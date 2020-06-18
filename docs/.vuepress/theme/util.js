@@ -145,6 +145,7 @@ export function resolveSidebarItems(page, route, site, localePath) {
 //解析页面的标题
 function resolveHeaders(page) {
   const headers = groupHeaders(page.headers || [])
+  
   //（添加），只有页面解析出来的标题栏不为空时才
   // if (headers.length) {
   return [{

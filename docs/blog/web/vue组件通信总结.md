@@ -5,7 +5,7 @@ meta:
     tag: vue
 ---
 
-# vue组件通信总结
+# vue 组件通信总结
 
 ## 路由传参
 
@@ -153,7 +153,7 @@ export default {
 
 `provide` 和 `inject` 允许一个祖先组件向其所有后代组件注入依赖，也就是说不论后代组件嵌套有多深，在祖先组件中提供 `provide` 属性，后代组件能够通过 `inject` 获取到这个属性。
 
-> provide 和 inject 主要为高阶插件/组件库提供用例。并不推荐直接用于应用程序代码中。
+`provide` 和 `inject` 主要为高阶插件/组件库提供用例。并不推荐直接用于应用程序代码中。
 
 父组件：
 
@@ -176,6 +176,29 @@ mounted() {
 ```
 
 更多用法: https://cn.vuejs.org/v2/api/#provide-inject
+
+`provide` 和 `inject`并不是响应式的，但如果传递的是一个对象，那么就是响应式的。
+
+这时的响应式只限于对象的属性改变，例如`provide`传递对象`obj`，`obj.a`改变时，子组件能观察到`obj.a`的变化，但`obj= Object.assign({}, obj, newObj)`这不能。
+
+但是，如果将一个 computed 的值传递，例如：
+
+```JavaScript
+provide () {
+  return {
+    options: this.curOptions //curOptions 为 computed 属性
+  }
+}
+```
+
+如果`curOptions`只是被`provide`传递，那`curOptions`只会执行一次，不会在其依赖的属性改变时执行。
+
+所以`provide`不要去传递一个 computed 属性。
+
+> 综上：
+>
+> 1. `provide`传递可响应式对象时，只能去改变对象的属性。
+> 2. 不能传递 computed 属性来作为响应式对象。（也就是不能去改变传递对象的引用）
 
 ### 父组件访问子组件
 
@@ -244,7 +267,7 @@ this.$root.Bus.$on("transfer-data", arg1, arg2);
 
 Vuex 是 vue 的全局状态管理模式，并且它的状态存储是响应式的。
 
-vuex 的使用见官方文档: https://vuex.vuejs.org/zh/installation.html
+vuex 的使用见官方文档: [vuex](https://vuex.vuejs.org/zh/installation.html)
 
 ### 小结
 
@@ -254,8 +277,8 @@ vuex 的使用见官方文档: https://vuex.vuejs.org/zh/installation.html
 
 3. 对于 ref,可以使用计算属性来达到响应式
 
-> 1. 在 computed 中无法直接访问 \$refs,因为 computed 在 mounted 之前执行,所有无法访问 dom , vue 中各选项及钩子函数执行顺序:https://www.cnblogs.com/vickylinj/p/9584202.html
-> 2. 可以通过定义一个变量 isMounted: false ,在 mounted 中将这其设置为 true 来判断是否已经处于 mounted 生命周期
+> 1. 在 computed 中无法直接访问 \$refs,因为 computed 在 mounted 之前执行，所有无法访问 dom , [vue 中各选项及钩子函数执行顺序](https://www.cnblogs.com/vickylinj/p/9584202.html)
+> 2. 可以通过定义一个变量 ismounted ()false ,在 mounted 中将这其设置为 true 来判断是否已经处于 mounted 生命周期
 >
 > ```javascript
 >  computed: {
@@ -280,6 +303,6 @@ vuex 的使用见官方文档: https://vuex.vuejs.org/zh/installation.html
 
 2. 对于所有的组件通信,当页面刷新时,就代表着当前页面的所有组件销毁与重建,那么自然参数会全部重置.
 
-3. 对于本地缓存 localStorage 和 SessionStorage,页面刷新值依然存在
+3. 对于本地缓存 localStorage 和 SessionStorage,页面刷新改变的值依然存在
 
 4. 当我们想要实现例如:点击某个按钮,获取数据,在页面刷新后依然是点击按钮后获取的数据.那么应该在点击后改变页面的 url(即:路由改变),然后根据路由来获取数据.
