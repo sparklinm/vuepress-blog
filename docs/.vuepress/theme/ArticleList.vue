@@ -300,6 +300,10 @@ export default {
     font-size: 18px;
     font-weight: 600;
   }
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .article-card {

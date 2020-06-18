@@ -5,5 +5,11 @@
   },
   "devDependencies": {
     "vuepress": "^0.14.11"
+  },
+  "dependencies": {
+    "@vue/cli-plugin-eslint": "^4.4.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.2.0",
+    "eslint-config-vuepress": "^2.2.0"
   }
 }

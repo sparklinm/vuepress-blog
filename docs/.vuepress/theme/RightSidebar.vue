@@ -1,40 +1,51 @@
 <!--  -->
 <template>
-  <div class="sidebar-inner">
+  <div class="sidebar-right">
     <transition name="ani-sidebar">
-      <div v-show="showSideBar">
+      <div v-show="showSideBar" class="sidebar-right-inner">
         <div class="newest" :key="1">
           <div class="title">推荐阅读</div>
           <ol class="title-list">
-            <li v-for="(item,index) in hotArticleAry" @click="toArticle(item.path)">
+            <li
+              v-for="(item, index) in hotArticleAry"
+              @click="toArticle(item.path)"
+            >
               <!-- <span class="order">{{index+1}}</span> -->
-              {{item.title}}
+              {{ item.title }}
             </li>
           </ol>
         </div>
         <div class="about" :key="2">
           <div class="title">云标签</div>
           <div class="title-list">
-            <span v-for="(item,index) in tagAry" class="tag" @click="toBlogByTag(index)">
+            <span
+              v-for="(item, index) in tagAry"
+              class="tag"
+              @click="toBlogByTag(index)"
+            >
               <!-- <span class="order">{{index+1}}</span> -->
-              {{item}}
+              {{ item }}
             </span>
           </div>
         </div>
 
-        <div class="catalog" :key="3" v-show="sidebarItems[0].title">
+        <div class="catalog" :key="3" v-if="sidebarItems[0].title">
           <div class="title">目录</div>
           <div class="article-title">
-            <h3>{{sidebarItems[0].title}}</h3>
+            <h3>{{ sidebarItems[0].title }}</h3>
           </div>
           <div class="title-list">
             <ul class="catalog-level-1">
-              <li v-for="(item1,index) in sidebarItems[0].children" class>
+              <li v-for="(item1, index) in sidebarItems[0].children" class>
                 <!-- <span class="order">{{index+1}}</span> -->
-                <router-link :to="item1.path" tag="span">{{item1.title}}</router-link>
+                <router-link :to="item1.path" tag="span">{{
+                  item1.title
+                }}</router-link>
                 <ul v-if="item1.children.length" class="catalog-level-2">
-                  <li v-for="(item2,index) in item1.children" class>
-                    <router-link :to="item2.path" tag="span">{{item2.title}}</router-link>
+                  <li v-for="(item2, index) in item1.children" class>
+                    <router-link :to="item2.path" tag="span">{{
+                      item2.title
+                    }}</router-link>
                   </li>
                 </ul>
               </li>
@@ -80,7 +91,7 @@ export default {
   },
 
   components: {},
-  props: ["sidebarItems","tagAry"],
+  props: ["sidebarItems", "tagAry"],
   computed: {
     //根据所有的静态文本获取标签
     // tagAry() {
@@ -144,7 +155,6 @@ export default {
   },
   mounted() {
     // this.blogByTag();
-    
     this.getHotArticleAry();
   }
 };
@@ -153,11 +163,16 @@ export default {
 <style lang="stylus">
 @require './styles/config.styl';
 
-.sidebar-inner {
+.sidebar-right {
   width: 25.86%;
   position: absolute;
   right: 0rem;
+  bottom 0;
   top: 10px;
+
+  .sidebar-right-inner {
+    height :100%;
+  }
 
   .newest, .about, .catalog {
     /* background: pink; */
@@ -172,6 +187,9 @@ export default {
   }
 
   .catalog {
+    position: sticky;
+    top: 20px;
+
     .title-list {
       .catalog-level-1 {
         list-style: square;

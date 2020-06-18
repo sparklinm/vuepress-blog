@@ -18,7 +18,7 @@ module.exports = {
         ],
         editLinks: false,
         sidebar: "auto",
-        sidebarDepth: 2
+        sidebarDepth: 3
 
     },
     markdown: {
