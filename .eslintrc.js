@@ -6,12 +6,15 @@ module.exports = {
     'es6': true
   },
   'parserOptions': {
-    'parser': 'babel-eslint',
     'ecmaVersion': 2017,
     'sourceType': 'module'
   },
-  'extends': ['plugin:vue/recommended', 'eslint:recommended'],
-  'plugins': ['vue'],
+  // 'extends': ['plugin:vue/recommended', 'eslint:recommended'],
+  // 'plugins': ['vue', 'html'],
+  'settings': {
+    'html/indent': '+2',
+    'html/report-bad-indent': 'error'
+  },
   'rules': {
     'indent': [
       'error',
@@ -131,7 +134,7 @@ module.exports = {
     'array-bracket-newline': [
       'error',
       {
-        'multiline': true,
+        'multiline': true
       }
     ],
     // 'array-element-newline': [
@@ -166,16 +169,24 @@ module.exports = {
     'space-in-parens': ['error', 'never'],
     'padding-line-between-statements': [
       'error',
-      { 'blankLine': 'always', 'next': '*', 'prev': ['const', 'let', 'var'] },
-      { 'blankLine': 'any', 'next': ['const', 'let', 'var'], 'prev': ['const', 'let', 'var'] },
-      { 'blankLine': 'always', 'next': 'export', 'prev': '*' }
-    ],
+      {
+ 'blankLine': 'always',
+'next': '*',
+'prev': ['const', 'let', 'var'] 
+},
+      {
+ 'blankLine': 'any',
+'next': ['const', 'let', 'var'],
+'prev': ['const', 'let', 'var'] 
+},
+      {
+ 'blankLine': 'always',
+'next': 'export',
+'prev': '*' 
+}
+    ]
   },
-  'plugins': ['html'],
-  'settings': {
-    'html/indent': '+2',
-    'html/report-bad-indent': 'error'
-  },
+
   'globals': {
     '$': true,
     'log': true,

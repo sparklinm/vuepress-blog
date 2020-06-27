@@ -36,16 +36,19 @@
           </div>
           <div class="title-list">
             <ul class="catalog-level-1">
-              <li v-for="(item1, index) in sidebarItems[0].children" class>
-                <!-- <span class="order">{{index+1}}</span> -->
-                <router-link :to="item1.path" tag="span">{{
-                  item1.title
-                }}</router-link>
+              <li v-for="(item1, index) in sidebarItems[0].children">
+                <a
+                  :href="$withBase(item1.path)"
+                  :class="{ 'active-link': isActive($route, item1.path) }"
+                  >{{ item1.title }}</a
+                >
                 <ul v-if="item1.children.length" class="catalog-level-2">
-                  <li v-for="(item2, index) in item1.children" class>
-                    <router-link :to="item2.path" tag="span">{{
-                      item2.title
-                    }}</router-link>
+                  <li v-for="(item2, index) in item1.children">
+                    <a
+                      :href="$withBase(item2.path)"
+                      :class="{ 'active-link': isActive($route, item2.path) }"
+                      >{{ item2.title }}</a
+                    >
                   </li>
                 </ul>
               </li>
@@ -58,7 +61,9 @@
 </template>
 
 <script>
+import { isActive, hashRE, groupHeaders } from "./util";
 export default {
+  props: ["sidebarItems", "tagAry"],
   data() {
     return {
       hotArticleAry: [],
@@ -89,9 +94,6 @@ export default {
       blogs: {}
     };
   },
-
-  components: {},
-  props: ["sidebarItems", "tagAry"],
   computed: {
     //根据所有的静态文本获取标签
     // tagAry() {
@@ -104,6 +106,7 @@ export default {
     toArticle(path) {
       this.$router.push(path);
     },
+    isActive: isActive,
 
     //获得推荐博客
     getHotArticleAry() {
@@ -191,6 +194,17 @@ export default {
     top: 20px;
 
     .title-list {
+      max-height: 700px;
+      overflow: auto;
+
+      a {
+        color:black;
+      }
+
+      .active-link {
+        color: #3eaf7c;
+      }
+
       .catalog-level-1 {
         list-style: square;
         font-size: 16px;

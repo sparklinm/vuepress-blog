@@ -4,12 +4,11 @@
     "build": "vuepress build docs"
   },
   "devDependencies": {
-    "vuepress": "^0.14.11"
-  },
-  "dependencies": {
-    "@vue/cli-plugin-eslint": "^4.4.4",
-    "babel-eslint": "^10.1.0",
-    "eslint": "^7.2.0",
-    "eslint-config-vuepress": "^2.2.0"
+    "@vuepress/plugin-active-header-links": "^1.5.2",
+    "@vuepress/plugin-register-components": "^1.5.2",
+    "eslint": "^7.3.1",
+    "eslint-plugin-html": "^6.0.2",
+    "eslint-plugin-vue": "^6.2.2",
+    "vuepress": "^1.5.2"
   }
 }
