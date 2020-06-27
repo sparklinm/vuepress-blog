@@ -12,6 +12,8 @@ meta:
 打开[node 官网下载链接](https://nodejs.org/en/download/)，下载自己需要的 node 安装包，由于我的电脑是 Windows，所以我下载的是 windows 下的安装包
 ![](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560931065098.png)
 
+<!-- more -->
+
 ## 二 安装
 
 一路点是，安装到自己需要的目录，这里我安装的目录是`F:\My development tools\node`，在安装过程中，程序会自动为你配置环境变量。

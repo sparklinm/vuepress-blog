@@ -1,26 +1,35 @@
 <template>
   <div class="article-list-inner" v-show="articleArray.length">
     <div class="tag-container">
-      <div class="tag-item-container" v-show="this.category=='/tag/'">
-        <span v-for="(item,index) in tagAry" class="tag" @click="toBlogByTag(item)">
+      <div class="tag-item-container" v-show="this.category == '/tag/'">
+        <span
+          v-for="(item, index) in tagAry"
+          class="tag"
+          @click="toBlogByTag(item)"
+        >
           <!-- <span class="order">{{index+1}}</span> -->
-          {{item}}
+          {{ item }}
         </span>
       </div>
       <div class="tag-tip" v-show="currentTag">
         标签为
-        <span>{{currentTag}}</span>下的文章
+        <span>{{ currentTag }}</span
+        >下的文章
       </div>
     </div>
-    <transition-group name="ani-article-item" enter-active-class="ani-article-item-in" tag="div">
+    <transition-group
+      name="ani-article-item"
+      enter-active-class="ani-article-item-in"
+      tag="div"
+    >
       <article
         class="article-item"
-        v-for="(article,index) in articleArray"
-        :key="index+5"
+        v-for="(article, index) in articleArray"
+        :key="index + 5"
         v-if="showarticleItem"
       >
         <div class="article-title" @click="toArticle(article.path)">
-          <h3 class>{{article.title}}</h3>
+          <h3 class>{{ article.title }}</h3>
         </div>
         <div class="article-bref">
           <!-- <div class="article-cover-container"> -->
@@ -37,16 +46,17 @@
           <div class="article-card">
             <span>
               <i class="fa-calendar-check-o fa"></i>
-              {{article.time}}
+              {{ article.time }}
             </span>
             <span class="article-tag-container">
               <i class="fa-tag fa"></i>
 
               <span
                 class="article-tag"
-                v-for="(item,index) in article.tag"
+                v-for="(item, index) in article.tag"
                 @click="toBlogByTag(item)"
-              >{{item}}</span>
+                >{{ item }}</span
+              >
             </span>
           </div>
         </div>
@@ -75,9 +85,7 @@ export default {
     return {
       showarticleItem: true,
 
-      articleArray: [
-       
-      ],
+      articleArray: [],
       showLoading: false,
       showTip: false,
       category: ""
@@ -287,12 +295,14 @@ export default {
   h1 {
     font-size: 22px;
     font-weight: 600;
-    display: none;
   }
 
   h2 {
     font-size: 20px;
     font-weight: 600;
+  }
+
+  h1, h2, h3, h4 {
     display: none;
   }
 

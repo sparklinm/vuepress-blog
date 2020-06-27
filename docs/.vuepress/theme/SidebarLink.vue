@@ -65,13 +65,14 @@ function renderLink(h, to, text, active) {
 
 function renderChildren(h, children, path, route, maxDepth, depth = 1) {
   if (!children || depth > maxDepth) return null;
+
   return h(
     "ul",
     { class: "sidebar-sub-headers" },
     children.map(c => {
-      const active = isActive(route, path + "#" + c.slug);
+      const active = isActive(route, c.path);
       return h("li", { class: "sidebar-sub-header" }, [
-        renderLink(h, path + "#" + c.slug, c.title, active),
+        renderLink(h, c.path, c.title, active),
         renderChildren(h, c.children, path, route, maxDepth, depth + 1)
       ]);
     })

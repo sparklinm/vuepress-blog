@@ -13,7 +13,7 @@ meta:
 
 #### 1. 动态路由
 
-定义一个动态路由，传递参数 id
+定义一个动态路由，传递参数 `id`
 
 ```javascript
 export default new Router({
@@ -29,7 +29,7 @@ export default new Router({
 
 <!-- more -->`
 
-通过 router-link 标签传递参数
+通过 `router-link` 标签传递参数
 
 ```html
 <router-link :to="{path:`/componentB/${user.id}`}"></router-link>
@@ -37,7 +37,7 @@ export default new Router({
 <router-link :to="{name: 'componentB', params: { id: user.id }}"></router-link>
 ```
 
-使用 router.push 方法传递参数
+使用 `router.push` 方法传递参数
 
 ```js
 this.$router.push({ path: `/componentB/${user.id}` });
@@ -45,18 +45,18 @@ this.$router.push({ path: `/componentB/${user.id}` });
 this.$router.push({ name: "componentB", params: { id: user.id } });
 ```
 
-> 注意：在使用了 path 后，params 会无效
+> 注意：在使用了 `path` 后，`params` 会无效
 >
 > ```js
 > // params无效
 > this.$router.push({ path: "/componentB", params: { id: user.id } });
 > ```
 
-使用 this.\$route.params.id 接收参数
+使用 `this.$route.params.id` 接收参数
 
 #### 2. 普通路由
 
-在普通路由中也可以通过 params 传参
+在普通路由中也可以通过 `params` 传参
 
 ```javascript
 export default new Router({
@@ -80,7 +80,7 @@ export default new Router({
 this.$router.push({ name: "componentB", params: { id: user.id } });
 ```
 
-接收参数：this.\$route.params.id
+接收参数：`this.$route.params.id`
 
 ### 通过 query
 
@@ -94,15 +94,15 @@ this.$router.push({ name: "componentB", params: { id: user.id } });
 this.$router.push({ name: "componentB", query: { id: user.id } });
 ```
 
-接收参数：this.route.query.id
+接收参数：`this.route.query.id`
 
 ### 小结
 
-1. 在动态路由传参过程中，参数会附在 url 后面
+1. 在动态路由传参过程中，参数会附在 `url` 后面
 
-2. 非动态路由使用 params 传递参数，参数不会附在 url 后面
+2. 非动态路由使用 `params` 传递参数，参数不会附在 `url` 后面
 
-3. query 传递参数，参数会以 `?id=number&name=li` 这种形式附在 url 后面
+3. `query` 传递参数，参数会以 `?id=number&name=li` 这种形式附在 `url` 后面
 
 ## 组件通信
 
@@ -271,7 +271,7 @@ vuex 的使用见官方文档: [vuex](https://vuex.vuejs.org/zh/installation.htm
 
 ### 小结
 
-1. 响应式:props、\$parent、vuex
+1. 响应式:props、$parent、vuex
 
 2. 非响应式:ref、$emit+v-on、$emit+\$on、provide / inject
 

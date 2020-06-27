@@ -7,8 +7,6 @@ meta:
 
 # babel7 简单使用总结
 
-<!-- more -->
-
 ## webpack 中使用
 
 安装 `@babel/preset-env` 以及 `core-js`
@@ -32,6 +30,8 @@ module.exports = {
   ]
 };
 ```
+
+<!-- more -->
 
 `targets`字段可用同级目录下`.browserslistrc`文件代替，例如：
 

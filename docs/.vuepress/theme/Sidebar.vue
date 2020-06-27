@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
-    <NavLinks fromComponent="sidebar"/>
-    <slot name="top"/>
+    <NavLinks fromComponent="sidebar" v-if="showNavLinks" />
+    <slot name="top" />
     <ul class="sidebar-links" v-if="items.length">
       <li v-for="(item, i) in items" :key="i">
         <SidebarGroup
@@ -12,10 +12,10 @@
           :collapsable="item.collapsable || item.collapsible"
           @toggle="toggleGroup(i)"
         />
-        <SidebarLink v-else :item="item"/>
+        <SidebarLink v-else :item="item" />
       </li>
     </ul>
-    <slot name="bottom"/>
+    <slot name="bottom" />
   </div>
 </template>
 
@@ -28,7 +28,14 @@ import { isActive } from "./util";
 export default {
   components: { SidebarGroup, SidebarLink, NavLinks },
 
-  props: ["items"],
+  props: {
+    items: {
+      default: {}
+    },
+    showNavLinks: {
+      default: true
+    }
+  },
 
   data() {
     return {
@@ -40,9 +47,7 @@ export default {
     this.refreshIndex();
   },
 
-  mounted() {
-    
-  },
+  mounted() {},
   watch: {
     $route() {
       this.refreshIndex();
