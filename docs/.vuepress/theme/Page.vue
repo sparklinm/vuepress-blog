@@ -4,7 +4,6 @@
     <router-link
       to="/blog/web/元素大小、位置、滚动相关知识点.html#判断是否有滚动条"
     >
-      <div>sss</div>
     </router-link>
     <ArticleList
       @toggle-topImg="$emit('toggle-topImg')"

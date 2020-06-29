@@ -98,25 +98,25 @@ vuepress eject docs
 1. 新建 theme/router/index.js 文件，在里面输入：
 
 ```javascript
-import Layout from "../Layout";
+import Layout from "../Layout"
 const install = (Vue, { router }) => {
-  let ru = ["/", "/:category", "/tag/", "/tag/:tag"];
-  const routes = [];
+  let ru = ["/", "/:category", "/tag/", "/tag/:tag"]
+  const routes = []
 
   for (var i = 0, len = ru.length; i < len; i++) {
     routes.push({
       name: ru[i],
       path: ru[i],
       component: Layout
-    });
+    })
   }
 
-  router.addRoutes(routes);
-};
+  router.addRoutes(routes)
+}
 
 export default {
   install
-};
+}
 ```
 
 这里自定义了一个路由插件，语法可参照[Vue 文档：插件](https://cn.vuejs.org/v2/guide/plugins.html)
@@ -126,15 +126,15 @@ export default {
 2. 新建 theme/enhanceApp.js 文件，在里面输入：
 
 ```javascript
-import routes from "./router";
+import routes from "./router"
 export default ({
   Vue, // VuePress 正在使用的 Vue 构造函数
   options, // 附加到根实例的一些选项
   router, // 当前应用的路由实例
   siteData // 站点元数据
 }) => {
-  Vue.use(routes, { router });
-};
+  Vue.use(routes, { router })
+}
 ```
 
 使用 Vue.use 使用上面自定义的路由，传入参数 router。
@@ -202,13 +202,13 @@ nav: [{
 if (this.fromComponent == "sidebar") {
   if (
     userLinks.findIndex(navItem => {
-      return navItem.text == "云标签";
+      return navItem.text == "云标签"
     }) === -1
   ) {
     userLinks.push({
       text: "云标签",
       link: "/tag/"
-    });
+    })
   }
 }
 ```
@@ -221,3 +221,139 @@ if (this.fromComponent == "sidebar") {
 
 > 补充：
 > 几天后重新运行放到服务器上，上次的错误没有了，具体原因未知
+
+### 浏览器前进后退保持页面原位置
+
+看 `vuepress` 官方文档，从 A 页面跳转到 B 页面，再点击浏览器后退按钮，返回 A 页面时，滚动条处于 A 页面跳转前的位置。
+
+也就是页面跳转时，它**保存了滚动条的位置**，然而自己的博客却无法做到。
+
+官方有一个插件：[vuepress-plugin-smooth-scroll](https://vuepress.github.io/zh/plugins/smooth-scroll/)。该插件用于平滑滚动。起初我以为是没有安装插件的问题，但安装后还是不能实现这个功能。
+
+但经过实验，如果页面跳转时路由是这样：`/a/aa` 到 `/b/bb`，就会保存滚动条位置。而从 `/a.html` 到 `b.html` 这样的路由却无法保存。
+
+查看 `vuepress-plugin-smooth-scroll` 插件源码：
+
+```js
+router.options.scrollBehavior = (to, from, savedPosition) => {
+  // 前进后退按钮会返回保存的滚动轴位置
+  if (savedPosition) {
+    return window.scrollTo({
+      top: savedPosition.y,
+      behavior: "smooth"
+    })
+  } else if (to.hash) {
+    if (Vue.$vuepress.$get("disableScrollBehavior")) {
+      return false
+    }
+    // 平滑滚到到目标页面的对应hash元素处
+    const targetElement = document.querySelector(to.hash)
+    if (targetElement) {
+      return window.scrollTo({
+        top: getElementPosition(targetElement).y,
+        behavior: "smooth"
+      })
+    }
+  } else {
+    return window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
+}
+```
+
+使用了 `router` 的 `scrollBehavior` 属性，见文档：[Vue Router 滚动行为](https://router.vuejs.org/zh/guide/advanced/scroll-behavior.html)。
+
+这里的 `savedPosition` 确实在从 `/a.html` 到 `b.html` 的过程中出错了，它总是保存了 `b.html` 的滚动条的位置。
+
+在 `enhanceApp.js` 中改进这个方法，自己保存滚动条位置：
+
+```js
+export default ({
+  Vue, // VuePress 正在使用的 Vue 构造函数
+  options, // 附加到根实例的一些选项
+  router, // 当前应用的路由实例
+  siteData // 站点元数据
+}) => {
+  // Vue.use(routes,{router})
+  // router.mode = "hash"
+
+  let postions = {}
+
+  // 必须在路由跳转前保存
+  router.beforeEach((to, from, next) => {
+    if (to.name !== from.name) {
+      postions[from.name] = {
+        x: window.scrollX,
+        y: window.scrollY
+      }
+    }
+    next()
+  })
+
+  router.options.scrollBehavior = (to, from, savedPosition) => {
+    // 前进后退按钮会返回保存的滚动轴位置
+    if (savedPosition) {
+      if (postions[to.name]) {
+        return window.scrollTo({
+          top: postions[to.name].y,
+          behavior: "smooth"
+        })
+      }
+
+      // a.html 跳转到 b.html
+      // 点击浏览器返回按钮
+      // savedPosition 存储的位置是 b.html 的滚动位置
+      return window.scrollTo({
+        top: savedPosition.y,
+        behavior: "smooth"
+      })
+    } else if (to.hash) {
+      if (Vue.$vuepress.$get("disableScrollBehavior")) {
+        return
+      }
+      // 平滑滚到到目标页面的对应hash元素处
+      const targetElement = document.querySelector(to.hash)
+      if (targetElement) {
+        return window.scrollTo({
+          top: getElementPosition(targetElement).y,
+          behavior: "smooth"
+        })
+      }
+    } else {
+      return { x: 0, y: 0 }
+
+      // 360 浏览器有bug
+      // 当路由跳转时，from 页面的滚动条位置大于 to 页面的高度
+      // fixed 定位于顶部的 nav 会从底部快速平移到顶部
+
+      // return window.scrollTo({
+      //   top: 0,
+      //   behavior: "smooth"
+      // })
+    }
+  }
+}
+
+function getElementPosition(el) {
+  const docEl = document.documentElement
+  const docRect = docEl.getBoundingClientRect()
+  const elRect = el.getBoundingClientRect()
+  return {
+    x: elRect.left - docRect.left,
+    y: elRect.top - docRect.top
+  }
+}
+```
+
+此外，在测试时还发现一个 `bug`：
+
+```js
+window.scrollTo({
+  top: 0,
+  behavior: "smooth"
+})
+```
+
+在 **360 浏览器**中，如果 `a` 页面的滚动条位置已经比 `b` 页面的高度高，那从 `a` 跳转到 `b` 后使用这个方法平滑滚动，会出现 `fixed` 定位的元素先处于预期位置下面，然后再平移到预期位置的显示问题。
