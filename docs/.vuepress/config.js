@@ -14,11 +14,20 @@ module.exports = {
       {
         text: "工具使用",
         link: "/tool/"
+      },
+      {
+        text: "微代码",
+        link: "/doc/"
       }
     ],
     editLinks: false,
     sidebar: "auto",
-    sidebarDepth: 3
+    sidebarDepth: 3,
+    // 文档的侧边栏配置，和sidebar一致
+    fileDocSidebar: [
+      ["/doc/", "说明"],
+      ["/doc/canvas保存下载图片", "canvas保存下载图片"]
+    ]
   },
   markdown: {
     lineNumbers: true
@@ -29,6 +38,7 @@ module.exports = {
     {
       sidebarLinkSelector: ".sidebar-link",
       headerAnchorSelector: ".header-anchor"
-    }
+    },
+    "vuepress-plugin-smooth-scroll"
   ]
-};
+}

@@ -6,23 +6,17 @@
         <div class="newest" :key="1">
           <div class="title">推荐阅读</div>
           <ol class="title-list">
-            <li
-              v-for="(item, index) in hotArticleAry"
-              @click="toArticle(item.path)"
-            >
+            <li v-for="(item, index) in hotArticleAry" @click="toArticle(item.path)">
               <!-- <span class="order">{{index+1}}</span> -->
               {{ item.title }}
             </li>
           </ol>
         </div>
+
         <div class="about" :key="2">
           <div class="title">云标签</div>
           <div class="title-list">
-            <span
-              v-for="(item, index) in tagAry"
-              class="tag"
-              @click="toBlogByTag(index)"
-            >
+            <span v-for="(item, index) in tagAry" class="tag" @click="toBlogByTag(index)">
               <!-- <span class="order">{{index+1}}</span> -->
               {{ item }}
             </span>
@@ -31,29 +25,7 @@
 
         <div class="catalog" :key="3" v-if="sidebarItems[0].title">
           <div class="title">目录</div>
-          <div class="article-title">
-            <h3>{{ sidebarItems[0].title }}</h3>
-          </div>
-          <div class="title-list">
-            <ul class="catalog-level-1">
-              <li v-for="(item1, index) in sidebarItems[0].children">
-                <a
-                  :href="$withBase(item1.path)"
-                  :class="{ 'active-link': isActive($route, item1.path) }"
-                  >{{ item1.title }}</a
-                >
-                <ul v-if="item1.children.length" class="catalog-level-2">
-                  <li v-for="(item2, index) in item1.children">
-                    <a
-                      :href="$withBase(item2.path)"
-                      :class="{ 'active-link': isActive($route, item2.path) }"
-                      >{{ item2.title }}</a
-                    >
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+          <SidebarLinks :depth="0" :items="sidebarItems" />
         </div>
       </div>
     </transition>
@@ -62,33 +34,15 @@
 
 <script>
 import { isActive, hashRE, groupHeaders } from "./util";
+import SidebarLinks from "./SidebarLinks.vue";
 export default {
+  components: {
+    SidebarLinks
+  },
   props: ["sidebarItems", "tagAry"],
   data() {
     return {
       hotArticleAry: [],
-      // tagAry: [
-      //   "html",
-      //   "css",
-      //   "js",
-      //   "vue",
-      //   "微信小程序",
-      //   "html",
-      //   "css",
-      //   "js",
-      //   "vue",
-      //   "微信小程序",
-      //   "html",
-      //   "css",
-      //   "js",
-      //   "vue",
-      //   "微信小程序",
-      //   "html",
-      //   "css",
-      //   "js",
-      //   "vue",
-      //   "微信小程序"
-      // ],
       showSideBar: true,
       //根据标签分类后的博客
       blogs: {}
@@ -106,7 +60,6 @@ export default {
     toArticle(path) {
       this.$router.push(path);
     },
-    isActive: isActive,
 
     //获得推荐博客
     getHotArticleAry() {
@@ -170,11 +123,11 @@ export default {
   width: 25.86%;
   position: absolute;
   right: 0rem;
-  bottom 0;
+  bottom: 0;
   top: 10px;
 
   .sidebar-right-inner {
-    height :100%;
+    height: 100%;
   }
 
   .newest, .about, .catalog {
@@ -192,84 +145,44 @@ export default {
   .catalog {
     position: sticky;
     top: 20px;
+    max-height: 700px;
+    overflow: auto;
 
-    .title-list {
-      max-height: 700px;
-      overflow: auto;
-
-      a {
-        color:black;
-      }
-
-      .active-link {
-        color: #3eaf7c;
-      }
-
-      .catalog-level-1 {
-        list-style: square;
-        font-size: 16px;
-        font-weight: bold;
-
-        >li {
-          padding-top: 0;
-          padding-bottom: 10px;
-          list-style: none;
-
-          span {
-            display: list-item;
-            list-style: square;
-            list-style-position: inside;
-
-            &:hover {
-              // background: #7eb6c9;
-              color: #7eb6c9;
-            }
-          }
-        }
-      }
-
-      .catalog-level-2 {
-        list-style: disc;
-        font-size: 14px;
-        font-weight: normal;
-        padding-top: 16px;
-
-        >li {
-          padding: 0px 24px 8px;
-          list-style: none;
-
-          span {
-            display: list-item;
-            list-style: disc;
-            list-style-position: inside;
-
-            &:hover {
-              // background: #7eb6c9;
-              color: #7eb6c9;
-            }
-          }
-        }
-      }
-
-      li {
-        border: none;
-        list-style-position: inside;
-      }
-
-      ul {
-        padding-left: 0;
-      }
+    ul {
+      list-style: none;
+      padding-left: 0;
     }
 
-    .article-title {
-      margin: 10px 0 0;
+    .sidebar-heading {
+      padding-left: 0;
+    }
 
-      h3 {
-        cursor: progress;
-        font-size :18px;
-        &:hover {
-          color: #292828;
-        }
+    .sidebar-links {
+      padding-left: 0;
+    }
+
+
+    a {
+      padding-left: 20px;
+    }
+
+    .active-link {
+      color: #3eaf7c;
+    }
+
+    .sidebar-group-items {
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .sidebar-sub-headers {
+      font-size: 14px;
+      font-weight: normal;
+      padding-left: 12px;
+
+
+      >li {
+        padding: 0px 12px 5px;
       }
     }
   }

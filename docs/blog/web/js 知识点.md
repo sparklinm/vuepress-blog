@@ -169,10 +169,12 @@ toString：
 
 ### Number 和 parseInt 区别
 
-1. Number 对于字符串转数字会比 parseInt 更为严格，Number 是字符串中有无法转换为数字的字符，直接返回 NaN
-2. parseInt 只能转换字符串，对于其他类型，都需要按照相应规则先转换为字符串
+1. Number 对于字符串转数字会比 parseInt 更为严格，Number 是字符串中有无法转换为数字的字符，直接返回 NaN。
+2. parseInt 只能转换字符串，对于其他类型，都需要按照相应规则先转换为字符串。
 
-isNaN() 函数，对于非 Number 的参数，会首先将其转换为 Number
+### isNaN
+
+isNaN() 函数，对于非 Number 的参数，会首先将其转换为 Number。
 
 1. 数字形式的字符串。例如 "123"、"-3.14"，虽然是字符串型，但被 isNaN() 判为数， 返回 false。（"12,345,678"，"1.2.3" 这些返回 true）
 2. 空值。null、空字符串""、空数组[]，都可被 Number()合法的转为 0，于是被 isNaN 认为是数，返回 false。（undefined、空对象{}、空函数等无法转数字，返回 true）

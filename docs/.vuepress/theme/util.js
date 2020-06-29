@@ -142,28 +142,37 @@ export function resolveSidebarItems(page, route, site, localePath) {
   }
 }
 
+export function resolveFielDoc(site) {
+  const {
+    pages,
+    themeConfig
+  } = site
+
+  const fileDocSidebar = themeConfig.fileDocSidebar
+
+  return fileDocSidebar ?
+    fileDocSidebar.map(item => resolveItem(item, pages, '/')) : []
+}
+
 //解析页面的标题
 function resolveHeaders(page) {
   const headers = groupHeaders(page.headers || [])
-  
-  //（添加），只有页面解析出来的标题栏不为空时才
-  // if (headers.length) {
+  // h2 有path，h3 没有path
   return [{
     type: 'group',
     collapsable: false,
     title: page.title,
+    path: null,
     children: headers.map(h => ({
+      // h2
       type: 'auto',
       title: h.title,
       basePath: page.path,
       path: page.path + '#' + h.slug,
-      children: h.children.map(h2 => ({
-        title: h2.title,
-        path: page.path + '#' + h2.slug,
-      }))
+      // h3
+      children: h.children || []
     }))
   }]
-  // }
 }
 /**
  * 
@@ -178,7 +187,7 @@ export function groupHeaders(headers) {
   headers.forEach(h => {
     if (h.level === 2) {
       lastH2 = h
-      lastH2.children=[]
+      lastH2.children = []
     } else if (lastH2) {
       lastH2.children.push(h)
     }
@@ -244,7 +253,7 @@ function resolveItem(item, pages, base, isNested) {
 export function formatTime(time) {
   var utcDate = new Date(time);
   //世界时间转化为北京时间，相差8小时
-  var tdate=new Date(utcDate-8*60*60*100)
+  var tdate = new Date(utcDate - 8 * 60 * 60 * 100)
   var year = tdate.getFullYear();
   var month = tdate.getMonth() + 1;
   var day = tdate.getDate();
