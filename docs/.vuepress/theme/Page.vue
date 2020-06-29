@@ -1,18 +1,30 @@
 <template>
   <div class="page">
-    <slot name="top"/>
+    <slot name="top" />
+    <router-link
+      to="/blog/web/元素大小、位置、滚动相关知识点.html#判断是否有滚动条"
+    >
+      <div>sss</div>
+    </router-link>
     <ArticleList
       @toggle-topImg="$emit('toggle-topImg')"
       :blogs="blogs"
       :content="$refs.content"
       :tagAry="tagAry"
     />
-    <Content :custom="false" ref="content"/>
-    <RightSidebar @transfer-blogs="transferBlogs" :sidebar-items="sidebarItems" :tagAry="tagAry"/>
+    <Content :custom="false" ref="content" />
+
+    <RightSidebar
+      @transfer-blogs="transferBlogs"
+      :sidebar-items="sidebarItems"
+      :tagAry="tagAry"
+    />
     <div class="page-edit">
       <div class="edit-link" v-if="editLink">
-        <a :href="editLink" target="_blank" rel="noopener noreferrer">{{ editLinkText }}</a>
-        <OutboundLink/>
+        <a :href="editLink" target="_blank" rel="noopener noreferrer">{{
+          editLinkText
+        }}</a>
+        <OutboundLink />
       </div>
 
       <div class="last-updated" v-if="lastUpdated">
@@ -25,73 +37,78 @@
       <p class="inner">
         <span v-if="prev" class="prev">
           ←
-          <router-link v-if="prev" class="prev" :to="prev.path">{{ prev.title || prev.path }}</router-link>
+          <router-link v-if="prev" class="prev" :to="prev.path">{{
+            prev.title || prev.path
+          }}</router-link>
         </span>
 
         <span v-if="next" class="next">
-          <router-link v-if="next" :to="next.path">{{ next.title || next.path }}</router-link>→
+          <router-link v-if="next" :to="next.path">{{
+            next.title || next.path
+          }}</router-link>
+          →
         </span>
       </p>
     </div>
 
-    <slot name="bottom"/>
+    <slot name="bottom" />
   </div>
 </template>
 
 <script>
-import { resolvePage, normalize, outboundRE, endingSlashRE } from "./util";
-import RightSidebar from "./RightSidebar";
-import ArticleList from "./ArticleList.vue";
+import { resolvePage, normalize, outboundRE, endingSlashRE } from "./util"
+import RightSidebar from "./RightSidebar"
+import ArticleList from "./ArticleList.vue"
 export default {
   data() {
     return {
       blogs: []
-    };
+    }
   },
   props: ["sidebarItems"],
   components: { RightSidebar, ArticleList },
   computed: {
     lastUpdated() {
       if (this.$page.lastUpdated) {
-        return new Date(this.$page.lastUpdated).toLocaleString(this.$lang);
+        return new Date(this.$page.lastUpdated).toLocaleString(this.$lang)
       }
     },
 
     lastUpdatedText() {
       if (typeof this.$themeLocaleConfig.lastUpdated === "string") {
-        return this.$themeLocaleConfig.lastUpdated;
+        return this.$themeLocaleConfig.lastUpdated
       }
       if (typeof this.$site.themeConfig.lastUpdated === "string") {
-        return this.$site.themeConfig.lastUpdated;
+        return this.$site.themeConfig.lastUpdated
       }
-      return "Last Updated";
+      return "Last Updated"
     },
 
     prev() {
-      const prev = this.$page.frontmatter.prev;
+      const prev = this.$page.frontmatter.prev
       if (prev === false) {
-        return;
+        return
       } else if (prev) {
-        return resolvePage(this.$site.pages, prev, this.$route.path);
+        return resolvePage(this.$site.pages, prev, this.$route.path)
       } else {
-        return resolvePrev(this.$page, this.sidebarItems);
+        return resolvePrev(this.$page, this.sidebarItems)
       }
     },
 
     next() {
-      const next = this.$page.frontmatter.next;
+      const next = this.$page.frontmatter.next
       if (next === false) {
-        return;
+        return
       } else if (next) {
-        return resolvePage(this.$site.pages, next, this.$route.path);
+        return resolvePage(this.$site.pages, next, this.$route.path)
       } else {
-        return resolveNext(this.$page, this.sidebarItems);
+        return resolveNext(this.$page, this.sidebarItems)
       }
     },
 
     editLink() {
       if (this.$page.frontmatter.editLink === false) {
-        return;
+        return
       }
       const {
         repo,
@@ -99,16 +116,16 @@ export default {
         docsDir = "",
         docsBranch = "master",
         docsRepo = repo
-      } = this.$site.themeConfig;
+      } = this.$site.themeConfig
 
-      let path = normalize(this.$page.path);
+      let path = normalize(this.$page.path)
       if (endingSlashRE.test(path)) {
-        path += "README.md";
+        path += "README.md"
       } else {
-        path += ".md";
+        path += ".md"
       }
       if (docsRepo && editLinks) {
-        return this.createEditLink(repo, docsRepo, docsDir, docsBranch, path);
+        return this.createEditLink(repo, docsRepo, docsDir, docsBranch, path)
       }
     },
 
@@ -117,38 +134,35 @@ export default {
         this.$themeLocaleConfig.editLinkText ||
         this.$site.themeConfig.editLinkText ||
         `Edit this page`
-      );
+      )
     },
     //获得博客的标签种类
     tagAry() {
-      var allPages = this.$site.pages;
-      var blogs = {};
+      var allPages = this.$site.pages
+      var blogs = {}
       for (let i = 0; i < allPages.length; i++) {
-        let page = allPages[i];
+        let page = allPages[i]
         if (page.frontmatter.meta && page.frontmatter.meta[0].tag) {
-          let key = page.frontmatter.meta[0].tag;
-          let keyAry = key.split(",");
+          let key = page.frontmatter.meta[0].tag
+          let keyAry = key.split(",")
 
           for (let j = 0; j < keyAry.length; j++) {
-            blogs[keyAry[j]] = blogs[keyAry[j]] ? blogs[keyAry[j]] : [];
-            let meta = page.frontmatter.meta[0];
-            meta.path = page.path;
-            blogs[keyAry[j]].push(meta);
+            blogs[keyAry[j]] = blogs[keyAry[j]] ? blogs[keyAry[j]] : []
+            let meta = page.frontmatter.meta[0]
+            meta.path = page.path
+            blogs[keyAry[j]].push(meta)
           }
         }
       }
-      return Object.keys(blogs);
+      return Object.keys(blogs)
     }
   },
-  mounted() {
-    
-    
-  },
+  mounted() {},
   methods: {
     createEditLink(repo, docsRepo, docsDir, docsBranch, path) {
-      const bitbucket = /bitbucket.org/;
+      const bitbucket = /bitbucket.org/
       if (bitbucket.test(repo)) {
-        const base = outboundRE.test(docsRepo) ? docsRepo : repo;
+        const base = outboundRE.test(docsRepo) ? docsRepo : repo
         return (
           base.replace(endingSlashRE, "") +
           `/src` +
@@ -156,47 +170,47 @@ export default {
           (docsDir ? "/" + docsDir.replace(endingSlashRE, "") : "") +
           path +
           `?mode=edit&spa=0&at=${docsBranch}&fileviewer=file-view-default`
-        );
+        )
       }
 
       const base = outboundRE.test(docsRepo)
         ? docsRepo
-        : `https://github.com/${docsRepo}`;
+        : `https://github.com/${docsRepo}`
 
       return (
         base.replace(endingSlashRE, "") +
         `/edit/${docsBranch}` +
         (docsDir ? "/" + docsDir.replace(endingSlashRE, "") : "") +
         path
-      );
+      )
     },
     transferBlogs(blogs) {
       // this.blogs=blogs
     }
   }
-};
+}
 
 function resolvePrev(page, items) {
-  return find(page, items, -1);
+  return find(page, items, -1)
 }
 
 function resolveNext(page, items) {
-  return find(page, items, 1);
+  return find(page, items, 1)
 }
 
 function find(page, items, offset) {
-  const res = [];
+  const res = []
   items.forEach(item => {
     if (item.type === "group") {
-      res.push(...(item.children || []));
+      res.push(...(item.children || []))
     } else {
-      res.push(item);
+      res.push(item)
     }
-  });
+  })
   for (let i = 0; i < res.length; i++) {
-    const cur = res[i];
+    const cur = res[i]
     if (cur.type === "page" && cur.path === page.path) {
-      return res[i + offset];
+      return res[i + offset]
     }
   }
 }
