@@ -40,13 +40,6 @@ if (flag) {
 
 ## 隐式转换
 
-参考文献：
-
-1. [你所忽略的 js 隐式转换](https://juejin.im/post/5a7172d9f265da3e3245cbca#heading-7)
-2. [从一道面试题说起—js 隐式转换踩坑合集](https://juejin.im/post/5a7172d9f265da3e3245cbca#heading-7)
-3. https://www.jianshu.com/p/a429e4940c33
-4. https://www.cnblogs.com/ihboy/p/6700059.html
-
 ### 转换规则
 
 1. null 和 undefined 自身相等，且 null == undefined，除此之外和其他任何值不宽松相等（==）。
@@ -55,10 +48,14 @@ if (flag) {
 4. 有 Boolean 类型时，Boolean 转化为 Number 类型比较。
 5. 一个 Object 类型，一个 String 或 Number 类型，将 Object 类型进行 ToPrimitive (原始转换)后，按上面流程进行原始值比较。
 
+原始值即基础类型：Undefined、 Null、 String、 Number、 Boolean、 Symbol。
+
 简单来说：
 
 1. 有 Number 和 Boolean，需要转换为 Number 类型比较，都是字符串直接比较。
 2. 有 Object 先将 Object 调用 valueOf 或者 toString 转换，再按照 1 比较。
+
+![img/20200630102412_fa4c0eb43e7f7f6c53e1991a7fa9c914.png](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/20200630102412_fa4c0eb43e7f7f6c53e1991a7fa9c914.png)
 
 ### ToBoolean
 
@@ -111,8 +108,6 @@ toString：
 
 > Symbol 对象无法隐式转换为原始值和字符串，即隐式转换时，Symbol 对象不会自动调用 valueOf 或者 toString。
 
-<!-- ![enter description here](./images/1566260383843.png) -->
-
 ### 其他隐式转换
 
 #### 加号
@@ -141,6 +136,13 @@ toString：
 2. `a` 为真，但 `b` 为假，返回 `c`；
 3. `a` 为假，返回 `c`。
 4. 即只有`a`、`b`同真时返回`b`，否则返回`c`。
+
+### 参考文献
+
+1. [你所忽略的 js 隐式转换](https://juejin.im/post/5a7172d9f265da3e3245cbca#heading-7)
+2. [从一道面试题说起—js 隐式转换踩坑合集](https://juejin.im/post/5a7172d9f265da3e3245cbca#heading-7)
+3. [JS 隐式转换](https://www.jianshu.com/p/a429e4940c33)
+4. [Js 中那些 隐式转换](https://www.cnblogs.com/ihboy/p/6700059.html)
 
 ## parseInt、isNaN 和 Number 注意点
 

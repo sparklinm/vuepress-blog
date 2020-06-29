@@ -54,6 +54,80 @@ export const siteData = {
       "excerpt": "<h1 id=\"vscode\"><a class=\"header-anchor\" href=\"#vscode\">#</a> VScode</h1>\n<h2 id=\"vscode-常用插件\"><a class=\"header-anchor\" href=\"#vscode-常用插件\">#</a> VScode 常用插件</h2>\n<ol>\n<li><code>Auto rename tag</code><br>\n修改 HTML 标签时，自动修改匹配的标签</li>\n<li><code>Color Highlight</code><br>\n颜色值在代码中高亮显示</li>\n<li><code>Beautify</code><br>\n代码格式化，包括：javascript, JSON, CSS, Sass, and HTML</li>\n</ol>\n"
     },
     {
+      "title": "node 与 npm",
+      "frontmatter": {
+        "meta": [
+          {
+            "title": "node与npm",
+            "time": "2019-06-19T16:33:55.000Z",
+            "tag": "环境搭建,工具使用"
+          }
+        ]
+      },
+      "regularPath": "/blog/tool/node%E5%92%8Cnpm.html",
+      "relativePath": "blog/tool/node和npm.md",
+      "key": "v-815124bc",
+      "path": "/blog/tool/node%E5%92%8Cnpm.html",
+      "headers": [
+        {
+          "level": 2,
+          "title": "一 下载",
+          "slug": "一-下载"
+        },
+        {
+          "level": 2,
+          "title": "二 安装",
+          "slug": "二-安装"
+        },
+        {
+          "level": 2,
+          "title": "三 自定义全局包安装路径",
+          "slug": "三-自定义全局包安装路径"
+        },
+        {
+          "level": 2,
+          "title": "四 安装 cnpm",
+          "slug": "四-安装-cnpm"
+        },
+        {
+          "level": 2,
+          "title": "五 npm 常用命令",
+          "slug": "五-npm-常用命令"
+        },
+        {
+          "level": 3,
+          "title": "1. 安装",
+          "slug": "_1-安装"
+        },
+        {
+          "level": 3,
+          "title": "2. 更新",
+          "slug": "_2-更新"
+        },
+        {
+          "level": 3,
+          "title": "3. 卸载",
+          "slug": "_3-卸载"
+        },
+        {
+          "level": 3,
+          "title": "4. --save 和--save-dev 的区别",
+          "slug": "_4-save-和-save-dev-的区别"
+        },
+        {
+          "level": 2,
+          "title": "git 更改 Windows 下默认编辑器",
+          "slug": "git-更改-windows-下默认编辑器"
+        },
+        {
+          "level": 2,
+          "title": "git 配置 ssh",
+          "slug": "git-配置-ssh"
+        }
+      ],
+      "excerpt": "<h1 id=\"node-与-npm\"><a class=\"header-anchor\" href=\"#node-与-npm\">#</a> node 与 npm</h1>\n<h2 id=\"一-下载\"><a class=\"header-anchor\" href=\"#一-下载\">#</a> 一 下载</h2>\n<p>打开<a href=\"https://nodejs.org/en/download/\" target=\"_blank\" rel=\"noopener noreferrer\">node 官网下载链接<OutboundLink/></a>，下载自己需要的 node 安装包，由于我的电脑是 Windows，所以我下载的是 windows 下的安装包\n<img src=\"https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560931065098.png\" alt=\"\"></p>\n"
+    },
+    {
       "title": "常用工具",
       "frontmatter": {
         "meta": [
@@ -221,83 +295,14 @@ export const siteData = {
           "level": 3,
           "title": "有关 computed 属性的问题",
           "slug": "有关-computed-属性的问题"
+        },
+        {
+          "level": 3,
+          "title": "浏览器前进后退保持页面原位置",
+          "slug": "浏览器前进后退保持页面原位置"
         }
       ],
       "excerpt": "<h1 id=\"vuepress-个人博客填坑\"><a class=\"header-anchor\" href=\"#vuepress-个人博客填坑\">#</a> VuePress 个人博客填坑</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>经过几天的努力，自己的个人博客终于大致做好了，最开始也参考了很多别人的博客布局，但做到后面发现静态博客不适合做得那么花哨。</p>\n<p>也想过为每一篇博客配上一张封面图，但发现在不同屏幕下，图片的显示方式不好管理，对图片的内容和分辨率也都有一定规定，就没有去弄了。</p>\n<p>过程也遇到了许多坑，做一个总结~~~</p>\n"
-    },
-    {
-      "title": "node 与 npm",
-      "frontmatter": {
-        "meta": [
-          {
-            "title": "node与npm",
-            "time": "2019-06-19T16:33:55.000Z",
-            "tag": "环境搭建,工具使用"
-          }
-        ]
-      },
-      "regularPath": "/blog/tool/node%E5%92%8Cnpm.html",
-      "relativePath": "blog/tool/node和npm.md",
-      "key": "v-815124bc",
-      "path": "/blog/tool/node%E5%92%8Cnpm.html",
-      "headers": [
-        {
-          "level": 2,
-          "title": "一 下载",
-          "slug": "一-下载"
-        },
-        {
-          "level": 2,
-          "title": "二 安装",
-          "slug": "二-安装"
-        },
-        {
-          "level": 2,
-          "title": "三 自定义全局包安装路径",
-          "slug": "三-自定义全局包安装路径"
-        },
-        {
-          "level": 2,
-          "title": "四 安装 cnpm",
-          "slug": "四-安装-cnpm"
-        },
-        {
-          "level": 2,
-          "title": "五 npm 常用命令",
-          "slug": "五-npm-常用命令"
-        },
-        {
-          "level": 3,
-          "title": "1. 安装",
-          "slug": "_1-安装"
-        },
-        {
-          "level": 3,
-          "title": "2. 更新",
-          "slug": "_2-更新"
-        },
-        {
-          "level": 3,
-          "title": "3. 卸载",
-          "slug": "_3-卸载"
-        },
-        {
-          "level": 3,
-          "title": "4. --save 和--save-dev 的区别",
-          "slug": "_4-save-和-save-dev-的区别"
-        },
-        {
-          "level": 2,
-          "title": "git 更改 Windows 下默认编辑器",
-          "slug": "git-更改-windows-下默认编辑器"
-        },
-        {
-          "level": 2,
-          "title": "git 配置 ssh",
-          "slug": "git-配置-ssh"
-        }
-      ],
-      "excerpt": "<h1 id=\"node-与-npm\"><a class=\"header-anchor\" href=\"#node-与-npm\">#</a> node 与 npm</h1>\n<h2 id=\"一-下载\"><a class=\"header-anchor\" href=\"#一-下载\">#</a> 一 下载</h2>\n<p>打开<a href=\"https://nodejs.org/en/download/\" target=\"_blank\" rel=\"noopener noreferrer\">node 官网下载链接<OutboundLink/></a>，下载自己需要的 node 安装包，由于我的电脑是 Windows，所以我下载的是 windows 下的安装包\n<img src=\"https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560931065098.png\" alt=\"\"></p>\n"
     },
     {
       "title": "babel7 简单使用总结",
@@ -576,6 +581,115 @@ export const siteData = {
       "excerpt": "<h1 id=\"js-模块导入导出\"><a class=\"header-anchor\" href=\"#js-模块导入导出\">#</a> js 模块导入导出</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>模块导出导入，现在有主要是两种方法：</p>\n<ol>\n<li>es6: export 和 import</li>\n<li>commonjs: module.exports（exports）和 require</li>\n</ol>\n<p>一直在稀里糊涂的用，知道一些区别，但又有很多不明白的地方，经过查阅各种资料后作一个总结。</p>\n"
     },
     {
+      "title": "js 知识点",
+      "frontmatter": {
+        "meta": [
+          {
+            "title": "js 知识点",
+            "time": "2019-8-20 8:2:41",
+            "tag": "js"
+          }
+        ]
+      },
+      "regularPath": "/blog/web/js%20%E7%9F%A5%E8%AF%86%E7%82%B9.html",
+      "relativePath": "blog/web/js 知识点.md",
+      "key": "v-01ad53cb",
+      "path": "/blog/web/js%20%E7%9F%A5%E8%AF%86%E7%82%B9.html",
+      "headers": [
+        {
+          "level": 2,
+          "title": "前言",
+          "slug": "前言"
+        },
+        {
+          "level": 2,
+          "title": "if 语句判断",
+          "slug": "if-语句判断"
+        },
+        {
+          "level": 3,
+          "title": "判断真假",
+          "slug": "判断真假"
+        },
+        {
+          "level": 3,
+          "title": "判断空对象空数组",
+          "slug": "判断空对象空数组"
+        },
+        {
+          "level": 2,
+          "title": "隐式转换",
+          "slug": "隐式转换"
+        },
+        {
+          "level": 3,
+          "title": "转换规则",
+          "slug": "转换规则"
+        },
+        {
+          "level": 3,
+          "title": "ToBoolean",
+          "slug": "toboolean"
+        },
+        {
+          "level": 3,
+          "title": "ToNumber",
+          "slug": "tonumber"
+        },
+        {
+          "level": 3,
+          "title": "ToString",
+          "slug": "tostring"
+        },
+        {
+          "level": 3,
+          "title": "ToPrimitive",
+          "slug": "toprimitive"
+        },
+        {
+          "level": 3,
+          "title": "valueOf 和 toString",
+          "slug": "valueof-和-tostring"
+        },
+        {
+          "level": 3,
+          "title": "其他隐式转换",
+          "slug": "其他隐式转换"
+        },
+        {
+          "level": 3,
+          "title": "参考文献",
+          "slug": "参考文献"
+        },
+        {
+          "level": 2,
+          "title": "parseInt、isNaN 和 Number 注意点",
+          "slug": "parseint、isnan-和-number-注意点"
+        },
+        {
+          "level": 3,
+          "title": "parseInt",
+          "slug": "parseint"
+        },
+        {
+          "level": 3,
+          "title": "Number",
+          "slug": "number"
+        },
+        {
+          "level": 3,
+          "title": "Number 和 parseInt 区别",
+          "slug": "number-和-parseint-区别"
+        },
+        {
+          "level": 3,
+          "title": "isNaN",
+          "slug": "isnan"
+        }
+      ],
+      "excerpt": "<h1 id=\"js-知识点\"><a class=\"header-anchor\" href=\"#js-知识点\">#</a> js 知识点</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>实时记录在使用 <code>js</code> 过程中遇到的问题和学习到的新知识点。</p>\n"
+    },
+    {
       "title": "vue 中使用 EChart",
       "frontmatter": {
         "meta": [
@@ -665,108 +779,78 @@ export const siteData = {
       "excerpt": "<h1 id=\"vue-中使用-echart\"><a class=\"header-anchor\" href=\"#vue-中使用-echart\">#</a> vue 中使用 EChart</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>在 vue 中使用 <code>echarts</code>，遇到了许许多多的问题，这里总结了一下如何配置 <code>vue-echarts</code> 组件，以及一些使用 <code>echarts</code> 过程遇到的问题和解决方案。</p>\n"
     },
     {
-      "title": "js 知识点",
+      "title": "vue 组件通信总结",
       "frontmatter": {
         "meta": [
           {
-            "title": "js 知识点",
-            "time": "2019-8-20 8:2:41",
-            "tag": "js"
+            "title": "vue组件通信总结",
+            "time": "2019-07-16T09:38:32.000Z",
+            "tag": "vue"
           }
         ]
       },
-      "regularPath": "/blog/web/js%20%E7%9F%A5%E8%AF%86%E7%82%B9.html",
-      "relativePath": "blog/web/js 知识点.md",
-      "key": "v-01ad53cb",
-      "path": "/blog/web/js%20%E7%9F%A5%E8%AF%86%E7%82%B9.html",
+      "regularPath": "/blog/web/vue%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93.html",
+      "relativePath": "blog/web/vue组件通信总结.md",
+      "key": "v-a706545e",
+      "path": "/blog/web/vue%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93.html",
       "headers": [
         {
           "level": 2,
-          "title": "前言",
-          "slug": "前言"
+          "title": "路由传参",
+          "slug": "路由传参"
+        },
+        {
+          "level": 3,
+          "title": "通过 params",
+          "slug": "通过-params"
+        },
+        {
+          "level": 3,
+          "title": "通过 query",
+          "slug": "通过-query"
+        },
+        {
+          "level": 3,
+          "title": "小结",
+          "slug": "小结"
         },
         {
           "level": 2,
-          "title": "if 语句判断",
-          "slug": "if-语句判断"
+          "title": "组件通信",
+          "slug": "组件通信"
         },
         {
           "level": 3,
-          "title": "判断真假",
-          "slug": "判断真假"
+          "title": "子组件访问父组件",
+          "slug": "子组件访问父组件"
         },
         {
           "level": 3,
-          "title": "判断空对象空数组",
-          "slug": "判断空对象空数组"
+          "title": "父组件访问子组件",
+          "slug": "父组件访问子组件"
+        },
+        {
+          "level": 3,
+          "title": "任意组件通信",
+          "slug": "任意组件通信"
+        },
+        {
+          "level": 3,
+          "title": "小结",
+          "slug": "小结-2"
         },
         {
           "level": 2,
-          "title": "隐式转换",
-          "slug": "隐式转换"
-        },
-        {
-          "level": 3,
-          "title": "转换规则",
-          "slug": "转换规则"
-        },
-        {
-          "level": 3,
-          "title": "ToBoolean",
-          "slug": "toboolean"
-        },
-        {
-          "level": 3,
-          "title": "ToNumber",
-          "slug": "tonumber"
-        },
-        {
-          "level": 3,
-          "title": "ToString",
-          "slug": "tostring"
-        },
-        {
-          "level": 3,
-          "title": "ToPrimitive",
-          "slug": "toprimitive"
-        },
-        {
-          "level": 3,
-          "title": "valueOf 和 toString",
-          "slug": "valueof-和-tostring"
-        },
-        {
-          "level": 3,
-          "title": "其他隐式转换",
-          "slug": "其他隐式转换"
+          "title": "localStorage 和 SessionStorage",
+          "slug": "localstorage-和-sessionstorage"
         },
         {
           "level": 2,
-          "title": "parseInt、isNaN 和 Number 注意点",
-          "slug": "parseint、isnan-和-number-注意点"
-        },
-        {
-          "level": 3,
-          "title": "parseInt",
-          "slug": "parseint"
-        },
-        {
-          "level": 3,
-          "title": "Number",
-          "slug": "number"
-        },
-        {
-          "level": 3,
-          "title": "Number 和 parseInt 区别",
-          "slug": "number-和-parseint-区别"
-        },
-        {
-          "level": 3,
-          "title": "isNaN",
-          "slug": "isnan"
+          "title": "总结",
+          "slug": "总结"
         }
       ],
-      "excerpt": "<h1 id=\"js-知识点\"><a class=\"header-anchor\" href=\"#js-知识点\">#</a> js 知识点</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>实时记录在使用 <code>js</code> 过程中遇到的问题和学习到的新知识点。</p>\n"
+      "excerpt": "<h1 id=\"vue-组件通信总结\"><a class=\"header-anchor\" href=\"#vue-组件通信总结\">#</a> vue 组件通信总结</h1>\n<h2 id=\"路由传参\"><a class=\"header-anchor\" href=\"#路由传参\">#</a> 路由传参</h2>\n<h3 id=\"通过-params\"><a class=\"header-anchor\" href=\"#通过-params\">#</a> 通过 params</h3>\n<h4 id=\"_1-动态路由\"><a class=\"header-anchor\" href=\"#_1-动态路由\">#</a> 1. 动态路由</h4>\n<p>定义一个动态路由，传递参数 <code>id</code></p>\n<!--beforebegin--><div class=\"language-javascript line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-javascript\"><code><span class=\"token keyword\">export</span> <span class=\"token keyword\">default</span> <span class=\"token keyword\">new</span> <span class=\"token class-name\">Router</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">{</span>\n  routes<span class=\"token operator\">:</span> <span class=\"token punctuation\">[</span>\n    <span class=\"token punctuation\">{</span>\n      path<span class=\"token operator\">:</span> <span class=\"token string\">\"/componentB/:id\"</span><span class=\"token punctuation\">,</span>\n      name<span class=\"token operator\">:</span> <span class=\"token string\">\"componentB\"</span><span class=\"token punctuation\">,</span>\n      component<span class=\"token operator\">:</span> componentB\n    <span class=\"token punctuation\">}</span>\n  <span class=\"token punctuation\">]</span>\n<span class=\"token punctuation\">}</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br><span class=\"line-number\">2</span><br><span class=\"line-number\">3</span><br><span class=\"line-number\">4</span><br><span class=\"line-number\">5</span><br><span class=\"line-number\">6</span><br><span class=\"line-number\">7</span><br><span class=\"line-number\">8</span><br><span class=\"line-number\">9</span><br></div><!--beforeend--></div><!--afterend-->"
     },
     {
       "title": "vue 路由动画和缓存",
@@ -1029,80 +1113,6 @@ export const siteData = {
         }
       ],
       "excerpt": "<h1 id=\"元素大小、位置、滚动相关知识点\"><a class=\"header-anchor\" href=\"#元素大小、位置、滚动相关知识点\">#</a> 元素大小、位置、滚动相关知识点</h1>\n<h2 id=\"元素大小\"><a class=\"header-anchor\" href=\"#元素大小\">#</a> 元素大小</h2>\n<h3 id=\"style-width-和-style-height\"><a class=\"header-anchor\" href=\"#style-width-和-style-height\">#</a> style.width 和 style.height</h3>\n<ol>\n<li>返回元素设置的宽、高</li>\n<li>需要是在内嵌的 style 中设置 width 和 height 的值</li>\n<li>是一个带<code>px</code>字符串</li>\n</ol>\n"
-    },
-    {
-      "title": "vue 组件通信总结",
-      "frontmatter": {
-        "meta": [
-          {
-            "title": "vue组件通信总结",
-            "time": "2019-07-16T09:38:32.000Z",
-            "tag": "vue"
-          }
-        ]
-      },
-      "regularPath": "/blog/web/vue%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93.html",
-      "relativePath": "blog/web/vue组件通信总结.md",
-      "key": "v-a706545e",
-      "path": "/blog/web/vue%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E6%80%BB%E7%BB%93.html",
-      "headers": [
-        {
-          "level": 2,
-          "title": "路由传参",
-          "slug": "路由传参"
-        },
-        {
-          "level": 3,
-          "title": "通过 params",
-          "slug": "通过-params"
-        },
-        {
-          "level": 3,
-          "title": "通过 query",
-          "slug": "通过-query"
-        },
-        {
-          "level": 3,
-          "title": "小结",
-          "slug": "小结"
-        },
-        {
-          "level": 2,
-          "title": "组件通信",
-          "slug": "组件通信"
-        },
-        {
-          "level": 3,
-          "title": "子组件访问父组件",
-          "slug": "子组件访问父组件"
-        },
-        {
-          "level": 3,
-          "title": "父组件访问子组件",
-          "slug": "父组件访问子组件"
-        },
-        {
-          "level": 3,
-          "title": "任意组件通信",
-          "slug": "任意组件通信"
-        },
-        {
-          "level": 3,
-          "title": "小结",
-          "slug": "小结-2"
-        },
-        {
-          "level": 2,
-          "title": "localStorage 和 SessionStorage",
-          "slug": "localstorage-和-sessionstorage"
-        },
-        {
-          "level": 2,
-          "title": "总结",
-          "slug": "总结"
-        }
-      ],
-      "excerpt": "<h1 id=\"vue-组件通信总结\"><a class=\"header-anchor\" href=\"#vue-组件通信总结\">#</a> vue 组件通信总结</h1>\n<h2 id=\"路由传参\"><a class=\"header-anchor\" href=\"#路由传参\">#</a> 路由传参</h2>\n<h3 id=\"通过-params\"><a class=\"header-anchor\" href=\"#通过-params\">#</a> 通过 params</h3>\n<h4 id=\"_1-动态路由\"><a class=\"header-anchor\" href=\"#_1-动态路由\">#</a> 1. 动态路由</h4>\n<p>定义一个动态路由，传递参数 <code>id</code></p>\n<!--beforebegin--><div class=\"language-javascript line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-javascript\"><code><span class=\"token keyword\">export</span> <span class=\"token keyword\">default</span> <span class=\"token keyword\">new</span> <span class=\"token class-name\">Router</span><span class=\"token punctuation\">(</span><span class=\"token punctuation\">{</span>\n  routes<span class=\"token operator\">:</span> <span class=\"token punctuation\">[</span>\n    <span class=\"token punctuation\">{</span>\n      path<span class=\"token operator\">:</span> <span class=\"token string\">\"/componentB/:id\"</span><span class=\"token punctuation\">,</span>\n      name<span class=\"token operator\">:</span> <span class=\"token string\">\"componentB\"</span><span class=\"token punctuation\">,</span>\n      component<span class=\"token operator\">:</span> componentB\n    <span class=\"token punctuation\">}</span>\n  <span class=\"token punctuation\">]</span>\n<span class=\"token punctuation\">}</span><span class=\"token punctuation\">)</span><span class=\"token punctuation\">;</span>\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br><span class=\"line-number\">2</span><br><span class=\"line-number\">3</span><br><span class=\"line-number\">4</span><br><span class=\"line-number\">5</span><br><span class=\"line-number\">6</span><br><span class=\"line-number\">7</span><br><span class=\"line-number\">8</span><br><span class=\"line-number\">9</span><br></div><!--beforeend--></div><!--afterend-->"
     },
     {
       "title": "全屏和横竖屏",
@@ -2273,98 +2283,6 @@ export const siteData = {
       "excerpt": "<h1 id=\"透明性组件\"><a class=\"header-anchor\" href=\"#透明性组件\">#</a> 透明性组件</h1>\n<h2 id=\"需要解决的问题\"><a class=\"header-anchor\" href=\"#需要解决的问题\">#</a> 需要解决的问题</h2>\n<p>对于一些组件，比如输入框，我们会对它进行封装，例如：</p>\n<!--beforebegin--><div class=\"language-html line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-html\"><code><span class=\"token comment\">&lt;!-- customInput组件 --></span>\n<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>template</span><span class=\"token punctuation\">></span></span>\n  <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>div</span><span class=\"token punctuation\">></span></span>\n    <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>icon</span> <span class=\"token punctuation\">/></span></span>\n    <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>input</span> <span class=\"token punctuation\">/></span></span>\n  <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;/</span>div</span><span class=\"token punctuation\">></span></span>\n<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;/</span>template</span><span class=\"token punctuation\">></span></span>\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br><span class=\"line-number\">2</span><br><span class=\"line-number\">3</span><br><span class=\"line-number\">4</span><br><span class=\"line-number\">5</span><br><span class=\"line-number\">6</span><br><span class=\"line-number\">7</span><br></div><!--beforeend--></div><!--afterend--><p>当我使用这个组件时，可能发生如下的情况：</p>\n<!--beforebegin--><div class=\"language-html line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-html\"><code><span class=\"token comment\">&lt;!-- 父组件 --></span>\n<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>customInput</span> <span class=\"token attr-name\">type</span><span class=\"token attr-value\"><span class=\"token punctuation\">=</span><span class=\"token punctuation\">\"</span>number<span class=\"token punctuation\">\"</span></span> <span class=\"token attr-name\">required</span> <span class=\"token attr-name\">id</span><span class=\"token attr-value\"><span class=\"token punctuation\">=</span><span class=\"token punctuation\">\"</span>input<span class=\"token punctuation\">\"</span></span><span class=\"token punctuation\">></span></span><span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;/</span>customInput</span><span class=\"token punctuation\">></span></span>\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br><span class=\"line-number\">2</span><br></div><!--beforeend--></div><!--afterend--><p>这时，我们需要在 customInput 组件中对每一个属性进行手动绑定。</p>\n"
     },
     {
-      "title": "说明",
-      "frontmatter": {},
-      "regularPath": "/doc/",
-      "relativePath": "doc/index.md",
-      "key": "v-0123048a",
-      "path": "/doc/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/0/",
-      "relativePath": "tag/0/README.md",
-      "key": "v-1ed23a52",
-      "path": "/tag/0/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/2/",
-      "relativePath": "tag/2/README.md",
-      "key": "v-b0140264",
-      "path": "/tag/2/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/1/",
-      "relativePath": "tag/1/README.md",
-      "key": "v-3937c6e0",
-      "path": "/tag/1/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/3/",
-      "relativePath": "tag/3/README.md",
-      "key": "v-6c87e10c",
-      "path": "/tag/3/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/4/",
-      "relativePath": "tag/4/README.md",
-      "key": "v-3119c34a",
-      "path": "/tag/4/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/5/",
-      "relativePath": "tag/5/README.md",
-      "key": "v-14a8b4f0",
-      "path": "/tag/5/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/6/",
-      "relativePath": "tag/6/README.md",
-      "key": "v-8b84f074",
-      "path": "/tag/6/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/7/",
-      "relativePath": "tag/7/README.md",
-      "key": "v-7ecf6a04",
-      "path": "/tag/7/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/9/",
-      "relativePath": "tag/9/README.md",
-      "key": "v-07f32e80",
-      "path": "/tag/9/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tag/",
-      "relativePath": "tag/README.md",
-      "key": "v-8c9d11d8",
-      "path": "/tag/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/tool/",
-      "relativePath": "tool/README.md",
-      "key": "v-223ae75a",
-      "path": "/tool/"
-    },
-    {
-      "frontmatter": {},
-      "regularPath": "/web/",
-      "relativePath": "web/README.md",
-      "key": "v-3b92a8c0",
-      "path": "/web/"
-    },
-    {
       "title": "canvas 保存下载图片",
       "frontmatter": {
         "meta": [
@@ -2444,11 +2362,150 @@ export const siteData = {
       "excerpt": "<h1 id=\"canvas-保存下载图片\"><a class=\"header-anchor\" href=\"#canvas-保存下载图片\">#</a> canvas 保存下载图片</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>在项目中遇到了截取屏幕区域，并转化为图片下载的问题，这里做一个小小的总结，主要包括以下几个内容：</p>\n<ol>\n<li><code>dom</code> 节点通过 <code>html2canvas</code> 转化为 <code>canvas</code></li>\n<li><code>canvas</code> 转化图片</li>\n<li>图片通过 <code>a</code> 标签下载</li>\n</ol>\n"
     },
     {
+      "title": "工具函数",
+      "frontmatter": {},
+      "regularPath": "/doc/",
+      "relativePath": "doc/index.md",
+      "key": "v-0123048a",
+      "path": "/doc/",
+      "headers": [
+        {
+          "level": 2,
+          "title": "数组",
+          "slug": "数组"
+        },
+        {
+          "level": 3,
+          "title": "数组扁平化",
+          "slug": "数组扁平化"
+        },
+        {
+          "level": 2,
+          "title": "对象",
+          "slug": "对象"
+        },
+        {
+          "level": 3,
+          "title": "展开运算符获得有条件的对象属性",
+          "slug": "展开运算符获得有条件的对象属性"
+        },
+        {
+          "level": 3,
+          "title": "动态属性名",
+          "slug": "动态属性名"
+        },
+        {
+          "level": 2,
+          "title": "函数",
+          "slug": "函数"
+        },
+        {
+          "level": 3,
+          "title": "柯里化",
+          "slug": "柯里化"
+        },
+        {
+          "level": 3,
+          "title": "自定义事件分发",
+          "slug": "自定义事件分发"
+        },
+        {
+          "level": 3,
+          "title": "时间相关",
+          "slug": "时间相关"
+        }
+      ]
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/0/",
+      "relativePath": "tag/0/README.md",
+      "key": "v-1ed23a52",
+      "path": "/tag/0/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/1/",
+      "relativePath": "tag/1/README.md",
+      "key": "v-3937c6e0",
+      "path": "/tag/1/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/2/",
+      "relativePath": "tag/2/README.md",
+      "key": "v-b0140264",
+      "path": "/tag/2/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/3/",
+      "relativePath": "tag/3/README.md",
+      "key": "v-6c87e10c",
+      "path": "/tag/3/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/4/",
+      "relativePath": "tag/4/README.md",
+      "key": "v-3119c34a",
+      "path": "/tag/4/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/5/",
+      "relativePath": "tag/5/README.md",
+      "key": "v-14a8b4f0",
+      "path": "/tag/5/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/6/",
+      "relativePath": "tag/6/README.md",
+      "key": "v-8b84f074",
+      "path": "/tag/6/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/7/",
+      "relativePath": "tag/7/README.md",
+      "key": "v-7ecf6a04",
+      "path": "/tag/7/"
+    },
+    {
       "frontmatter": {},
       "regularPath": "/tag/8/",
       "relativePath": "tag/8/README.md",
       "key": "v-43614c42",
       "path": "/tag/8/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/9/",
+      "relativePath": "tag/9/README.md",
+      "key": "v-07f32e80",
+      "path": "/tag/9/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tag/",
+      "relativePath": "tag/README.md",
+      "key": "v-8c9d11d8",
+      "path": "/tag/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/tool/",
+      "relativePath": "tool/README.md",
+      "key": "v-223ae75a",
+      "path": "/tool/"
+    },
+    {
+      "frontmatter": {},
+      "regularPath": "/web/",
+      "relativePath": "web/README.md",
+      "key": "v-3b92a8c0",
+      "path": "/web/"
     }
   ],
   "themeConfig": {
@@ -2476,7 +2533,7 @@ export const siteData = {
     "fileDocSidebar": [
       [
         "/doc/",
-        "说明"
+        "工具函数"
       ],
       [
         "/doc/canvas保存下载图片",

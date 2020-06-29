@@ -25,7 +25,7 @@ module.exports = {
     sidebarDepth: 3,
     // 文档的侧边栏配置，和sidebar一致
     fileDocSidebar: [
-      ["/doc/", "说明"],
+      ["/doc/", "工具函数"],
       ["/doc/canvas保存下载图片", "canvas保存下载图片"]
     ]
   },
@@ -38,7 +38,7 @@ module.exports = {
     {
       sidebarLinkSelector: ".sidebar-link",
       headerAnchorSelector: ".header-anchor"
-    },
-    "vuepress-plugin-smooth-scroll"
+    }
+    // "vuepress-plugin-smooth-scroll"
   ]
 }
