@@ -5,12 +5,13 @@ module.exports = {
     'node': true,
     'es6': true
   },
+  'parser': 'babel-eslint',
   'parserOptions': {
     'ecmaVersion': 2017,
     'sourceType': 'module'
   },
-  // 'extends': ['plugin:vue/recommended', 'eslint:recommended'],
-  // 'plugins': ['vue', 'html'],
+  'extends': ['plugin:vue/recommended', 'eslint:recommended'],
+  'plugins': ['vue', 'html'],
   'settings': {
     'html/indent': '+2',
     'html/report-bad-indent': 'error'
@@ -170,20 +171,20 @@ module.exports = {
     'padding-line-between-statements': [
       'error',
       {
- 'blankLine': 'always',
-'next': '*',
-'prev': ['const', 'let', 'var'] 
-},
+        'blankLine': 'always',
+        'next': '*',
+        'prev': ['const', 'let', 'var']
+      },
       {
- 'blankLine': 'any',
-'next': ['const', 'let', 'var'],
-'prev': ['const', 'let', 'var'] 
-},
+        'blankLine': 'any',
+        'next': ['const', 'let', 'var'],
+        'prev': ['const', 'let', 'var']
+      },
       {
- 'blankLine': 'always',
-'next': 'export',
-'prev': '*' 
-}
+        'blankLine': 'always',
+        'next': 'export',
+        'prev': '*'
+      }
     ]
   },
 

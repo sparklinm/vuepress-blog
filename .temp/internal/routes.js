@@ -21,6 +21,14 @@ export const routes = [
     redirect: "/"
   },
   {
+    name: "v-589b97b2",
+    path: "/blog/tool/Eslint.html",
+    component: GlobalLayout,
+    beforeEnter: (to, from, next) => {
+      ensureAsyncComponentsLoaded("Layout", "v-589b97b2").then(next)
+    },
+  },
+  {
     name: "v-620c8935",
     path: "/blog/tool/VScode.html",
     component: GlobalLayout,
@@ -41,6 +49,26 @@ export const routes = [
     redirect: "/blog/tool/node%E5%92%8Cnpm.html"
   },
   {
+    name: "v-b0c5ba5e",
+    path: "/blog/tool/jsdoc.html",
+    component: GlobalLayout,
+    beforeEnter: (to, from, next) => {
+      ensureAsyncComponentsLoaded("Layout", "v-b0c5ba5e").then(next)
+    },
+  },
+  {
+    name: "v-3dd3bc42",
+    path: "/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html",
+    component: GlobalLayout,
+    beforeEnter: (to, from, next) => {
+      ensureAsyncComponentsLoaded("Layout", "v-3dd3bc42").then(next)
+    },
+  },
+  {
+    path: "/blog/tool/rollup打包发布到npm.html",
+    redirect: "/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html"
+  },
+  {
     name: "v-0d827ab0",
     path: "/blog/tool/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7.html",
     component: GlobalLayout,
@@ -53,18 +81,6 @@ export const routes = [
     redirect: "/blog/tool/%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7.html"
   },
   {
-    name: "v-67b6f28f",
-    path: "/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html",
-    component: GlobalLayout,
-    beforeEnter: (to, from, next) => {
-      ensureAsyncComponentsLoaded("Layout", "v-67b6f28f").then(next)
-    },
-  },
-  {
-    path: "/blog/web/PC、移动端拖拽.html",
-    redirect: "/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html"
-  },
-  {
     name: "v-407b253a",
     path: "/blog/web/VuePress%20%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%A1%AB%E5%9D%91.html",
     component: GlobalLayout,
@@ -75,6 +91,18 @@ export const routes = [
   {
     path: "/blog/web/VuePress 个人博客填坑.html",
     redirect: "/blog/web/VuePress%20%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E5%A1%AB%E5%9D%91.html"
+  },
+  {
+    name: "v-67b6f28f",
+    path: "/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html",
+    component: GlobalLayout,
+    beforeEnter: (to, from, next) => {
+      ensureAsyncComponentsLoaded("Layout", "v-67b6f28f").then(next)
+    },
+  },
+  {
+    path: "/blog/web/PC、移动端拖拽.html",
+    redirect: "/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html"
   },
   {
     name: "v-63a7a701",
@@ -377,28 +405,24 @@ export const routes = [
     redirect: "/blog/web/%E9%80%8F%E6%98%8E%E6%80%A7%E7%BB%84%E4%BB%B6.html"
   },
   {
-    name: "v-7e5ff7fd",
-    path: "/doc/canvas%E4%BF%9D%E5%AD%98%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87.html",
+    name: "v-068df21a",
+    path: "/docs/",
     component: GlobalLayout,
     beforeEnter: (to, from, next) => {
-      ensureAsyncComponentsLoaded("Layout", "v-7e5ff7fd").then(next)
+      ensureAsyncComponentsLoaded("Layout", "v-068df21a").then(next)
     },
   },
   {
-    path: "/doc/canvas保存下载图片.html",
-    redirect: "/doc/canvas%E4%BF%9D%E5%AD%98%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87.html"
+    path: "/docs/index.html",
+    redirect: "/docs/"
   },
   {
-    name: "v-0123048a",
-    path: "/doc/",
+    name: "v-11688b41",
+    path: "/docs/marquee.html",
     component: GlobalLayout,
     beforeEnter: (to, from, next) => {
-      ensureAsyncComponentsLoaded("Layout", "v-0123048a").then(next)
+      ensureAsyncComponentsLoaded("Layout", "v-11688b41").then(next)
     },
-  },
-  {
-    path: "/doc/index.html",
-    redirect: "/doc/"
   },
   {
     name: "v-1ed23a52",

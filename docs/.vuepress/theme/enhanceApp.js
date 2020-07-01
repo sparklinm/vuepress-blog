@@ -1,4 +1,7 @@
 import routes from "./router"
+let util = require("@sparklinm/util/bundle")
+console.log(util);
+
 
 export default ({
   Vue, // VuePress 正在使用的 Vue 构造函数

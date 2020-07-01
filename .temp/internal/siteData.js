@@ -15,6 +15,22 @@ export const siteData = {
       "path": "/"
     },
     {
+      "title": "Eslint 使用和问题",
+      "frontmatter": {
+        "meta": [
+          {
+            "title": "Eslint使用和问题",
+            "time": "2020-07-02T10:54:04.000Z",
+            "tag": "eslint,工具使用"
+          }
+        ]
+      },
+      "regularPath": "/blog/tool/Eslint.html",
+      "relativePath": "blog/tool/Eslint.md",
+      "key": "v-589b97b2",
+      "path": "/blog/tool/Eslint.html"
+    },
+    {
       "title": "VScode",
       "frontmatter": {
         "meta": [
@@ -44,6 +60,11 @@ export const siteData = {
           "level": 2,
           "title": "eslint 保存自动修复",
           "slug": "eslint-保存自动修复"
+        },
+        {
+          "level": 2,
+          "title": "自定义 markdown 代码片段",
+          "slug": "自定义-markdown-代码片段"
         },
         {
           "level": 2,
@@ -128,6 +149,124 @@ export const siteData = {
       "excerpt": "<h1 id=\"node-与-npm\"><a class=\"header-anchor\" href=\"#node-与-npm\">#</a> node 与 npm</h1>\n<h2 id=\"一-下载\"><a class=\"header-anchor\" href=\"#一-下载\">#</a> 一 下载</h2>\n<p>打开<a href=\"https://nodejs.org/en/download/\" target=\"_blank\" rel=\"noopener noreferrer\">node 官网下载链接<OutboundLink/></a>，下载自己需要的 node 安装包，由于我的电脑是 Windows，所以我下载的是 windows 下的安装包\n<img src=\"https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560931065098.png\" alt=\"\"></p>\n"
     },
     {
+      "title": "jsdoc",
+      "frontmatter": {
+        "meta": [
+          {
+            "title": "jsdoc",
+            "time": "2020-06-28T20:33:46.000Z",
+            "tag": "jsdoc,工具使用"
+          }
+        ]
+      },
+      "regularPath": "/blog/tool/jsdoc.html",
+      "relativePath": "blog/tool/jsdoc.md",
+      "key": "v-b0c5ba5e",
+      "path": "/blog/tool/jsdoc.html",
+      "headers": [
+        {
+          "level": 2,
+          "title": "安装 jsdoc",
+          "slug": "安装-jsdoc"
+        },
+        {
+          "level": 2,
+          "title": "配置文件",
+          "slug": "配置文件"
+        },
+        {
+          "level": 2,
+          "title": "docstrap",
+          "slug": "docstrap"
+        },
+        {
+          "level": 2,
+          "title": "部署 Github Page",
+          "slug": "部署-github-page"
+        },
+        {
+          "level": 2,
+          "title": "参考文献",
+          "slug": "参考文献"
+        }
+      ],
+      "excerpt": "<h1 id=\"jsdoc\"><a class=\"header-anchor\" href=\"#jsdoc\">#</a> jsdoc</h1>\n<h2 id=\"安装-jsdoc\"><a class=\"header-anchor\" href=\"#安装-jsdoc\">#</a> 安装 jsdoc</h2>\n<h2 id=\"配置文件\"><a class=\"header-anchor\" href=\"#配置文件\">#</a> 配置文件</h2>\n<p>在根目录（或者其他地方）新建一个 <code>jsdoc-conf.js</code> 文件。</p>\n<p>配置文件信息见文档：</p>\n<p><a href=\"https://jsdoc.zcopy.site/about-configuring-jsdoc.html\" target=\"_blank\" rel=\"noopener noreferrer\">jsdoc 配置文件<OutboundLink/></a></p>\n<p>使用配置文件生成文档：</p>\n<!--beforebegin--><div class=\"language-bash line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-bash\"><code>// 当前目录\njsdoc util -r -c ./jsdoc-conf.js\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br><span class=\"line-number\">2</span><br></div><!--beforeend--></div><!--afterend-->"
+    },
+    {
+      "title": "rollup 打包发布到 npm",
+      "frontmatter": {
+        "meta": [
+          {
+            "title": "rollup打包发布到npm",
+            "time": "2020-07-03T10:17:47.000Z",
+            "tag": "rollup"
+          }
+        ]
+      },
+      "regularPath": "/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html",
+      "relativePath": "blog/tool/rollup打包发布到npm.md",
+      "key": "v-3dd3bc42",
+      "path": "/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html",
+      "headers": [
+        {
+          "level": 2,
+          "title": "前言",
+          "slug": "前言"
+        },
+        {
+          "level": 2,
+          "title": "插件",
+          "slug": "插件"
+        },
+        {
+          "level": 2,
+          "title": "开发环境和生产环境",
+          "slug": "开发环境和生产环境"
+        },
+        {
+          "level": 2,
+          "title": "排除不打包的第三方库",
+          "slug": "排除不打包的第三方库"
+        },
+        {
+          "level": 2,
+          "title": "加载 cdn 的库",
+          "slug": "加载-cdn-的库"
+        },
+        {
+          "level": 2,
+          "title": "发布到 npm",
+          "slug": "发布到-npm"
+        },
+        {
+          "level": 3,
+          "title": "基本信息",
+          "slug": "基本信息"
+        },
+        {
+          "level": 3,
+          "title": "忽略的文件",
+          "slug": "忽略的文件"
+        },
+        {
+          "level": 3,
+          "title": "发布",
+          "slug": "发布"
+        },
+        {
+          "level": 3,
+          "title": "发布中的问题",
+          "slug": "发布中的问题"
+        },
+        {
+          "level": 2,
+          "title": "参考文献",
+          "slug": "参考文献"
+        }
+      ],
+      "excerpt": "<h1 id=\"rollup-打包发布到-npm\"><a class=\"header-anchor\" href=\"#rollup-打包发布到-npm\">#</a> rollup 打包发布到 npm</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>安装，配置文件就不多说了，具体参考官网即可：</p>\n<p><a href=\"https://www.rollupjs.com/guide/introduction/\" target=\"_blank\" rel=\"noopener noreferrer\">Rollupjs 文档<OutboundLink/></a></p>\n"
+    },
+    {
       "title": "常用工具",
       "frontmatter": {
         "meta": [
@@ -155,70 +294,6 @@ export const siteData = {
         }
       ],
       "excerpt": "<h1 id=\"常用工具\"><a class=\"header-anchor\" href=\"#常用工具\">#</a> 常用工具</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>对一些常用工具和便利的工具网站的记录。</p>\n"
-    },
-    {
-      "title": "PC、移动端拖拽",
-      "frontmatter": {
-        "meta": [
-          {
-            "title": "PC、移动端拖拽",
-            "time": "2020-04-23T19:19:28.000Z",
-            "tag": "html"
-          }
-        ]
-      },
-      "regularPath": "/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html",
-      "relativePath": "blog/web/PC、移动端拖拽.md",
-      "key": "v-67b6f28f",
-      "path": "/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html",
-      "headers": [
-        {
-          "level": 2,
-          "title": "H5 拖拽",
-          "slug": "h5-拖拽"
-        },
-        {
-          "level": 3,
-          "title": "设置元素可拖动",
-          "slug": "设置元素可拖动"
-        },
-        {
-          "level": 3,
-          "title": "拖拽事件",
-          "slug": "拖拽事件"
-        },
-        {
-          "level": 3,
-          "title": "放置事件",
-          "slug": "放置事件"
-        },
-        {
-          "level": 3,
-          "title": "拖拽过程中鼠标位置",
-          "slug": "拖拽过程中鼠标位置"
-        },
-        {
-          "level": 2,
-          "title": "移动端拖拽",
-          "slug": "移动端拖拽"
-        },
-        {
-          "level": 3,
-          "title": "相关事件",
-          "slug": "相关事件"
-        },
-        {
-          "level": 3,
-          "title": "触摸点",
-          "slug": "触摸点"
-        },
-        {
-          "level": 3,
-          "title": "触摸点位置",
-          "slug": "触摸点位置"
-        }
-      ],
-      "excerpt": "<h1 id=\"pc、移动端拖拽\"><a class=\"header-anchor\" href=\"#pc、移动端拖拽\">#</a> PC、移动端拖拽</h1>\n<h2 id=\"h5-拖拽\"><a class=\"header-anchor\" href=\"#h5-拖拽\">#</a> H5 拖拽</h2>\n<h3 id=\"设置元素可拖动\"><a class=\"header-anchor\" href=\"#设置元素可拖动\">#</a> 设置元素可拖动</h3>\n<p>设置拖拽属性<code>draggable=&quot;true&quot;</code>。</p>\n<!--beforebegin--><div class=\"language-html line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-html\"><code><span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>img</span> <span class=\"token attr-name\">draggable</span><span class=\"token attr-value\"><span class=\"token punctuation\">=</span><span class=\"token punctuation\">\"</span>true<span class=\"token punctuation\">\"</span></span> <span class=\"token punctuation\">/></span></span>\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br></div><!--beforeend--></div><!--afterend-->"
     },
     {
       "title": "VuePress 个人博客填坑",
@@ -303,6 +378,70 @@ export const siteData = {
         }
       ],
       "excerpt": "<h1 id=\"vuepress-个人博客填坑\"><a class=\"header-anchor\" href=\"#vuepress-个人博客填坑\">#</a> VuePress 个人博客填坑</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>经过几天的努力，自己的个人博客终于大致做好了，最开始也参考了很多别人的博客布局，但做到后面发现静态博客不适合做得那么花哨。</p>\n<p>也想过为每一篇博客配上一张封面图，但发现在不同屏幕下，图片的显示方式不好管理，对图片的内容和分辨率也都有一定规定，就没有去弄了。</p>\n<p>过程也遇到了许多坑，做一个总结~~~</p>\n"
+    },
+    {
+      "title": "PC、移动端拖拽",
+      "frontmatter": {
+        "meta": [
+          {
+            "title": "PC、移动端拖拽",
+            "time": "2020-04-23T19:19:28.000Z",
+            "tag": "html"
+          }
+        ]
+      },
+      "regularPath": "/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html",
+      "relativePath": "blog/web/PC、移动端拖拽.md",
+      "key": "v-67b6f28f",
+      "path": "/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html",
+      "headers": [
+        {
+          "level": 2,
+          "title": "H5 拖拽",
+          "slug": "h5-拖拽"
+        },
+        {
+          "level": 3,
+          "title": "设置元素可拖动",
+          "slug": "设置元素可拖动"
+        },
+        {
+          "level": 3,
+          "title": "拖拽事件",
+          "slug": "拖拽事件"
+        },
+        {
+          "level": 3,
+          "title": "放置事件",
+          "slug": "放置事件"
+        },
+        {
+          "level": 3,
+          "title": "拖拽过程中鼠标位置",
+          "slug": "拖拽过程中鼠标位置"
+        },
+        {
+          "level": 2,
+          "title": "移动端拖拽",
+          "slug": "移动端拖拽"
+        },
+        {
+          "level": 3,
+          "title": "相关事件",
+          "slug": "相关事件"
+        },
+        {
+          "level": 3,
+          "title": "触摸点",
+          "slug": "触摸点"
+        },
+        {
+          "level": 3,
+          "title": "触摸点位置",
+          "slug": "触摸点位置"
+        }
+      ],
+      "excerpt": "<h1 id=\"pc、移动端拖拽\"><a class=\"header-anchor\" href=\"#pc、移动端拖拽\">#</a> PC、移动端拖拽</h1>\n<h2 id=\"h5-拖拽\"><a class=\"header-anchor\" href=\"#h5-拖拽\">#</a> H5 拖拽</h2>\n<h3 id=\"设置元素可拖动\"><a class=\"header-anchor\" href=\"#设置元素可拖动\">#</a> 设置元素可拖动</h3>\n<p>设置拖拽属性<code>draggable=&quot;true&quot;</code>。</p>\n<!--beforebegin--><div class=\"language-html line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-html\"><code><span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>img</span> <span class=\"token attr-name\">draggable</span><span class=\"token attr-value\"><span class=\"token punctuation\">=</span><span class=\"token punctuation\">\"</span>true<span class=\"token punctuation\">\"</span></span> <span class=\"token punctuation\">/></span></span>\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br></div><!--beforeend--></div><!--afterend-->"
     },
     {
       "title": "babel7 简单使用总结",
@@ -2283,91 +2422,12 @@ export const siteData = {
       "excerpt": "<h1 id=\"透明性组件\"><a class=\"header-anchor\" href=\"#透明性组件\">#</a> 透明性组件</h1>\n<h2 id=\"需要解决的问题\"><a class=\"header-anchor\" href=\"#需要解决的问题\">#</a> 需要解决的问题</h2>\n<p>对于一些组件，比如输入框，我们会对它进行封装，例如：</p>\n<!--beforebegin--><div class=\"language-html line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-html\"><code><span class=\"token comment\">&lt;!-- customInput组件 --></span>\n<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>template</span><span class=\"token punctuation\">></span></span>\n  <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>div</span><span class=\"token punctuation\">></span></span>\n    <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>icon</span> <span class=\"token punctuation\">/></span></span>\n    <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>input</span> <span class=\"token punctuation\">/></span></span>\n  <span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;/</span>div</span><span class=\"token punctuation\">></span></span>\n<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;/</span>template</span><span class=\"token punctuation\">></span></span>\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br><span class=\"line-number\">2</span><br><span class=\"line-number\">3</span><br><span class=\"line-number\">4</span><br><span class=\"line-number\">5</span><br><span class=\"line-number\">6</span><br><span class=\"line-number\">7</span><br></div><!--beforeend--></div><!--afterend--><p>当我使用这个组件时，可能发生如下的情况：</p>\n<!--beforebegin--><div class=\"language-html line-numbers-mode\"><!--afterbegin--><pre v-pre class=\"language-html\"><code><span class=\"token comment\">&lt;!-- 父组件 --></span>\n<span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;</span>customInput</span> <span class=\"token attr-name\">type</span><span class=\"token attr-value\"><span class=\"token punctuation\">=</span><span class=\"token punctuation\">\"</span>number<span class=\"token punctuation\">\"</span></span> <span class=\"token attr-name\">required</span> <span class=\"token attr-name\">id</span><span class=\"token attr-value\"><span class=\"token punctuation\">=</span><span class=\"token punctuation\">\"</span>input<span class=\"token punctuation\">\"</span></span><span class=\"token punctuation\">></span></span><span class=\"token tag\"><span class=\"token tag\"><span class=\"token punctuation\">&lt;/</span>customInput</span><span class=\"token punctuation\">></span></span>\n</code></pre>\n<div class=\"line-numbers-wrapper\"><span class=\"line-number\">1</span><br><span class=\"line-number\">2</span><br></div><!--beforeend--></div><!--afterend--><p>这时，我们需要在 customInput 组件中对每一个属性进行手动绑定。</p>\n"
     },
     {
-      "title": "canvas 保存下载图片",
-      "frontmatter": {
-        "meta": [
-          {
-            "title": "canvas保存下载图片",
-            "time": "2020-03-15T09:38:32.000Z",
-            "tag": "图片下载,canvas"
-          }
-        ]
-      },
-      "regularPath": "/doc/canvas%E4%BF%9D%E5%AD%98%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87.html",
-      "relativePath": "doc/canvas保存下载图片.md",
-      "key": "v-7e5ff7fd",
-      "path": "/doc/canvas%E4%BF%9D%E5%AD%98%E4%B8%8B%E8%BD%BD%E5%9B%BE%E7%89%87.html",
-      "headers": [
-        {
-          "level": 2,
-          "title": "前言",
-          "slug": "前言"
-        },
-        {
-          "level": 2,
-          "title": "canvas 转化为图片",
-          "slug": "canvas-转化为图片"
-        },
-        {
-          "level": 2,
-          "title": "canvas 与 retina 屏",
-          "slug": "canvas-与-retina-屏"
-        },
-        {
-          "level": 2,
-          "title": "html2canvas",
-          "slug": "html2canvas"
-        },
-        {
-          "level": 2,
-          "title": "下载图片",
-          "slug": "下载图片"
-        },
-        {
-          "level": 2,
-          "title": "Blob 对象",
-          "slug": "blob-对象"
-        },
-        {
-          "level": 2,
-          "title": "data URL 和 Blob 转换",
-          "slug": "data-url-和-blob-转换"
-        },
-        {
-          "level": 2,
-          "title": "URL.createObjectURL()",
-          "slug": "url-createobjecturl"
-        },
-        {
-          "level": 2,
-          "title": "IE 10",
-          "slug": "ie-10"
-        },
-        {
-          "level": 2,
-          "title": "总结",
-          "slug": "总结"
-        },
-        {
-          "level": 2,
-          "title": "问题",
-          "slug": "问题"
-        },
-        {
-          "level": 2,
-          "title": "参考资料：",
-          "slug": "参考资料："
-        }
-      ],
-      "excerpt": "<h1 id=\"canvas-保存下载图片\"><a class=\"header-anchor\" href=\"#canvas-保存下载图片\">#</a> canvas 保存下载图片</h1>\n<h2 id=\"前言\"><a class=\"header-anchor\" href=\"#前言\">#</a> 前言</h2>\n<p>在项目中遇到了截取屏幕区域，并转化为图片下载的问题，这里做一个小小的总结，主要包括以下几个内容：</p>\n<ol>\n<li><code>dom</code> 节点通过 <code>html2canvas</code> 转化为 <code>canvas</code></li>\n<li><code>canvas</code> 转化图片</li>\n<li>图片通过 <code>a</code> 标签下载</li>\n</ol>\n"
-    },
-    {
       "title": "工具函数",
       "frontmatter": {},
-      "regularPath": "/doc/",
-      "relativePath": "doc/index.md",
-      "key": "v-0123048a",
-      "path": "/doc/",
+      "regularPath": "/docs/",
+      "relativePath": "docs/index.md",
+      "key": "v-068df21a",
+      "path": "/docs/",
       "headers": [
         {
           "level": 2,
@@ -2393,26 +2453,49 @@ export const siteData = {
           "level": 3,
           "title": "动态属性名",
           "slug": "动态属性名"
+        }
+      ]
+    },
+    {
+      "title": "marquee",
+      "frontmatter": {
+        "meta": [
+          {
+            "title": "marquee.js 文档",
+            "time": "2020-07-02T16:25:14.000Z",
+            "tag": "marquee,js"
+          }
+        ]
+      },
+      "regularPath": "/docs/marquee.html",
+      "relativePath": "docs/marquee.md",
+      "key": "v-11688b41",
+      "path": "/docs/marquee.html",
+      "headers": [
+        {
+          "level": 2,
+          "title": "使用方法",
+          "slug": "使用方法"
         },
         {
           "level": 2,
-          "title": "函数",
-          "slug": "函数"
+          "title": "配置项",
+          "slug": "配置项"
+        },
+        {
+          "level": 2,
+          "title": "实例方法",
+          "slug": "实例方法"
         },
         {
           "level": 3,
-          "title": "柯里化",
-          "slug": "柯里化"
+          "title": "destory",
+          "slug": "destory"
         },
         {
-          "level": 3,
-          "title": "自定义事件分发",
-          "slug": "自定义事件分发"
-        },
-        {
-          "level": 3,
-          "title": "时间相关",
-          "slug": "时间相关"
+          "level": 2,
+          "title": "示例",
+          "slug": "示例"
         }
       ]
     },
@@ -2524,7 +2607,7 @@ export const siteData = {
       },
       {
         "text": "微代码",
-        "link": "/doc/"
+        "link": "/docs/"
       }
     ],
     "editLinks": false,
@@ -2532,12 +2615,12 @@ export const siteData = {
     "sidebarDepth": 3,
     "fileDocSidebar": [
       [
-        "/doc/",
+        "/docs/",
         "工具函数"
       ],
       [
-        "/doc/canvas保存下载图片",
-        "canvas保存下载图片"
+        "/docs/marquee",
+        "文字走马灯"
       ]
     ]
   }

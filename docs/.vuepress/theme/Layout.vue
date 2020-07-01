@@ -103,7 +103,7 @@ export default {
     },
 
     isDoc() {
-      return this.$route.path.includes("/doc/")
+      return this.$route.path.includes("/docs/")
     },
 
     fielDocSidebar() {
