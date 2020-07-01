@@ -96,7 +96,64 @@ vscode 快捷方式图标——右键属性——目标——路径后面加上�
     ]
 ```
 
+## 自定义 markdown 代码片段
+
+设置 > 用户代码片段 > 选择相应语言，打开或新建相应 json 文件。
+
+```json
+{
+  "markdown sample": {
+    "prefix": "markdown",
+    "body": [
+      "---",
+      "meta:",
+      "\t- title: $1",
+      "\t\ttime: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
+      "\t\ttag: $3",
+      "---",
+      "",
+      "# $4"
+    ],
+    "description": "The full sample code - markdown."
+  }
+}
+```
+
+建立的模板如下:
+
+```md
+---
+meta:
+  - title:
+    time: 2020-07-02 10:54:04
+    tag:
+---
+
+#
+```
+
+**自定义代码片段语法：**
+
+`body` 中每个数组元素代表一行。
+
+行内可以使用 `空格`，`\t`，`\n`。
+
+其他关于：`制表符：$1`、`系统变量` 等的语法见：[vscode 自定义代码片段](https://blog.csdn.net/ucmir183/article/details/88413369)。
+
+上面的 `$CURRENT_YEAR` 等分别代表当前年月日时分秒。
+
+这样建立的 `markdown` 模板，输入前缀 `markdown` 发现并不能在 `.md` 文件中弹出模板。还需要在 `settings.json` 中配置：
+
+```json
+  "[markdown]":{
+    "editor.quickSuggestions": true
+  }
+```
+
+**这样的配置后，在任何地方（不仅限于 `.md` 文件中）输入 `markdown` 都会提示使用模板。**
+
 ## 参考文献
 
 1. [精选!15 个 web 前端必备的 VSCode 插件](http://baijiahao.baidu.com/s?id=1585469813997965563&wfr=spider&for=pc)
 2. [前端开发 VScode 常用插件](https://segmentfault.com/a/1190000012558414)
+3. [vscode 自定义代码片段](https://blog.csdn.net/ucmir183/article/details/88413369)

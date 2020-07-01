@@ -5,17 +5,25 @@
 </template>
 
 <script>
-import Sidebar from "./Sidebar";
+import Sidebar from "./Sidebar"
+// import { marquee } from "@sparklinm/util"
+// console.log(marquee);
+
+
 export default {
   components: {
-    Sidebar
+    Sidebar,
   },
   props: ["items"],
   data() {
-    return {};
+    return {}
   },
-  methods: {}
-};
+  created() {
+    // let md = require("../../docs/marquee/example.md")
+    // console.log(md.vue.component);
+  },
+  methods: {},
+}
 </script>
 
 <style lang="stylus">
@@ -25,7 +33,7 @@ export default {
 }
 
 .doc-content:not(.custom) {
-  max-width: 740px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2rem 2.5rem;
 

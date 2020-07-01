@@ -1,3 +1,6 @@
+const Mode = require("frontmatter-markdown-loader/mode")
+
+
 module.exports = {
   title: "My Blog",
   description: "Just playing around",
@@ -5,40 +8,59 @@ module.exports = {
     nav: [
       {
         text: "首页",
-        link: "/"
+        link: "/",
       },
       {
         text: "Web开发",
-        link: "/web/"
+        link: "/web/",
       },
       {
         text: "工具使用",
-        link: "/tool/"
+        link: "/tool/",
       },
       {
         text: "微代码",
-        link: "/doc/"
-      }
+        link: "/docs/",
+      },
     ],
     editLinks: false,
     sidebar: "auto",
     sidebarDepth: 3,
     // 文档的侧边栏配置，和sidebar一致
     fileDocSidebar: [
-      ["/doc/", "工具函数"],
-      ["/doc/canvas保存下载图片", "canvas保存下载图片"]
-    ]
+      ["/docs/", "工具函数"],
+      ["/docs/marquee", "文字走马灯"],
+    ],
   },
   markdown: {
-    lineNumbers: true
+    lineNumbers: true,
+    extractHeaders: ["h2", "h3"],
   },
   base: "/vuepress-blog/",
-  plugins: [
-    "@vuepress/active-header-links",
-    {
+  plugins: {
+    "@vuepress/active-header-links": {
       sidebarLinkSelector: ".sidebar-link",
-      headerAnchorSelector: ".header-anchor"
-    }
+      headerAnchorSelector: ".header-anchor",
+    },
+    "@vuepress/medium-zoom": {
+      selector: ".content__default :not(a) > img",
+    },
+    "demo-code": {},
     // "vuepress-plugin-smooth-scroll"
-  ]
+  },
+  // chainWebpack: config => {
+  //   config.module
+  //     .rule('markdown')
+  //     .test(/\.md$/)
+  //     .use('frontmatter-markdown-loader')
+  //     .loader('frontmatter-markdown-loader')
+  //     .tap(() => {
+  //       return {
+  //         mode: [Mode.HTML, Mode.VUE_COMPONENT],
+  //         vue: {
+  //           root: 'markdown-body'
+  //         }
+  //       }
+  //     })
+  // }
 }

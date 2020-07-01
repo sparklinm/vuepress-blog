@@ -77,7 +77,7 @@
 
 <script>
 // import { mapGetters } from "vuex";
-import { formatTime } from "./util.js";
+import { formatTime } from "./util.js"
 // import Loading from "./Loading";
 // import Tip from "./Tip";
 export default {
@@ -88,8 +88,8 @@ export default {
       articleArray: [],
       showLoading: false,
       showTip: false,
-      category: ""
-    };
+      category: "",
+    }
   },
   props: ["blogs", "content", "tagAry"],
   //   computed: {
@@ -99,121 +99,121 @@ export default {
   //   },
   computed: {
     currentTag() {
-      return this.tagAry[this.getCurrentTagIndex()];
-    }
+      return this.tagAry[this.getCurrentTagIndex()]
+    },
   },
   watch: {
     $route() {
-      this.getArticleList();
-    }
+      this.getArticleList()
+    },
   },
 
   methods: {
     //日志显示动画
     setShowarticleItem(flag) {
-      this.showarticleItem = flag;
+      this.showarticleItem = flag
     },
     //跳转到文章页面
     toArticle(path) {
-      this.$router.push(path);
-      this.$emit("toggle-topImg");
+      this.$router.push(path)
+      this.$emit("toggle-topImg")
     },
 
     //鼠标滚动事件
     wheelEvent() {
       if (this.isToPageBottom()) {
-        this.setShowLoading(true);
-        this.pageNum++;
-        this.pageSize = 5;
+        this.setShowLoading(true)
+        this.pageNum++
+        this.pageSize = 5
         this.addArticleAry(
           this.fromComponent,
           this.category,
           this.pageNum,
           this.pageSize
-        );
+        )
       }
     },
 
     //得到当前分类信息
     getCurrentCategory() {
-      var pathRe = /\/[^\/]+\//;
+      var pathRe = /\/[^\/]+\//
       this.category = this.$route.path.match(pathRe)
         ? this.$route.path.match(pathRe)[0]
-        : "";
+        : ""
     },
     //得到当前标签信息
     getCurrentTagIndex() {
-      var pathRe = /[^\/]+/g;
+      var pathRe = /[^\/]+/g
       return this.$route.path.match(pathRe)
         ? this.$route.path.match(pathRe)[1]
-        : "";
+        : ""
     },
     //根据当前分类获取相应博客信息
     getArticleList() {
-      this.getCurrentCategory();
-      var allPages = this.$site.pages;
+      this.getCurrentCategory()
+      var allPages = this.$site.pages
       // console.log(allPages);
-      var currentPages = [];
+      var currentPages = []
       // console.log(this.category);
 
       if (this.category === "") {
-        currentPages = allPages.filter(page => {
-          return page.path.includes("/blog/");
-        });
+        currentPages = allPages.filter((page) => {
+          return page.path.includes("/blog/")
+        })
       } else if (this.category === "/web/") {
-        currentPages = allPages.filter(page => {
-          return page.path.includes("/blog/web/");
-        });
+        currentPages = allPages.filter((page) => {
+          return page.path.includes("/blog/web/")
+        })
       } else if (this.category === "/tool/") {
-        currentPages = allPages.filter(page => {
-          return page.path.includes("/blog/tool/");
-        });
+        currentPages = allPages.filter((page) => {
+          return page.path.includes("/blog/tool/")
+        })
       } else if (this.category === "/tag/") {
         if (this.currentTag) {
-          currentPages = allPages.filter(page => {
+          currentPages = allPages.filter((page) => {
             if (page.frontmatter.meta && page.frontmatter.meta[0].tag) {
-              let key = page.frontmatter.meta[0].tag;
-              let keyAry = key.split(",");
-              return keyAry.some(item => {
-                return item == this.currentTag;
-              });
+              let key = page.frontmatter.meta[0].tag
+              let keyAry = key.split(",")
+              return keyAry.some((item) => {
+                return item == this.currentTag
+              })
             }
-          });
+          })
         } else {
-          currentPages = allPages.filter(page => {
-            return page.path.includes("/blog/");
-          });
+          currentPages = allPages.filter((page) => {
+            return page.path.includes("/blog/")
+          })
         }
       }
       currentPages.sort((current, next) => {
         return (
           new Date(next.frontmatter.meta[0].time) -
           new Date(current.frontmatter.meta[0].time)
-        );
-      });
-      this.articleArray = currentPages.map(page => {
-        var meta = page.frontmatter.meta[0];
+        )
+      })
+      this.articleArray = currentPages.map((page) => {
+        var meta = page.frontmatter.meta[0]
         return {
           title: meta.title,
           content: page.excerpt,
           // coverImg: require("../public/img/a2.jpg"),
           tag: meta.tag.split(","),
           time: formatTime(meta.time),
-          path: page.path
-        };
-      });
+          path: page.path,
+        }
+      })
     },
     //标签点击去往相应标签页面
     toBlogByTag(tag) {
-      var index = this.tagAry.indexOf(tag);
-      this.$router.push(`/tag/${index}/`);
-    }
+      var index = this.tagAry.indexOf(tag)
+      this.$router.push(`/tag/${index}/`)
+    },
   },
   mounted() {
-    this.getArticleList();
+    this.getArticleList()
   },
-  destroyed() {}
-};
+  destroyed() {},
+}
 </script>
 <style lang="stylus">
 .article-list-inner {
