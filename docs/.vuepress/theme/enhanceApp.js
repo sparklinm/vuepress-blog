@@ -1,7 +1,4 @@
-import routes from "./router"
-let util = require("@sparklinm/util/bundle")
-console.log(util);
-
+import routes from './router'
 
 export default ({
   Vue, // VuePress 正在使用的 Vue 构造函数
@@ -15,23 +12,34 @@ export default ({
   let postions = {}
 
   // 必须在路由跳转前保存
-  router.beforeEach((to, from, next) => {
-    if (to.name !== from.name) {
-      postions[from.name] = {
-        x: window.scrollX,
-        y: window.scrollY
-      }
-    }
-    next()
-  })
+  // router.beforeEach((to, from, next) => {
+  //   if (to.name !== from.name) {
+  //     postions[from.name] = {
+  //       x: window && window.scrollX,
+  //       y: window && window.scrollY
+  //     }
+  //   }
+  //   next()
+  // })
 
+  Vue.mixin({
+    beforeRouteLeave(to, from, next) {
+      if (to.name !== from.name) {
+        postions[from.name] = {
+          x: window && window.scrollX,
+          y: window && window.scrollY
+        }
+      }
+      next()
+    }
+  })
   router.options.scrollBehavior = (to, from, savedPosition) => {
     // 前进后退按钮会返回保存的滚动轴位置
     if (savedPosition) {
       if (postions[to.name]) {
         return window.scrollTo({
           top: postions[to.name].y,
-          behavior: "smooth"
+          behavior: 'smooth'
         })
       }
 
@@ -40,10 +48,10 @@ export default ({
       // savedPosition 存储的位置是 b.html 的滚动位置
       return window.scrollTo({
         top: savedPosition.y,
-        behavior: "smooth"
+        behavior: 'smooth'
       })
     } else if (to.hash) {
-      if (Vue.$vuepress.$get("disableScrollBehavior")) {
+      if (Vue.$vuepress.$get('disableScrollBehavior')) {
         return
       }
       // 平滑滚到到目标页面的对应hash元素处
@@ -51,7 +59,7 @@ export default ({
       if (targetElement) {
         return window.scrollTo({
           top: getElementPosition(targetElement).y,
-          behavior: "smooth"
+          behavior: 'smooth'
         })
       }
     } else {
