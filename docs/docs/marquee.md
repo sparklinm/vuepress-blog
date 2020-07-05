@@ -10,7 +10,7 @@ meta:
 ## 使用方法
 
 ```js
-let textNode = document.querySelector(".text")
+let textNode = document.querySelector('.text')
 let m = marquee(textNode)
 ```
 
@@ -33,7 +33,6 @@ let m = marquee(textNode)
 
 ::: demo html
 
-```html
 <style>
   .marquee {
     margin: 0 auto;
@@ -57,12 +56,11 @@ let m = marquee(textNode)
 </p>
 
 <script>
-  marquee(document.querySelector(".marquee"))
+  util.marquee(document.querySelector(".marquee"))
 </script>
-```
+
+<script>
+  document.querySelector(".marquee").style.background="red"
+</script>
 
 :::
-
-<!-- start-code -->
-
-<!-- end-code -->

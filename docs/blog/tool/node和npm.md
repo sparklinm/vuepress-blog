@@ -57,8 +57,8 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 
 2. 添加环境变量
 
-经过上面的配置，`cnpm`会被安装到`F:\My development tools\node\node_global`目录下，所以需要对`cnpm`进行环境变量的配置，用户变量`Path`添加`F:\My development tools\node\node_global`（即 cnpm 脚本的地址）
-![](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560933710146.png)
+   经过上面的配置，`cnpm`会被安装到`F:\My development tools\node\node_global`目录下，所以需要对`cnpm`进行环境变量的配置，用户变量`Path`添加`F:\My development tools\node\node_global`（即 cnpm 脚本的地址）
+   ![](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560933710146.png)
 
 切换源：
 
@@ -70,8 +70,6 @@ npm config set registry https://registry.npmjs.org
 she
 
 ## 五 npm 常用命令
-
-
 
 ### 1. 安装
 

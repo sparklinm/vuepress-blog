@@ -12,11 +12,13 @@
     "eslint-plugin-html": "^6.0.2",
     "eslint-plugin-vue": "^6.2.2",
     "frontmatter-markdown-loader": "^3.6.0",
+    "markdown-it": "^11.0.0",
     "vuepress": "^1.5.2",
     "vuepress-plugin-demo-code": "^0.5.0",
     "vuepress-plugin-smooth-scroll": "^0.0.9"
   },
   "dependencies": {
-    "@sparklinm/util": "^0.0.4"
+    "@sparklinm/util": "^0.0.5",
+    "markdown-it-container": "^3.0.0"
   }
 }
