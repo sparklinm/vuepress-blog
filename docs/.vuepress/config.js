@@ -7,7 +7,7 @@ module.exports = {
     [
       'script',
       {
-        src: 'https://cdn.jsdelivr.net/npm/@sparklinm/util/d/bundle.umd.js'
+        src: 'https://cdn.jsdelivr.net/gh/sparklinm/js-library/d/bundle.umd.js'
       }
     ],
     [
@@ -40,10 +40,12 @@ module.exports = {
     editLinks: false,
     sidebar: 'auto',
     sidebarDepth: 3,
+    lastUpdated: 'Last Updated',
     // 文档的侧边栏配置，和sidebar一致
     fileDocSidebar: [
       ['/docs/', '工具函数'],
-      ['/docs/marquee', '文字走马灯']
+      ['/docs/marquee', '文字走马灯'],
+      ['/docs/sorter', '拖拽排序']
     ]
   },
   markdown: {

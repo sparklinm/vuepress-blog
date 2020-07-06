@@ -17,6 +17,8 @@ meta:
 
 ## 插件
 
+### 常用插件
+
 需要几个常用插件：
 
 1. rollup-plugin-node-resolve ---帮助 Rollup 查找外部模块，然后导入
@@ -61,7 +63,7 @@ export default [
 ]
 ```
 
-新建 `.eslintrc.js`，在里面配置 `eslint` 即可。
+### Babel
 
 其中需要注意 `babel` 插件的配置，见官网：
 
@@ -69,9 +71,18 @@ export default [
 
 当然也可以自己配置 `babel`，安装 `@babel/preset-env` 和 `@babel/runtime-corejs3`
 
+`dependencies`：
+
+```bash
+yarn add @babel/runtime-corejs3 --dev
+```
+
+`devDependencies`：
+
 ```bash
 yarn add @babel/preset-env
-yarn add @babel/runtime-corejs3
+yarn add @babel/core
+yarn add @babel/plugin-transform-runtime
 ```
 
 新建 `babel.config` 文件：
@@ -97,6 +108,7 @@ module.exports = {
       "@babel/plugin-transform-runtime",
       {
         corejs: 3, // 可选 false | 2 | 3
+        proposals: true, //corejs 3 可设置
       },
     ],
   ],
@@ -112,9 +124,35 @@ module.exports = {
 
 详情见：[结合 Babel 7.4.0 谈一下 Babel-runtime 和 Babel-polyfill](https://juejin.im/post/5d0373a95188251e1b5ebb6c)
 
-还需要设置 `modules: false` ，否则 `Babel` 会在 `Rollup` 有机会做处理之前，将我们的模块转成 `CommonJS` ，导致 `Rollup` 的一些处理失败。
+`corejs` 可选值为 `false | 2 | 3`，区别在于：
 
-对于 `Eslint`，同样可以不使用插件，自己配置。
+- corejs: 2 only supports global variables (e.g. Promise) and static properties (e.g. Array.from)。
+- corejs: 3 also supports instance properties (e.g. [].includes)。
+
+`corejs` 选择的版本越高，也意味着打包体积的增加。
+
+参考：[babel plugin-transform-runtime](https://www.babeljs.cn/docs/babel-plugin-transform-runtime)。
+
+同时需要设置 `modules: false` ，否则 `Babel` 会在 `Rollup` 有机会做处理之前，将我们的模块转成 `CommonJS` ，导致 `Rollup` 的一些处理失败。
+
+在 `rollup.config.js` 文件中，也需要做一些配置来使 `@babel/plugin-transform-runtime` 插件生效：
+
+```js
+export default {
+    babel({
+      exclude: 'node_modules/**', // 只编译我们的源代码
+      // plugin-transform-runtime 生效
+      runtimeHelpers: true
+    })
+  ]
+}
+```
+
+### Eslint
+
+新建 `.eslintrc.js`，在里面配置 `eslint` 即可。
+
+对于 `Eslint`，同样可以不使用 `rollup-plugin-eslint` 插件，自己配置。
 
 ## 开发环境和生产环境
 
@@ -143,6 +181,50 @@ export default {
     name: "util",
   },
   plugins: [!isDev && terser()],
+}
+```
+
+## 多出口打包
+
+如果是发布到 `npm`，需要在`package.json` 中定义需要的包：
+
+```json
+{
+  "main": "d/bundle.min.cjs.js",
+  "module": "d/bundle.min.esm.js",
+  "browser": "d/bundle.min.umd.js",
+  "scripts": {
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "dev": "rollup -c -w",
+    "test": "node test/test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
+```
+
+```js
+// 引入
+import pkg from './package.json'
+const isDev = process.env.NODE_ENV !== 'production'
+export default {
+  input: 'main.js',
+  output: [
+    {
+      file: (!isDev && pkg.main) || 'd/bundle.cjs.js',
+      format: 'cjs'
+    },
+    {
+      file: (!isDev && pkg.module) || 'd/bundle.esm.js',
+      format: 'esm'
+    },
+    {
+      file: (!isDev && pkg.browser) || 'd/bundle.umd.js',
+      format: 'umd',
+      name: 'util'
+    }
+  ],
+  ]
 }
 ```
 
@@ -234,7 +316,11 @@ define(["https://cdn.bootcss.com/jquery/3.2.1/jquery.js"], function(jquery) {
   "version": "0.0.1",
   "description": "tool library",
   // 入口文件 import pkg from 'package-name'，导入的就是这个文件
-  "main": "bundle.min.js",
+  "main": "d/bundle.min.cjs.js",
+  // es模块打包
+  "module": "d/bundle.min.esm.js",
+  // 浏览器模块打包
+  "browser": "d/bundle.min.umd.js",
   "author": "作者",
   // 协议
   "license": "",
