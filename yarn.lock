@@ -992,10 +992,10 @@
   resolved "https://registry.npm.scutech.com/@sindresorhus%2fis/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
   integrity sha1-n7OjzzEyMoFR81PeRjLgHlIQK+o=
 
-"@sparklinm/util@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.npmjs.org/@sparklinm/util/-/util-0.0.4.tgz#d958dcb8e44246cf88a9029de371d8692b8892c4"
-  integrity sha512-k0MVc/vPGM2ZZDu+4Hyb4rYx9wKrqAfxmdzMyR0u29TOkMA0jjaw1k060Y4SKs60OfQrKY+PAsKl9j4tSSDHqg==
+"@sparklinm/util@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npm.taobao.org/@sparklinm/util/download/@sparklinm/util-0.0.5.tgz#d9c5cd417d750e2facf78a23ec382e42fbdd1671"
+  integrity sha1-2cXNQX11Di+s94oj7DguQvvdFnE=
   dependencies:
     jquery "^3.5.1"
 
@@ -5811,6 +5811,11 @@ markdown-it-container@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npm.scutech.com/markdown-it-container/-/markdown-it-container-2.0.0.tgz#0019b43fd02eefece2f1960a2895fba81a404695"
   integrity sha1-ABm0P9Au7+zi8ZYKKJX7qBpARpU=
+
+markdown-it-container@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.npm.taobao.org/markdown-it-container/download/markdown-it-container-3.0.0.tgz#1d19b06040a020f9a827577bb7dbf67aa5de9a5b"
+  integrity sha1-HRmwYECgIPmoJ1d7t9v2eqXemls=
 
 markdown-it-emoji@^1.4.0:
   version "1.4.0"
