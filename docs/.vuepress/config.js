@@ -45,7 +45,9 @@ module.exports = {
     fileDocSidebar: [
       ['/docs/', '工具函数'],
       ['/docs/marquee', '文字走马灯'],
-      ['/docs/sorter', '拖拽排序']
+      ['/docs/sorter', '拖拽排序'],
+      ['/docs/slide-select', '滑动选择'],
+      ['/docs/broadcast', '轮播图']
     ]
   },
   markdown: {
