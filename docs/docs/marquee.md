@@ -2,7 +2,7 @@
 meta:
   - title: marquee.js 文档
     time: 2020-07-02 16:25:14
-    tag: marquee,js
+    tag: js,文档
 ---
 
 # marquee
