@@ -139,12 +139,6 @@ module.exports = {
         'multiline': true
       }
     ],
-    // 'array-element-newline': [
-    //   'error',
-    //   {
-    //     'multiline': true,
-    //   }
-    // ],
     'object-property-newline': [
       'error',
       {
