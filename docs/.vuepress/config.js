@@ -100,7 +100,12 @@ module.exports = {
         jsLibs: [
           'https://cdn.jsdelivr.net/npm/@sparklinm/util/d/bundle.min.umd.js'
         ],
-        minHeight: 0
+        minHeight: 0,
+        onlineBtns:{
+          codepen: true,
+          jsfiddle: false,
+          codesandbox: false,
+        }
       }
     ]
     // "vuepress-plugin-smooth-scroll"

@@ -16,13 +16,13 @@ let m = marquee(textNode)
 
 ## 配置项
 
-| 参数               | 类型    | 说明                                                          | 可选值          | 默认值    |
-| ------------------ | ------- | ------------------------------------------------------------- | --------------- | --------- |
-| `duration`         | Number  | 动画时长（ms）。                                              | -               | 10000     |
-| `gap`              | Number  | 两个文本之间的距离，单位：px。                                | -               | undefined |
-| `start`            | Number  | 文本距离容器左边缘距离，单位：px。                            | -               | 0         |
-| `scrollIn`         | String  | 在哪里滚动，`parent`表示在父容器里滚动，`self` 在自身里滚动。 | parent, self | parent  |
-| `scrollOverflowed` | Boolean | 是否多行时才滚动                                              | -               | false     |
+| 参数               | 类型    | 说明                                                          | 可选值       | 默认值    |
+| ------------------ | ------- | ------------------------------------------------------------- | ------------ | --------- |
+| `duration`         | Number  | 动画时长（ms）。                                              | -            | 10000     |
+| `gap`              | Number  | 两个文本之间的距离，单位：px。                                | -            | undefined |
+| `start`            | Number  | 文本距离容器左边缘距离，单位：px。                            | -            | 0         |
+| `scrollIn`         | String  | 在哪里滚动，`parent`表示在父容器里滚动，`self` 在自身里滚动。 | parent, self | parent    |
+| `scrollOverflowed` | Boolean | 是否多行时才滚动。                                             | -            | false     |
 
 ## 实例方法
 
@@ -32,8 +32,7 @@ let m = marquee(textNode)
 
 ## 示例
 
-::: demo html
-
+```html demo
 <style>
   .container {
     border: 1px solid pink;
@@ -60,5 +59,4 @@ let m = marquee(textNode)
     scrollIn: 'self'
   })
 </script>
-
-:::
+```

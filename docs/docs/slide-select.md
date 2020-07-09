@@ -163,120 +163,128 @@ select.on('selected', ({ index, node, startIndex, startNode }) => {
 
 ## 示例
 
-::: demo
-
-  <div class="example-container">
-      <div class="title">选择水果</div>
-      <div id="slide-select">
-        <div class="slide-select-list">
-          <div class="item">香蕉</div>
-          <div class="item">苹果</div>
-          <div class="item">栗子</div>
-          <div class="item">西红柿</div>
-          <div class="item">汤圆</div>
-          <div class="item">烧烤</div>
-        </div>
-      </div>
-      <div class="operation">
-        <button onclick="select.next()">下一个</button>
-        <button onclick="select.pre()">上一个</button>
-        <button onclick="select.toItem(Math.random()*6)">随机选择</button>
-      </div>
-      <div class="selected-value"></div>
+```html demo
+<div class="example-container">
+  <div class="title">选择水果</div>
+  <div id="slide-select">
+    <div class="slide-select-list">
+      <div class="item">香蕉</div>
+      <div class="item">苹果</div>
+      <div class="item">栗子</div>
+      <div class="item">西红柿</div>
+      <div class="item">汤圆</div>
+      <div class="item">烧烤</div>
+    </div>
   </div>
-  <style>
-      .example-container {
-        width: 300px;
-        margin: 0 auto;
+  <div class="operation">
+    <button id="ex-opt1">下一个</button>
+    <button id="ex-opt2">上一个</button>
+    <button id="ex-opt3">随机选择</button>
+  </div>
+  <div class="selected-value"></div>
+</div>
+<style>
+  .example-container {
+    width: 300px;
+    margin: 0 auto;
+  }
+  .example-container .title {
+    border-bottom: 1px solid rgb(0, 68, 124);
+    padding: 5px 0;
+    margin-bottom: 5px;
+  }
+  .example-container #slide-select {
+    text-align: center;
+  }
+  .example-container .item {
+    padding: 5px 0;
+  }
+  .example-container .slide-item-checked {
+    color: brown;
+  }
+  .example-container .operation {
+    margin-top: 20px;
+  }
+  .example-container .operation button {
+    display: inline-block;
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid #dcdfe6;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    padding: 6px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+    margin: 5px;
+  }
+</style>
+<script>
+  document.querySelector('.operation').addEventListener('click', (e) => {
+    const id = e.target.id
+    if (id === 'ex-opt1') {
+      select.next()
+    } else if (id === 'ex-opt2') {
+      select.pre()
+    } else if (id === 'ex-opt3') {
+      select.toItem(Math.random() * 6)
+    }
+  })
+  const SlideSelect = util.SlideSelect
+  const select = new SlideSelect(document.querySelector('#slide-select'), {
+    slideList: '.slide-select-list',
+    // 可见行数
+    visiableRowCount: 4,
+    // 初始位置索引
+    startIndex: 1,
+    // 保持索引位置不变
+    keepIndex: true,
+    // 选择框
+    selectBox: {
+      // 选择框所在位置
+      position: 1,
+      style: {
+        backgroundColor: 'coral',
+        border: 'none'
       }
-      .example-container .title {
-        border-bottom: 1px solid rgb(0, 68, 124);
-        padding: 5px 0;
-        margin-bottom: 5px;
-      }
-      .example-container #slide-select {
-        text-align: center;
-      }
-      .example-container .item {
-        padding: 5px 0;
-      }
-      .example-container .slide-item-checked {
-        color: brown;
-      }
-      .example-container .operation {
-        margin-top: 20px;
-      }
-      .example-container .operation button {
-        display: inline-block;
-        line-height: 1;
-        cursor: pointer;
-        border: 1px solid #dcdfe6;
-        text-align: center;
-        box-sizing: border-box;
-        outline: none;
-        padding: 6px;
-        font-size: 14px;
-        border-radius: 4px;
-        color: #fff;
-        background-color: #409eff;
-        border-color: #409eff;
-        margin: 5px;
-      }
-
-  </style>
-  <script>
-      const SlideSelect = util.SlideSelect
-      const select = new SlideSelect(document.querySelector('#slide-select'), {
-        slideList: '.slide-select-list',
-        // 可见行数
-        visiableRowCount: 4,
-        // 初始位置索引
-        startIndex: 1,
-        // 保持索引位置不变
-        keepIndex: true,
-        // 选择框
-        selectBox: {
-          // 选择框所在位置
-          position: 1,
-          style: {
-            backgroundColor: 'coral',
-            border: 'none'
-          }
-        }
-      })
-      const data = ['香蕉', '苹果', '栗子', '西红柿', '汤圆', '烧烤']
-      const div = document.querySelector('.selected-value')
-        select.on('change', ({ index }) => {
-        div.innerHTML = data[index]
-      })
-      select.on('finish', ({ index }) => {
-        div.innerHTML = data[index]
-      })
-      select.on('finish', (params) => {
-        console.log('finish:')
-        console.log(params)
-      })
-      select.on('slidestart', (params) => {
-        console.log('slidestart:')
-        console.log(params)
-      })
-      select.on('slide', () => {
-        console.log('slide')
-      })
-      select.on('slideend', () => {
-        console.log('slideend')
-      })
-      select.on('change', (params) => {
-        console.log('change:')
-        console.log(params)
-      })
-      select.on('selected', (params) => {
-        console.log('selected:')
-        console.log(params)
-      })
-      select.on('animationend', () => {
-        console.log('animationend:')
-      })
-      select.init()
-  </script>
-:::
+    }
+  })
+  const data = ['香蕉', '苹果', '栗子', '西红柿', '汤圆', '烧烤']
+  const div = document.querySelector('.selected-value')
+  select.on('change', ({ index }) => {
+    div.innerHTML = data[index]
+  })
+  select.on('finish', ({ index }) => {
+    div.innerHTML = data[index]
+  })
+  select.on('finish', (params) => {
+    console.log('finish:')
+    console.log(params)
+  })
+  select.on('slidestart', (params) => {
+    console.log('slidestart:')
+    console.log(params)
+  })
+  select.on('slide', () => {
+    console.log('slide')
+  })
+  select.on('slideend', () => {
+    console.log('slideend')
+  })
+  select.on('change', (params) => {
+    console.log('change:')
+    console.log(params)
+  })
+  select.on('selected', (params) => {
+    console.log('selected:')
+    console.log(params)
+  })
+  select.on('animationend', () => {
+    console.log('animationend:')
+  })
+  select.init()
+</script>
+```
