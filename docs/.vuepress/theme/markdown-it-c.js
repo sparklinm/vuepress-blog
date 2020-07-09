@@ -1,7 +1,7 @@
 // Process block-level custom containers
 //
 'use strict'
-function container_plugin(md, name, options) {
+function container_plugin(md, name = 'demo', options) {
   // Second param may be useful if you decide
   // to increase minimal allowed marker length
   function validateDefault(params /*, markup*/) {
@@ -26,9 +26,12 @@ function container_plugin(md, name, options) {
     validate = options.validate || validateDefault,
     render = options.render || renderDefault
 
+  // startLine 每一个块的开始
+  // endLine 文档结尾
+  //
   function container(state, startLine, endLine, silent) {
-    let open = `::: ${name || 'demo'}`
-    let close = ':::'
+    let open = `'''`
+    let close = `'''`
     var openDelim,
       len,
       params,
@@ -38,8 +41,18 @@ function container_plugin(md, name, options) {
       lastLine,
       lastLinePos,
       haveEndMarker = false,
+      // 该行开始字符的索引
       pos = state.bMarks[startLine] + state.tShift[startLine],
+      // 该行结束字符的索引
       max = state.eMarks[startLine]
+
+    // console.log(state.blkIndent);
+    // console.log(state.sCount);
+    
+
+    // console.log(state.bMarks);
+
+    // console.log(endLine);
 
     if (pos + open.length > max) {
       return false
@@ -53,7 +66,24 @@ function container_plugin(md, name, options) {
 
     pos += open.length
     firstLine = state.src.slice(pos, max)
-    params = state.src.slice(pos, max);
+
+    let tags = firstLine.split(' ')
+
+    params = tags[0]
+
+    if (tags.length !== 2) {
+      return false
+    }
+
+    if (!['html', 'vue'].includes(params)) {
+      return false
+    }
+
+    let marker = firstLine.split(' ')[1]
+
+    if (marker !== name) {
+      return false
+    }
 
     // Since start is found, we can report success here in validation mode
     if (silent) {
@@ -61,7 +91,7 @@ function container_plugin(md, name, options) {
     }
 
     if (firstLine.trim().slice(-close.length) === close) {
-      // Single line expression
+      // Single line expression, no use
       firstLine = firstLine.trim().slice(0, -close.length)
       haveEndMarker = true
     }
@@ -128,7 +158,6 @@ function container_plugin(md, name, options) {
     token = state.push('container_' + name, 'div', 0)
     token.block = true
     token.content =
-      (firstLine && firstLine.trim() ? firstLine + '\n' : '') +
       state.getLines(startLine + 1, nextLine, len, true) +
       (lastLine && lastLine.trim() ? lastLine : '')
     token.children = ['']
@@ -137,7 +166,7 @@ function container_plugin(md, name, options) {
     token.markup = open
     token.hidden = false
 
-    // console.log(token)
+    console.log(token)
 
     return true
   }
@@ -156,250 +185,10 @@ let md = new markdownit({
   typographer: true
 })
 
-function block(state, startLine, endLine, silent) {
-  let open = '<script>'
-  let close = '</script>'
-  var openDelim,
-    len,
-    params,
-    nextLine,
-    token,
-    firstLine,
-    lastLine,
-    lastLinePos,
-    haveEndMarker = false,
-    pos = state.bMarks[startLine] + state.tShift[startLine],
-    max = state.eMarks[startLine]
-
-  console.log(startLine)
-  console.log(endLine)
-
-  if (pos + open.length > max) {
-    return false
-  }
-
-  openDelim = state.src.slice(pos, pos + open.length)
-
-  if (openDelim !== open) {
-    return false
-  }
-
-  pos += open.length
-  firstLine = state.src.slice(pos, max)
-
-  // Since start is found, we can report success here in validation mode
-  if (silent) {
-    return true
-  }
-
-  if (firstLine.trim().slice(-close.length) === close) {
-    // Single line expression
-    firstLine = firstLine.trim().slice(0, -close.length)
-    haveEndMarker = true
-  }
-
-  // search end of block
-  nextLine = startLine
-
-  for (;;) {
-    if (haveEndMarker) {
-      break
-    }
-
-    nextLine++
-
-    if (nextLine >= endLine) {
-      // unclosed block should be autoclosed by end of document.
-      // also block seems to be autoclosed by end of parent
-      break
-    }
-
-    pos = state.bMarks[nextLine] + state.tShift[nextLine]
-    max = state.eMarks[nextLine]
-
-    if (pos < max && state.tShift[nextLine] < state.blkIndent) {
-      // non-empty line with negative indent should stop the list:
-      break
-    }
-
-    if (
-      state.src
-        .slice(pos, max)
-        .trim()
-        .slice(-close.length) !== close
-    ) {
-      continue
-    }
-
-    if (state.tShift[nextLine] - state.blkIndent >= 4) {
-      // closing block math should be indented less then 4 spaces
-      continue
-    }
-
-    lastLinePos = state.src.slice(0, max).lastIndexOf(close)
-    lastLine = state.src.slice(pos, lastLinePos)
-
-    pos += lastLine.length + close.length
-
-    // make sure tail has spaces only
-    pos = state.skipSpaces(pos)
-
-    if (pos < max) {
-      continue
-    }
-
-    // found!
-    haveEndMarker = true
-  }
-
-  // If math block has heading spaces, they should be removed from its inner block
-  len = state.tShift[startLine]
-
-  state.line = nextLine + (haveEndMarker ? 1 : 0)
-
-  token = state.push('tt', 'tt', 0)
-  token.block = true
-  token.content =
-    (firstLine && firstLine.trim() ? firstLine + '\n' : '') +
-    state.getLines(startLine + 1, nextLine, len, true) +
-    (lastLine && lastLine.trim() ? lastLine : '')
-  token.info = params
-  token.map = [startLine, state.line]
-  token.markup = open
-  token.hidden = false
-  console.log(state)
-  console.log(token)
-
-  return true
-}
-
-function blocks(state, startLine, endLine, silent) {
-  let open = '::: test'
-  let close = ':::'
-  var openDelim,
-    len,
-    params,
-    nextLine,
-    token,
-    firstLine,
-    lastLine,
-    lastLinePos,
-    haveEndMarker = false,
-    pos = state.bMarks[startLine] + state.tShift[startLine],
-    max = state.eMarks[startLine]
-
-  if (pos + open.length > max) {
-    return false
-  }
-
-  openDelim = state.src.slice(pos, pos + open.length)
-
-  if (openDelim !== open) {
-    return false
-  }
-
-  pos += open.length
-  firstLine = state.src.slice(pos, max)
-
-  // Since start is found, we can report success here in validation mode
-  if (silent) {
-    return true
-  }
-
-  if (firstLine.trim().slice(-close.length) === close) {
-    // Single line expression
-    firstLine = firstLine.trim().slice(0, -close.length)
-    haveEndMarker = true
-  }
-
-  // search end of block
-  nextLine = startLine
-
-  for (;;) {
-    if (haveEndMarker) {
-      break
-    }
-
-    nextLine++
-
-    if (nextLine >= endLine) {
-      // unclosed block should be autoclosed by end of document.
-      // also block seems to be autoclosed by end of parent
-      break
-    }
-
-    pos = state.bMarks[nextLine] + state.tShift[nextLine]
-    max = state.eMarks[nextLine]
-
-    if (pos < max && state.tShift[nextLine] < state.blkIndent) {
-      // non-empty line with negative indent should stop the list:
-      break
-    }
-
-    if (
-      state.src
-        .slice(pos, max)
-        .trim()
-        .slice(-close.length) !== close
-    ) {
-      continue
-    }
-
-    if (state.tShift[nextLine] - state.blkIndent >= 4) {
-      // closing block math should be indented less then 4 spaces
-      continue
-    }
-
-    lastLinePos = state.src.slice(0, max).lastIndexOf(close)
-    lastLine = state.src.slice(pos, lastLinePos)
-
-    pos += lastLine.length + close.length
-
-    // make sure tail has spaces only
-    pos = state.skipSpaces(pos)
-
-    if (pos < max) {
-      continue
-    }
-
-    // found!
-    haveEndMarker = true
-  }
-
-  // If math block has heading spaces, they should be removed from its inner block
-  len = state.tShift[startLine]
-
-  state.line = nextLine + (haveEndMarker ? 1 : 0)
-
-  token = state.push('scriptss', 'scriptss', 0)
-  token.block = true
-  token.content =
-    (firstLine && firstLine.trim() ? firstLine + '\n' : '') +
-    state.getLines(startLine + 1, nextLine, len, true) +
-    (lastLine && lastLine.trim() ? lastLine : '')
-  token.children = ['']
-  token.info = params
-  token.map = [startLine, state.line]
-  token.markup = open
-  token.hidden = false
-
-  // console.log(token)
-
-  return true
-}
-// md.block.ruler.before('html_block', 'scriptss', container)
-
-// // md.block.ruler.before('fence', 'script', block)
-// md.renderer.rules.scriptss = function(tokens, idx) {
-//   let content = tokens[idx].content
-//   return `<ss>${content}</ss>`
-// }
-
 md.use(markdownitc, 'demo', {
   render: function(tokens, idx) {
-    console.log(tokens);
-    
     let content = tokens[idx].content
+
     const renderedContent = content.replace(/<script>[\w\W]+<\/script>/g, '')
     const scripts = content.match(/<script>[\w\W]+<\/script>/g)
     return ` <DemoAndCode>
@@ -412,7 +201,11 @@ md.use(markdownitc, 'demo', {
 })
 
 let t = md.render(
-  `::: demo vue
+  `
+- 456
+
+'''vue demo
+ 
 <div>
 test text
 </div>
@@ -421,7 +214,7 @@ test text
 util.marquee(document.querySelector(".marquee"))
 </script>
 
-:::
+'''
 `
 )
 

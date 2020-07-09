@@ -132,88 +132,103 @@ broadcast.on('animationend', ({ node, index, lastIndex, lastNode }) => {
 
 通常事件触发顺序：slidstart -> slide -> slideend -> animationend。
 
-::: demo
+## 示例
 
-  <div class="example-container">
-      <div id="broadcast">
-        <div class="broadcast-list">
-          <div class="item" style="background: pink;">香蕉</div>
-          <div class="item" style="background: salmon;">苹果</div>
-          <div class="item" style="background: sandybrown;">栗子</div>
-          <div class="item" style="background: goldenrod;">西红柿</div>
-          <div class="item" style="background: rgb(0, 130, 190);">汤圆</div>
-        </div>
-      </div>
-      <div class="operation">
-        <button onclick="broadcast.next()">下一个</button>
-        <button onclick="broadcast.pre()">上一个</button>
-        <button onclick="broadcast.toItem(Math.random()*6)">随机</button>
-        <button onclick="broadcast.toItem(Math.random()*6, true, 1)">
-          随机（方向永远向右）
-        </button>
-      </div>
+```html demo
+<div class="example-container">
+  <div id="broadcast">
+    <div class="broadcast-list">
+      <div class="item" style="background: pink;">香蕉</div>
+      <div class="item" style="background: salmon;">苹果</div>
+      <div class="item" style="background: sandybrown;">栗子</div>
+      <div class="item" style="background: goldenrod;">西红柿</div>
+      <div class="item" style="background: rgb(0, 130, 190);">汤圆</div>
     </div>
-  <style>
-    .example-container {
-      width: 400px;
-      margin: 0 auto;
+  </div>
+  <div class="operation">
+    <button id="ex-opt1">下一个</button>
+    <button id="ex-opt2">上一个</button>
+    <button id="ex-opt3">
+      随机
+    </button>
+    <button id="ex-opt4">
+      随机（方向永远向右）
+    </button>
+  </div>
+</div>
+<style>
+  .example-container {
+    width: 400px;
+    margin: 0 auto;
+  }
+  .example-container #broadcast {
+    height: 250px;
+  }
+  .example-container .broadcast-list {
+    height: 100%;
+    font-size: 0;
+  }
+  .example-container .item {
+    height: 100%;
+    text-align: center;
+    font-size: 16px;
+  }
+  .example-container .operation {
+    margin-top: 20px;
+  }
+  .example-container .operation button {
+    display: inline-block;
+    line-height: 1;
+    cursor: pointer;
+    border: 1px solid #dcdfe6;
+    text-align: center;
+    box-sizing: border-box;
+    outline: none;
+    padding: 6px;
+    font-size: 14px;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #409eff;
+    border-color: #409eff;
+    margin: 5px;
+  }
+</style>
+<script>
+  document.querySelector('.operation').addEventListener('click', (e) => {
+    const id = e.target.id
+    if (id === 'ex-opt1') {
+      broadcast.next()
+    } else if (id === 'ex-opt2') {
+      broadcast.pre()
+    } else if (id === 'ex-opt3') {
+      broadcast.toItem(Math.random() * 6)
+    } else if (id === 'ex-opt4') {
+      broadcast.toItem(Math.random() * 6, true, 1)
     }
-    .example-container #broadcast {
-      height: 250px;
-    }
-    .example-container .broadcast-list {
-      height: 100%;
-      font-size: 0;
-    }
-    .example-container .item {
-      height: 100%;
-      text-align: center;
-      font-size: 16px;
-    }
-    .example-container .operation {
-      margin-top: 20px;
-    }
-    .example-container .operation button {
-      display: inline-block;
-      line-height: 1;
-      cursor: pointer;
-      border: 1px solid #dcdfe6;
-      text-align: center;
-      box-sizing: border-box;
-      outline: none;
-      padding: 6px;
-      font-size: 14px;
-      border-radius: 4px;
-      color: #fff;
-      background-color: #409eff;
-      border-color: #409eff;
-      margin: 5px;
-    }
-  </style>
-  <script>
-    const Broadcast = util.Broadcast
-    const broadcast = new Broadcast(document.querySelecto('#broadcast'), {
-      broadcastList: '.broadcast-list'
-      // loop: false
-    })
-    broadcast.on('finish', (params) => {
-      console.log('finish:')
-      console.log(params)
-    })
-    broadcast.on('slidestart', (params) => {
-      console.log('slidestart:')
-      console.log(params)
-    })
-    broadcast.on('slide', () => {
-      console.log('slide')
-    })
-    broadcast.on('slideend', () => {
-      console.log('slideend')
-    })
-    broadcast.on('animationend', (params) => {
-      console.log('animationend:')
-      console.log(params)
-    })
-    broadcast.init()
-  </script>
-:::
+  })
+  const Broadcast = util.Broadcast
+  const broadcast = new Broadcast(document.querySelector('#broadcast'), {
+    broadcastList: '.broadcast-list'
+    // loop: false
+  })
+  broadcast.on('finish', (params) => {
+    console.log('finish:')
+    console.log(params)
+  })
+  broadcast.on('slidestart', (params) => {
+    console.log('slidestart:')
+    console.log(params)
+  })
+  broadcast.on('slide', () => {
+    console.log('slide')
+  })
+  broadcast.on('slideend', () => {
+    console.log('slideend')
+  })
+  broadcast.on('animationend', (params) => {
+    console.log('animationend:')
+    console.log(params)
+  })
+  broadcast.init()
+</script>
+```

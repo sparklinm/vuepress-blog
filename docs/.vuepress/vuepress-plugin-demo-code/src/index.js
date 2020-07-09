@@ -83,8 +83,6 @@ module.exports = (options = {}) => {
         const codesandboxStr = encodeAndStringify(codesandbox)
         const renderedContent = content.replace(/<script>[\w\W]*<\/script>/g, '')
         const scripts = encodeURIComponent(content.match(/<script>[\w\W]*?<\/script>/g))
-        console.log(scripts);
-        
         
         let str = ` <DemoAndCode
                   htmlStr="${encodeURIComponent(htmlStr)}"
