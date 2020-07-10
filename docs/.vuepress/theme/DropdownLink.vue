@@ -11,31 +11,33 @@
       <span
         class="arrow"
         :class="open ? 'down' : 'right'"
-      ></span>
+      />
     </a>
 
     <DropdownTransition>
       <ul
-        class="nav-dropdown"
         v-show="open"
+        class="nav-dropdown"
       >
         <li
-          class="dropdown-item"
-          :key="subItem.link || index"
           v-for="(subItem, index) in item.items"
+          :key="subItem.link || index"
+          class="dropdown-item"
         >
-          <h4 v-if="subItem.type === 'links'">{{ subItem.text }}</h4>
+          <h4 v-if="subItem.type === 'links'">
+            {{ subItem.text }}
+          </h4>
 
           <ul
-            class="dropdown-subitem-wrapper"
             v-if="subItem.type === 'links'"
+            class="dropdown-subitem-wrapper"
           >
             <li
-              class="dropdown-subitem"
-              :key="childSubItem.link"
               v-for="childSubItem in subItem.items"
+              :key="childSubItem.link"
+              class="dropdown-subitem"
             >
-              <NavLink :item="childSubItem"/>
+              <NavLink :item="childSubItem" />
             </li>
           </ul>
 
@@ -54,17 +56,20 @@ import NavLink from './NavLink.vue'
 import DropdownTransition from './DropdownTransition.vue'
 
 export default {
-  components: { NavLink, DropdownTransition },
-
-  data () {
-    return {
-      open: false
-    }
+  components: {
+    NavLink,
+    DropdownTransition
   },
 
   props: {
     item: {
       required: true
+    }
+  },
+
+  data () {
+    return {
+      open: false
     }
   },
 

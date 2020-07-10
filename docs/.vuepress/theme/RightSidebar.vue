@@ -2,30 +2,59 @@
 <template>
   <div class="sidebar-right">
     <transition name="ani-sidebar">
-      <div v-show="showSideBar" class="sidebar-right-inner">
-        <div class="newest" :key="1">
-          <div class="title">推荐阅读</div>
+      <div
+        v-show="showSideBar"
+        class="sidebar-right-inner"
+      >
+        <div
+          :key="1"
+          class="newest"
+        >
+          <div class="title">
+            推荐阅读
+          </div>
           <ol class="title-list">
-            <li v-for="(item, index) in hotArticleAry" @click="toArticle(item.path)">
+            <li
+              v-for="(item, index) in hotArticleAry"
+              @click="toArticle(item.path)"
+            >
               <!-- <span class="order">{{index+1}}</span> -->
               {{ item.title }}
             </li>
           </ol>
         </div>
 
-        <div class="about" :key="2">
-          <div class="title">云标签</div>
+        <div
+          :key="2"
+          class="about"
+        >
+          <div class="title">
+            云标签
+          </div>
           <div class="title-list">
-            <span v-for="(item, index) in tagAry" class="tag" @click="toBlogByTag(index)">
+            <span
+              v-for="(item, index) in tagAry"
+              class="tag"
+              @click="toBlogByTag(index)"
+            >
               <!-- <span class="order">{{index+1}}</span> -->
               {{ item }}
             </span>
           </div>
         </div>
 
-        <div class="catalog" :key="3" v-if="sidebarItems[0].title">
-          <div class="title">目录</div>
-          <SidebarLinks :depth="0" :items="sidebarItems" />
+        <div
+          v-if="sidebarItems[0].title"
+          :key="3"
+          class="catalog"
+        >
+          <div class="title">
+            目录
+          </div>
+          <SidebarLinks
+            :depth="0"
+            :items="sidebarItems"
+          />
         </div>
       </div>
     </transition>
@@ -33,87 +62,94 @@
 </template>
 
 <script>
-import { isActive, hashRE, groupHeaders } from "./util";
-import SidebarLinks from "./SidebarLinks.vue";
+import { isActive, hashRE, groupHeaders } from './util'
+import SidebarLinks from './SidebarLinks.vue'
+
 export default {
   components: {
     SidebarLinks
   },
-  props: ["sidebarItems", "tagAry"],
-  data() {
+  props: ['sidebarItems', 'tagAry'],
+  data () {
     return {
       hotArticleAry: [],
       showSideBar: true,
-      //根据标签分类后的博客
+      // 根据标签分类后的博客
       blogs: {}
-    };
+    }
   },
   computed: {
-    //根据所有的静态文本获取标签
+    // 根据所有的静态文本获取标签
     // tagAry() {
     //   return Object.keys(this.blogs);
     // }
   },
+  mounted () {
+    // this.blogByTag();
+    this.getHotArticleAry()
+  },
 
   methods: {
-    //跳转到文章页面
-    toArticle(path) {
-      this.$router.push(path);
+    // 跳转到文章页面
+    toArticle (path) {
+      this.$router.push(path)
     },
 
-    //获得推荐博客
-    getHotArticleAry() {
-      var currentPages = this.$site.pages.filter(page => {
-        return page.path.includes("/blog/");
-      });
+    // 获得推荐博客
+    getHotArticleAry () {
+      const currentPages = this.$site.pages.filter(page => {
+        return page.path.includes('/blog/')
+      })
 
-      var blogs = currentPages.map((page, index) => {
-        return Object.assign(page.frontmatter.meta[0], page.frontmatter.path);
-      });
-      var obj = {};
+      const blogs = currentPages.map((page, index) => {
+        return Object.assign(page.frontmatter.meta[0], page.frontmatter.path)
+      })
+      const obj = {}
+
       while (true) {
-        var random = Math.floor(Math.random() * blogs.length);
+        const random = Math.floor(Math.random() * blogs.length)
+
         if (!obj[random]) {
-          this.hotArticleAry.push(blogs[random]);
-          obj[random] = true;
+          this.hotArticleAry.push(blogs[random])
+          obj[random] = true
         }
         if (
           this.hotArticleAry.length == 5 ||
           this.hotArticleAry.length == blogs.length
         ) {
-          break;
+          break
         }
       }
     },
 
-    //根据标签对博客分类
-    blogByTag() {
-      var allPages = this.$site.pages;
-      var blogs = {};
+    // 根据标签对博客分类
+    blogByTag () {
+      const allPages = this.$site.pages
+      const blogs = {}
+
       for (let i = 0; i < allPages.length; i++) {
-        let page = allPages[i];
+        const page = allPages[i]
+
         if (page.frontmatter.meta && page.frontmatter.meta[0].tag) {
-          let key = page.frontmatter.meta[0].tag;
-          blogs[key] = blogs[key] ? blogs[key] : [];
-          let meta = page.frontmatter.meta[0];
-          meta.path = page.path;
-          blogs[key].push(meta);
+          const key = page.frontmatter.meta[0].tag
+
+          blogs[key] = blogs[key] ? blogs[key] : []
+          const meta = page.frontmatter.meta[0]
+
+          meta.path = page.path
+          blogs[key].push(meta)
         }
       }
-      this.blogs = blogs;
+      this.blogs = blogs
     },
-    //标签点击去往相应标签页面
-    toBlogByTag(tag) {
-      this.$router.push(`/tag/${tag}/`);
+    // 标签点击去往相应标签页面
+    toBlogByTag (tag) {
+      this.$router.push(`/tag/${tag}/`)
 
       // this.$emit("transfer-blogs",this.blogs[tag])
     }
-  },
-  mounted() {
-    // this.blogByTag();
-    this.getHotArticleAry();
   }
-};
+}
 </script>
 
 <style lang="stylus">

@@ -5,54 +5,89 @@
     @touchstart="onTouchStart"
     @touchend="onTouchEnd"
   >
-    <Navbar v-if="shouldShowNavbar" @toggle-sidebar="toggleSidebar" />
+    <Navbar
+      v-if="shouldShowNavbar"
+      @toggle-sidebar="toggleSidebar"
+    />
     <!-- <div class="top-backImg" v-if="showTopImg"></div> -->
     <!-- <div class="top-img-container" v-if="showTopImg">
       <img src="../../public/img/backImg1.jpg" alt class="top-img">
     </div>-->
-    <div class="sidebar-mask" @click="toggleSidebar(false)"></div>
+    <div
+      class="sidebar-mask"
+      @click="toggleSidebar(false)"
+    />
 
     <Sidebar
       :items="sidebarItems"
-      @toggle-sidebar="toggleSidebar"
       :class="{ 'doc-sidebar': isDoc }"
+      @toggle-sidebar="toggleSidebar"
     >
-      <slot name="sidebar-top" slot="top" />
-      <slot name="sidebar-bottom" slot="bottom" />
+      <slot
+        slot="top"
+        name="sidebar-top"
+      />
+      <slot
+        slot="bottom"
+        name="sidebar-bottom"
+      />
     </Sidebar>
-    <div class="custom-layout" v-if="$page.frontmatter.layout">
+    <div
+      v-if="$page.frontmatter.layout"
+      class="custom-layout"
+    >
       <component :is="$page.frontmatter.layout" />
     </div>
 
     <Home v-else-if="$page.frontmatter.home" />
 
-    <Doc v-else-if="isDoc" :items="fielDocSidebar" />
+    <Doc
+      v-else-if="isDoc"
+      :items="fielDocSidebar"
+    />
 
-    <Page v-else :sidebar-items="sidebarItems" @toggle-topImg="toggleTopImg">
-      <slot name="page-top" slot="top" />
-      <slot name="page-bottom" slot="bottom" />
+    <Page
+      v-else
+      :sidebar-items="sidebarItems"
+      @toggle-topImg="toggleTopImg"
+    >
+      <slot
+        slot="top"
+        name="page-top"
+      />
+      <slot
+        slot="bottom"
+        name="page-bottom"
+      />
     </Page>
 
-    <SWUpdatePopup :updateEvent="swUpdateEvent" />
+    <SWUpdatePopup :update-event="swUpdateEvent" />
   </div>
 </template>
 
 <script>
-import Vue from "vue"
-import nprogress from "nprogress"
-import Home from "./Home.vue"
-import Navbar from "./Navbar.vue"
-import Page from "./Page.vue"
-import Sidebar from "./Sidebar.vue"
-import Doc from "./Doc.vue"
-import SWUpdatePopup from "./SWUpdatePopup.vue"
+import Vue from 'vue'
+import nprogress from 'nprogress'
+import Home from './Home.vue'
+import Navbar from './Navbar.vue'
+import Page from './Page.vue'
+import Sidebar from './Sidebar.vue'
+import Doc from './Doc.vue'
+import SWUpdatePopup from './SWUpdatePopup.vue'
 
-import { resolveSidebarItems, resolveFielDoc } from "./util"
+import { resolveSidebarItems, resolveFielDoc } from './util'
 
 export default {
-  components: { Home, Page, Sidebar, Navbar, SWUpdatePopup, Doc },
+  components: {
+    Home,
+    Page,
+    Sidebar,
+    Navbar,
+    SWUpdatePopup,
+    Doc
+  },
 
-  data() {
+  data () {
     return {
       isSidebarOpen: false,
       swUpdateEvent: null,
@@ -62,9 +97,10 @@ export default {
   },
 
   computed: {
-    shouldShowNavbar() {
+    shouldShowNavbar () {
       const { themeConfig } = this.$site
       const { frontmatter } = this.$page
+
       if (frontmatter.navbar === false || themeConfig.navbar === false) {
         return false
       }
@@ -77,9 +113,10 @@ export default {
       )
     },
 
-    shouldShowSidebar() {
+    shouldShowSidebar () {
       const { frontmatter } = this.$page
-      //当页面的layout、home、sidebar都存在时，以及解析出来的页面标题存在时，侧边栏不显示
+
+      // 当页面的layout、home、sidebar都存在时，以及解析出来的页面标题存在时，侧边栏不显示
       return (
         !frontmatter.layout &&
         !frontmatter.home &&
@@ -88,8 +125,8 @@ export default {
       )
     },
 
-    sidebarItems() {
-      //返回页面标题层次结构
+    sidebarItems () {
+      // 返回页面标题层次结构
       if (this.isDoc) {
         return this.fielDocSidebar
       }
@@ -102,35 +139,43 @@ export default {
       )
     },
 
-    isDoc() {
-      return this.$route.path.includes("/docs/")
+    isDoc () {
+      return this.$route.path.includes('/docs/')
     },
 
-    fielDocSidebar() {
+    fielDocSidebar () {
       if (this.isDoc) {
         return resolveFielDoc(this.$site)
       }
 
-      return ""
+      return ''
     },
 
-    pageClasses() {
+    pageClasses () {
       const userPageClass = this.$page.frontmatter.pageClass
+
       return [
         {
-          "no-navbar": !this.shouldShowNavbar,
-          "sidebar-open": this.isSidebarOpen,
-          "no-sidebar": !this.shouldShowSidebar,
-          "no-topImg": !this.showTopImg
+          'no-navbar': !this.shouldShowNavbar,
+          'sidebar-open': this.isSidebarOpen,
+          'no-sidebar': !this.shouldShowSidebar,
+          'no-topImg': !this.showTopImg
         },
         userPageClass
       ]
     }
   },
+  watch: {
+    $route () {
+      this.routePathChange()
+    }
+  },
 
-  mounted() {
+  mounted () {
     // configure progress bar
-    nprogress.configure({ showSpinner: false })
+    nprogress.configure({
+      showSpinner: false
+    })
 
     this.$router.beforeEach((to, from, next) => {
       if (to.path !== from.path && !Vue.component(to.name)) {
@@ -144,29 +189,30 @@ export default {
       this.isSidebarOpen = false
     })
 
-    this.$on("sw-updated", this.onSWUpdated)
+    this.$on('sw-updated', this.onSWUpdated)
     this.routePathChange()
   },
 
   methods: {
-    toggleSidebar(to) {
-      this.isSidebarOpen = typeof to === "boolean" ? to : !this.isSidebarOpen
+    toggleSidebar (to) {
+      this.isSidebarOpen = typeof to === 'boolean' ? to : !this.isSidebarOpen
     },
-    toggleTopImg() {
+    toggleTopImg () {
       // console.log("图片切换信息");
       // this.showTopImg=false
     },
     // side swipe
-    onTouchStart(e) {
+    onTouchStart (e) {
       this.touchStart = {
         x: e.changedTouches[0].clientX,
         y: e.changedTouches[0].clientY
       }
     },
 
-    onTouchEnd(e) {
+    onTouchEnd (e) {
       const dx = e.changedTouches[0].clientX - this.touchStart.x
       const dy = e.changedTouches[0].clientY - this.touchStart.y
+
       if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
         if (dx > 0 && this.touchStart.x <= 80) {
           this.toggleSidebar(true)
@@ -176,27 +222,23 @@ export default {
       }
     },
 
-    onSWUpdated(e) {
+    onSWUpdated (e) {
       this.swUpdateEvent = e
     },
-    //路由路径变化
-    routePathChange() {
-      var pathRe = /\/[^\/]+\//
-      var currentPath = this.$route.path.match(pathRe)
+    // 路由路径变化
+    routePathChange () {
+      const pathRe = /\/[^\/]+\//
+      const currentPath = this.$route.path.match(pathRe)
         ? this.$route.path.match(pathRe)[0]
-        : ""
-      if (currentPath == "/blog/") {
+        : ''
+
+      if (currentPath == '/blog/') {
         this.showTopImg = false
         this.showArticleList = false
       } else {
         this.showTopImg = true
         this.showArticleList = true
       }
-    }
-  },
-  watch: {
-    $route() {
-      this.routePathChange()
     }
   }
 }

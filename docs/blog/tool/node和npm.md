@@ -123,7 +123,7 @@ npm uninstall [<name><version>][-g]/[--save][-dev]
 core.editord 的值可以配置多个，删除多个时：
 `git config --global --unset-all core.editor`
 
-删除一个时
+删除一个时:
 `git config --global --unset core.editor`
 
 ## git 配置 ssh

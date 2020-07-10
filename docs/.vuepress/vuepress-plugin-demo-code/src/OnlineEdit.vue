@@ -7,42 +7,73 @@
   >
     <!-- https://blog.codepen.io/documentation/api/prefill/ -->
     <template v-if="platform === 'codepen'">
-      <input type="hidden" name="data" :value="codepenValue" />
+      <input
+        type="hidden"
+        name="data"
+        :value="codepenValue"
+      >
     </template>
 
     <!-- https://docs.jsfiddle.net/api/display-a-fiddle-from-post -->
     <template v-if="platform === 'jsfiddle'">
-      <input type="hidden" name="js" :value="js" />
-      <input type="hidden" name="css" :value="css" />
-      <input type="hidden" name="html" :value="html" />
-      <input type="hidden" name="panel_js" value="3" />
-      <input type="hidden" name="resources" :value="resources" />
+      <input
+        type="hidden"
+        name="js"
+        :value="js"
+      >
+      <input
+        type="hidden"
+        name="css"
+        :value="css"
+      >
+      <input
+        type="hidden"
+        name="html"
+        :value="html"
+      >
+      <input
+        type="hidden"
+        name="panel_js"
+        value="3"
+      >
+      <input
+        type="hidden"
+        name="resources"
+        :value="resources"
+      >
     </template>
 
     <!-- https://codesandbox.io/docs/importing#define-api -->
     <template v-if="platform === 'codesandbox'">
-      <input type="hidden" name="parameters" :value="codeSandboxValue" />
+      <input
+        type="hidden"
+        name="parameters"
+        :value="codeSandboxValue"
+      >
       <input
         v-if="codesandboxOptions.query"
         type="hidden"
         name="query"
         :value="codesandboxOptions.query"
-      />
+      >
       <input
         v-if="codesandboxOptions.embed"
         type="hidden"
         name="embed"
         :value="codesandboxOptions.embed"
-      />
+      >
       <input
         v-if="codesandboxOptions.json"
         type="hidden"
         name="json"
         :value="codesandboxOptions.json"
-      />
+      >
     </template>
 
-    <button type="submit" :data-tip="platformTip">
+    <button
+      type="submit"
+      :data-tip="platformTip"
+    >
       <component :is="platform" />
     </button>
   </form>
@@ -71,15 +102,42 @@ export default {
       required: true,
       validator: (val) => PLATFORMS.indexOf(val) !== -1
     },
-    js: { type: String, default: '' },
-    css: { type: String, default: '' },
-    html: { type: String, default: '' },
-    jsPre: { type: String, default: 'babel' },
-    layout: { type: String, default: 'left' },
-    jsLibs: { type: Array, default: () => [] },
-    cssLibs: { type: Array, default: () => [] },
-    editors: { type: String, default: '111' },
-    codesandboxOptions: { type: Object, default: () => ({}) },
+    js: {
+      type: String,
+      default: ''
+    },
+    css: {
+      type: String,
+      default: ''
+    },
+    html: {
+      type: String,
+      default: ''
+    },
+    jsPre: {
+      type: String,
+      default: 'babel'
+    },
+    layout: {
+      type: String,
+      default: 'left'
+    },
+    jsLibs: {
+      type: Array,
+      default: () => []
+    },
+    cssLibs: {
+      type: Array,
+      default: () => []
+    },
+    editors: {
+      type: String,
+      default: '111'
+    },
+    codesandboxOptions: {
+      type: Object,
+      default: () => ({})
+    },
     language: {
       type: String,
       default: 'html'
@@ -115,7 +173,7 @@ export default {
         cssLibs: vm.cssLibs
       })
   },
-  mounted() {}
+  mounted () {}
 }
 </script>
 

@@ -1,6 +1,7 @@
 const Mode = require('frontmatter-markdown-loader/mode')
 
 module.exports = {
+  cache: false,
   title: 'My Blog',
   description: 'Just playing around',
   head: [
@@ -55,7 +56,7 @@ module.exports = {
     extractHeaders: ['h2', 'h3'],
     extendMarkdown: (md) => {
       md.use(require('markdown-it-container'), 'test', {
-        render: function(tokens, idx) {
+        render: function (tokens, idx) {
           return '<div>test test</div>'
         }
       })
@@ -86,25 +87,27 @@ module.exports = {
       }
     ],
     // [
-    //   'demo-code',
+    //   'md-enhance',
     //   {
-    //     jsLibs: [
-    //       'https://cdn.jsdelivr.net/npm/@sparklinm/util/d/bundle.min.umd.js'
-    //     ],
-    //     minHeight: 0
+    //   // 启用下角标功能
+    //     sub: true,
+    //     // 启用上角标
+    //     sup: true,
+    //     footnote: true,
+    //     mark: true,
+    //     // flowchart: true,
+    //     // tex: true
     //   }
-    // ]
+    // ],
     [
       require('./vuepress-plugin-demo-code/src/index'),
       {
-        jsLibs: [
-          'https://cdn.jsdelivr.net/npm/@sparklinm/util/d/bundle.min.umd.js'
-        ],
+        jsLibs: ['https://cdn.jsdelivr.net/npm/@sparklinm/util/d/bundle.min.umd.js'],
         minHeight: 0,
-        onlineBtns:{
+        onlineBtns: {
           codepen: true,
           jsfiddle: false,
-          codesandbox: false,
+          codesandbox: false
         }
       }
     ]
