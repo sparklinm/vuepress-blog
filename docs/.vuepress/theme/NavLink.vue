@@ -1,10 +1,12 @@
 <template>
   <router-link
+    v-if="!isExternal(link)"
     class="nav-link"
     :to="link"
-    v-if="!isExternal(link)"
     :exact="exact"
-  >{{ item.text }}</router-link>
+  >
+    {{ item.text }}
+  </router-link>
   <a
     v-else
     :href="link"
@@ -13,7 +15,7 @@
     :rel="isMailto(link) || isTel(link) ? null : 'noopener noreferrer'"
   >
     {{ item.text }}
-    <OutboundLink/>
+    <OutboundLink />
   </a>
 </template>
 
@@ -26,14 +28,11 @@ export default {
       required: true
     }
   },
-  mounted(){
-    
-  },
 
   computed: {
     link () {
       // console.log(ensureExt(this.item.link));
-      
+
       return ensureExt(this.item.link)
     },
 
@@ -43,6 +42,9 @@ export default {
       }
       return this.link === '/'
     }
+  },
+  mounted () {
+
   },
 
   methods: {

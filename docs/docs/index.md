@@ -1,5 +1,9 @@
 # 工具函数
 
+## 文档
+
+[记录平时使用到的工具函数和工具类](https://sparklinm.github.io/js-library/module-common.html)
+
 ## 数组
 
 ### 数组扁平化

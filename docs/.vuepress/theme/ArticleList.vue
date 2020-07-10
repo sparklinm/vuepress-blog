@@ -1,7 +1,13 @@
 <template>
-  <div class="article-list-inner" v-show="articleArray.length">
+  <div
+    v-show="articleArray.length"
+    class="article-list-inner"
+  >
     <div class="tag-container">
-      <div class="tag-item-container" v-show="this.category == '/tag/'">
+      <div
+        v-show="this.category == '/tag/'"
+        class="tag-item-container"
+      >
         <span
           v-for="(item, index) in tagAry"
           class="tag"
@@ -11,10 +17,12 @@
           {{ item }}
         </span>
       </div>
-      <div class="tag-tip" v-show="currentTag">
+      <div
+        v-show="currentTag"
+        class="tag-tip"
+      >
         标签为
-        <span>{{ currentTag }}</span
-        >下的文章
+        <span>{{ currentTag }}</span>下的文章
       </div>
     </div>
     <transition-group
@@ -23,13 +31,18 @@
       tag="div"
     >
       <article
-        class="article-item"
         v-for="(article, index) in articleArray"
-        :key="index + 5"
         v-if="showarticleItem"
+        :key="index + 5"
+        class="article-item"
       >
-        <div class="article-title" @click="toArticle(article.path)">
-          <h3 class>{{ article.title }}</h3>
+        <div
+          class="article-title"
+          @click="toArticle(article.path)"
+        >
+          <h3 class>
+            {{ article.title }}
+          </h3>
         </div>
         <div class="article-bref">
           <!-- <div class="article-cover-container"> -->
@@ -42,21 +55,23 @@
           <!-- </div> -->
           <!-- <h3  class="article-text">{{article.title}}</h3> -->
 
-          <span class="article-text" v-html="article.content"></span>
+          <span
+            class="article-text"
+            v-html="article.content"
+          />
           <div class="article-card">
             <span>
-              <i class="fa-calendar-check-o fa"></i>
+              <i class="fa-calendar-check-o fa" />
               {{ article.time }}
             </span>
             <span class="article-tag-container">
-              <i class="fa-tag fa"></i>
+              <i class="fa-tag fa" />
 
               <span
-                class="article-tag"
                 v-for="(item, index) in article.tag"
+                class="article-tag"
                 @click="toBlogByTag(item)"
-                >{{ item }}</span
-              >
+              >{{ item }}</span>
             </span>
           </div>
         </div>
@@ -77,50 +92,55 @@
 
 <script>
 // import { mapGetters } from "vuex";
-import { formatTime } from "./util.js"
+import { formatTime } from './util.js'
+
 // import Loading from "./Loading";
 // import Tip from "./Tip";
 export default {
-  data() {
+  props: ['blogs', 'content', 'tagAry'],
+  data () {
     return {
       showarticleItem: true,
 
       articleArray: [],
       showLoading: false,
       showTip: false,
-      category: "",
+      category: ''
     }
   },
-  props: ["blogs", "content", "tagAry"],
   //   computed: {
   //     ...mapGetters({
   //       //   articleArray: "getarticleArray"
   //     })
   //   },
   computed: {
-    currentTag() {
+    currentTag () {
       return this.tagAry[this.getCurrentTagIndex()]
-    },
+    }
   },
   watch: {
-    $route() {
+    $route () {
       this.getArticleList()
-    },
+    }
   },
+  mounted () {
+    this.getArticleList()
+  },
+  destroyed () {},
 
   methods: {
-    //日志显示动画
-    setShowarticleItem(flag) {
+    // 日志显示动画
+    setShowarticleItem (flag) {
       this.showarticleItem = flag
     },
-    //跳转到文章页面
-    toArticle(path) {
+    // 跳转到文章页面
+    toArticle (path) {
       this.$router.push(path)
-      this.$emit("toggle-topImg")
+      this.$emit('toggle-topImg')
     },
 
-    //鼠标滚动事件
-    wheelEvent() {
+    // 鼠标滚动事件
+    wheelEvent () {
       if (this.isToPageBottom()) {
         this.setShowLoading(true)
         this.pageNum++
@@ -134,46 +154,49 @@ export default {
       }
     },
 
-    //得到当前分类信息
-    getCurrentCategory() {
-      var pathRe = /\/[^\/]+\//
+    // 得到当前分类信息
+    getCurrentCategory () {
+      const pathRe = /\/[^\/]+\//
+
       this.category = this.$route.path.match(pathRe)
         ? this.$route.path.match(pathRe)[0]
-        : ""
+        : ''
     },
-    //得到当前标签信息
-    getCurrentTagIndex() {
-      var pathRe = /[^\/]+/g
+    // 得到当前标签信息
+    getCurrentTagIndex () {
+      const pathRe = /[^\/]+/g
+
       return this.$route.path.match(pathRe)
         ? this.$route.path.match(pathRe)[1]
-        : ""
+        : ''
     },
-    //根据当前分类获取相应博客信息
-    getArticleList() {
+    // 根据当前分类获取相应博客信息
+    getArticleList () {
       this.getCurrentCategory()
-      var allPages = this.$site.pages
+      const allPages = this.$site.pages
       // console.log(allPages);
-      var currentPages = []
+      let currentPages = []
       // console.log(this.category);
 
-      if (this.category === "") {
+      if (this.category === '') {
         currentPages = allPages.filter((page) => {
-          return page.path.includes("/blog/")
+          return page.path.includes('/blog/')
         })
-      } else if (this.category === "/web/") {
+      } else if (this.category === '/web/') {
         currentPages = allPages.filter((page) => {
-          return page.path.includes("/blog/web/")
+          return page.path.includes('/blog/web/')
         })
-      } else if (this.category === "/tool/") {
+      } else if (this.category === '/tool/') {
         currentPages = allPages.filter((page) => {
-          return page.path.includes("/blog/tool/")
+          return page.path.includes('/blog/tool/')
         })
-      } else if (this.category === "/tag/") {
+      } else if (this.category === '/tag/') {
         if (this.currentTag) {
           currentPages = allPages.filter((page) => {
             if (page.frontmatter.meta && page.frontmatter.meta[0].tag) {
-              let key = page.frontmatter.meta[0].tag
-              let keyAry = key.split(",")
+              const key = page.frontmatter.meta[0].tag
+              const keyAry = key.split(',')
+
               return keyAry.some((item) => {
                 return item == this.currentTag
               })
@@ -181,7 +204,7 @@ export default {
           })
         } else {
           currentPages = allPages.filter((page) => {
-            return page.path.includes("/blog/")
+            return page.path.includes('/blog/')
           })
         }
       }
@@ -192,27 +215,25 @@ export default {
         )
       })
       this.articleArray = currentPages.map((page) => {
-        var meta = page.frontmatter.meta[0]
+        const meta = page.frontmatter.meta[0]
+
         return {
           title: meta.title,
           content: page.excerpt,
           // coverImg: require("../public/img/a2.jpg"),
-          tag: meta.tag.split(","),
+          tag: meta.tag.split(','),
           time: formatTime(meta.time),
-          path: page.path,
+          path: page.path
         }
       })
     },
-    //标签点击去往相应标签页面
-    toBlogByTag(tag) {
-      var index = this.tagAry.indexOf(tag)
+    // 标签点击去往相应标签页面
+    toBlogByTag (tag) {
+      const index = this.tagAry.indexOf(tag)
+
       this.$router.push(`/tag/${index}/`)
-    },
-  },
-  mounted() {
-    this.getArticleList()
-  },
-  destroyed() {},
+    }
+  }
 }
 </script>
 <style lang="stylus">

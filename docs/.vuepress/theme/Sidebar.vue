@@ -1,6 +1,9 @@
 <template>
   <div class="sidebar">
-    <NavLinks fromComponent="sidebar" v-if="showNavLinks" />
+    <NavLinks
+      v-if="showNavLinks"
+      from-component="sidebar"
+    />
     <slot name="top" />
     <SidebarLinks
       :depth="0"
@@ -11,11 +14,14 @@
 </template>
 
 <script>
-import NavLinks from "./NavLinks.vue";
+import NavLinks from './NavLinks.vue'
 import SidebarLinks from './SidebarLinks.vue'
 
 export default {
-  components: { SidebarLinks, NavLinks },
+  components: {
+    SidebarLinks,
+    NavLinks
+  },
 
   props: {
     items: {
@@ -24,8 +30,8 @@ export default {
     showNavLinks: {
       default: true
     }
-  },
-};
+  }
+}
 
 </script>
 

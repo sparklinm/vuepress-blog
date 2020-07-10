@@ -2,15 +2,15 @@
 //
 'use strict'
 
-module.exports = function container_plugin(md, name = 'demo', options) {
+module.exports = function container_plugin (md, name = 'demo', options) {
   // Second param may be useful if you decide
   // to increase minimal allowed marker length
 
-  function validateDefault(params /*, markup*/) {
+  function validateDefault (params /* , markup*/) {
     return params.trim().split(' ', 2)[0] === name
   }
 
-  function renderDefault(tokens, idx, _options, env, slf) {
+  function renderDefault (tokens, idx, _options, env, slf) {
     const { content } = tokens[idx]
     // add a class to the opening tag
 
@@ -19,36 +19,36 @@ module.exports = function container_plugin(md, name = 'demo', options) {
 
   options = options || {}
 
-  var min_markers = 3,
-    marker_str = options.marker || ':',
-    marker_char = marker_str.charCodeAt(0),
-    marker_len = marker_str.length,
-    validate = options.validate || validateDefault,
-    render = options.render || renderDefault
+  const min_markers = 3
+  const marker_str = options.marker || ':'
+  const marker_char = marker_str.charCodeAt(0)
+  const marker_len = marker_str.length
+  const validate = options.validate || validateDefault
+  const render = options.render || renderDefault
 
   // startLine 每一个块的开始
   // endLine 文档结尾
   //
-  function container(state, startLine, endLine, silent) {
-    let open = '```'
-    let close = '```'
-    var openDelim,
-      len,
-      params,
-      nextLine,
-      token,
-      firstLine,
-      lastLine,
-      lastLinePos,
-      haveEndMarker = false,
-      // 该行开始字符的索引
-      // bMarks 储存该行开始字符在文档中的位置
-      // tShift 开始字符前面的空格字符数
-      // 这个空格是指符合规范的空格，例如嵌套列表前面的空格。
-      pos = state.bMarks[startLine] + state.tShift[startLine],
-      // 该行结束字符的索引
-      // eMarks该行结束字符在文档中的位置
-      max = state.eMarks[startLine]
+  function container (state, startLine, endLine, silent) {
+    const open = '```'
+    const close = '```'
+    let openDelim
+    let len
+    let params
+    let nextLine
+    let token
+    let firstLine
+    let lastLine
+    let lastLinePos
+    let haveEndMarker = false
+    // 该行开始字符的索引
+    // bMarks 储存该行开始字符在文档中的位置
+    // tShift 开始字符前面的空格字符数
+    // 这个空格是指符合规范的空格，例如嵌套列表前面的空格。
+    let pos = state.bMarks[startLine] + state.tShift[startLine]
+    // 该行结束字符的索引
+    // eMarks该行结束字符在文档中的位置
+    let max = state.eMarks[startLine]
 
     if (pos + open.length > max) {
       return false
@@ -63,7 +63,7 @@ module.exports = function container_plugin(md, name = 'demo', options) {
     pos += open.length
     firstLine = state.src.slice(pos, max)
 
-    let tags = firstLine.split(' ')
+    const tags = firstLine.split(' ')
 
     params = tags[0]
 
@@ -76,7 +76,7 @@ module.exports = function container_plugin(md, name = 'demo', options) {
       return false
     }
 
-    let marker = firstLine.split(' ')[1]
+    const marker = firstLine.split(' ')[1]
 
     // 第二个参数
     if (marker !== name) {

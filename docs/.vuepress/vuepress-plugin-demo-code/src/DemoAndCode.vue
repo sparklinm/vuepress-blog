@@ -2,24 +2,36 @@
   <section class="demo-and-code-wrapper">
     <slot name="demo" />
 
-    <div ref="script" class="demo-script"></div>
+    <div
+      ref="script"
+      class="demo-script"
+    />
 
     <div
       ref="codeControl"
       class="code-control"
-      @click="onClickControl"
       :style="codeControlStyle"
+      @click="onClickControl"
     >
-      <span class="control-btn" v-show="isShowControl">
+      <span
+        v-show="isShowControl"
+        class="control-btn"
+      >
         {{ controlText }}
-        <i class="arrow-icon" :style="iconStyle" />
+        <i
+          class="arrow-icon"
+          :style="iconStyle"
+        />
       </span>
 
-      <div class="online-wrapper" @click.stop>
+      <div
+        class="online-wrapper"
+        @click.stop
+      >
         <OnlineEdit
           v-for="platform in platforms"
-          :key="platform"
           v-show="showOnlineBtns[platform]"
+          :key="platform"
           v-bind="parsedCode"
           :platform="platform"
           :language="language"
@@ -27,8 +39,15 @@
       </div>
     </div>
 
-    <div class="code-wrapper" ref="codeWrapper" :style="codeWrapperStyle">
-      <div v-html="highlightCode" :class="`language-${language} extra-class`" />
+    <div
+      ref="codeWrapper"
+      class="code-wrapper"
+      :style="codeWrapperStyle"
+    >
+      <div
+        :class="`language-${language} extra-class`"
+        v-html="highlightCode"
+      />
     </div>
   </section>
 </template>
@@ -45,22 +64,49 @@ export default {
     OnlineEdit
   },
   props: {
-    htmlStr: { type: String, default: '' },
-    language: { type: String, default: 'vue' },
-    showText: { type: String, default: 'show code' },
-    hideText: { type: String, default: 'hide code' },
-    jsLibsStr: { type: String, default: '[]' },
-    cssLibsStr: { type: String, default: '[]' },
+    htmlStr: {
+      type: String,
+      default: ''
+    },
+    language: {
+      type: String,
+      default: 'vue'
+    },
+    showText: {
+      type: String,
+      default: 'show code'
+    },
+    hideText: {
+      type: String,
+      default: 'hide code'
+    },
+    jsLibsStr: {
+      type: String,
+      default: '[]'
+    },
+    cssLibsStr: {
+      type: String,
+      default: '[]'
+    },
     minHeight: {
       type: Number,
       default: 200,
       validator: (val) => val >= 0
     },
-    onlineBtnsStr: { type: String, default: '{}' },
-    codesandboxStr: { type: String, default: '{}' },
-    scripts: { type: String, default: '' }
+    onlineBtnsStr: {
+      type: String,
+      default: '{}'
+    },
+    codesandboxStr: {
+      type: String,
+      default: '{}'
+    },
+    scripts: {
+      type: String,
+      default: ''
+    }
   },
-  data() {
+  data () {
     return {
       scrollTop: 0,
       platforms: PLATFORMS,
@@ -105,42 +151,24 @@ export default {
       const cssLibs = parseAndDecode(vm.cssLibsStr)
       const codesandboxOptions = parseAndDecode(vm.codesandboxStr)
 
-      return { js, css, html, jsLibs, cssLibs, codesandboxOptions }
-    }
-  },
-  methods: {
-    onClickControl() {
-      this.isShowCode = !this.isShowCode
-
-      if (!this.isShowCode) {
-        this.getDomRect()
-        window.scrollTo({ top: this.scrollTop, behavior: 'smooth' })
+      return {
+        js,
+        css,
+        html,
+        jsLibs,
+        cssLibs,
+        codesandboxOptions
       }
-    },
-    getDomRect() {
-      const navbar = document.querySelector('header.navbar')
-      const { codeWrapper } = this.$refs
-
-      const {
-        top: codeTop,
-        height: codeHeight
-      } = codeWrapper.getBoundingClientRect()
-      const { height: navbarHeight } = navbar
-        ? navbar.getBoundingClientRect()
-        : { height: 0 }
-
-      this.scrollTop = window.scrollY + codeTop - navbarHeight - 35
-      this.codeHeight = codeHeight
-      this.navbarHeight = navbarHeight
     }
   },
 
-  mounted() {
+  mounted () {
     this.getDomRect()
     this.isShowCode = false
 
     const scripts = decodeURIComponent(this.scripts)
     const cont = document.querySelector('.demo-script')
+
     cont.innerHTML = scripts
     const oldScripts = cont.querySelectorAll('script')
 
@@ -161,6 +189,37 @@ export default {
 
     if (this.codeHeight < this.minHeight) {
       this.isShowControl = false
+    }
+  },
+  methods: {
+    onClickControl () {
+      this.isShowCode = !this.isShowCode
+
+      if (!this.isShowCode) {
+        this.getDomRect()
+        window.scrollTo({
+          top: this.scrollTop,
+          behavior: 'smooth'
+        })
+      }
+    },
+    getDomRect () {
+      const navbar = document.querySelector('header.navbar')
+      const { codeWrapper } = this.$refs
+
+      const {
+        top: codeTop,
+        height: codeHeight
+      } = codeWrapper.getBoundingClientRect()
+      const { height: navbarHeight } = navbar
+        ? navbar.getBoundingClientRect()
+        : {
+          height: 0
+        }
+
+      this.scrollTop = window.scrollY + codeTop - navbarHeight - 35
+      this.codeHeight = codeHeight
+      this.navbarHeight = navbarHeight
     }
   }
 }

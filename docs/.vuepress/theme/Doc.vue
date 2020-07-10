@@ -1,28 +1,32 @@
 <template>
   <main class="page-doc">
-    <Content :custom="false" ref="content" class="doc-content" />
+    <Content
+      ref="content"
+      :custom="false"
+      class="doc-content"
+    />
   </main>
 </template>
 
 <script>
-import Sidebar from "./Sidebar"
+import Sidebar from './Sidebar'
 // import { marquee } from "@sparklinm/util"
 // console.log(marquee);
 
 
 export default {
   components: {
-    Sidebar,
+    Sidebar
   },
-  props: ["items"],
-  data() {
+  props: ['items'],
+  data () {
     return {}
   },
-  created() {
+  created () {
     // let md = require("../../docs/marquee/example.md")
     // console.log(md.vue.component);
   },
-  methods: {},
+  methods: {}
 }
 </script>
 

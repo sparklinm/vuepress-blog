@@ -4,8 +4,10 @@
       v-if="enabled"
       class="sw-update-popup"
     >
-      {{message}}<br>
-      <button @click="reload">{{buttonText}}</button>
+      {{ message }}<br>
+      <button @click="reload">
+        {{ buttonText }}
+      </button>
     </div>
   </transition>
 </template>
@@ -23,6 +25,7 @@ export default {
     popupConfig () {
       for (const config of [this.$themeLocaleConfig, this.$site.themeConfig]) {
         const sw = config.serviceWorker
+
         if (sw && sw.updatePopup) {
           return typeof sw.updatePopup === 'object' ? sw.updatePopup : {}
         }
@@ -36,11 +39,13 @@ export default {
 
     message () {
       const c = this.popupConfig
+
       return (c && c.message) || 'New content is available.'
     },
 
     buttonText () {
       const c = this.popupConfig
+
       return (c && c.buttonText) || 'Refresh'
     }
   },

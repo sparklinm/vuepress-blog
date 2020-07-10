@@ -3,88 +3,86 @@ const markdownItContainer = require('./markdown-it-container')
 const { encodeAndStringify, HTMLEncode, setScripts } = require('./utils')
 
 const defaults = {
-    onlineBtns: {
-        codepen: true,
-        jsfiddle: true,
-        codesandbox: true,
-    },
-    // https://codesandbox.io/docs/importing#define-api
-    codesandbox: {
-        deps: {}, // dependencies
-        json: '',
-        query: 'module=App.vue',
-        embed: '',
-    },
+  onlineBtns: {
+    codepen: true,
+    jsfiddle: true,
+    codesandbox: true
+  },
+  // https://codesandbox.io/docs/importing#define-api
+  codesandbox: {
+    deps: {}, // dependencies
+    json: '',
+    query: 'module=App.vue',
+    embed: ''
+  }
 }
 
 module.exports = (options = {}) => {
-    const {
-        demoCodeMark = 'demo',
-        copyOptions = {
-            align: 'top',
-            selector: '.demo-and-code-wrapper div[class*="language-"] pre',
-        },
-    } = options
-    const END_TYPE = `container_${demoCodeMark}_close`
-
-    return {
-        name: 'vuepress-plugin-demo-code',
-        plugins: [
-            ['code-copy', copyOptions],
-        ],
-        enhanceAppFiles: [
-            path.resolve(__dirname, 'enhanceAppFile.js'),
-        ],
-        extendMarkdown: (md) => {
-            md.use(markdownItContainer, demoCodeMark, { render })
-        },
+  const {
+    demoCodeMark = 'demo',
+    copyOptions = {
+      align: 'top',
+      selector: '.demo-and-code-wrapper div[class*="language-"] pre'
     }
+  } = options
+  const END_TYPE = `container_${demoCodeMark}_close`
 
-    function render (tokens, idx) {
-        const { info, content } = tokens[idx]
+  return {
+    name: 'vuepress-plugin-demo-code',
+    plugins: [['code-copy', copyOptions]],
+    enhanceAppFiles: [path.resolve(__dirname, 'enhanceAppFile.js')],
+    extendMarkdown: (md) => {
+      md.use(markdownItContainer, demoCodeMark, {
+        render
+      })
+    }
+  }
 
-        let htmlStr = ''
-        let lastLine = 0
-        const language = (info || 'html').trim()
+  function render (tokens, idx) {
+    const { info, content } = tokens[idx]
 
-        for (let index = idx; index < tokens.length; index++) {
-            const { map, type, content } = tokens[index]
+    let htmlStr = ''
+    let lastLine = 0
+    const language = (info || 'html').trim()
 
-            if (type === END_TYPE) break
+    for (let index = idx; index < tokens.length; index++) {
+      const { map, type, content } = tokens[index]
 
-            // add empty lines
-            if (map) {
-                const delta = map[0] - (lastLine || map[1])
+      if (type === END_TYPE) break
 
-                if (delta > 0) {
-                    htmlStr += '\n'.repeat(delta)
-                }
+      // add empty lines
+      if (map) {
+        const delta = map[0] - (lastLine || map[1])
 
-                lastLine = map[1]
-            }
-
-            htmlStr += content
+        if (delta > 0) {
+          htmlStr += '\n'.repeat(delta)
         }
 
-        const {
-            jsLibs = [],
-            cssLibs = [],
-            showText = 'show code',
-            hideText = 'hide code',
-            minHeight,
-        } = options
+        lastLine = map[1]
+      }
 
-        const onlineBtns = Object.assign({}, defaults.onlineBtns, options.onlineBtns)
-        const codesandbox = Object.assign({}, defaults.codesandbox, options.codesandbox)
+      htmlStr += content
+    }
 
-        const jsLibsStr = encodeAndStringify(jsLibs)
-        const cssLibsStr = encodeAndStringify(cssLibs)
-        const onlineBtnsStr = encodeAndStringify(onlineBtns)
-        const codesandboxStr = encodeAndStringify(codesandbox)
-        const renderedContent = content.replace(/<script>[\w\W]*<\/script>/g, '')
-        const scripts = encodeURIComponent(content.match(/<script>[\w\W]*?<\/script>/g))
-        
-        let str = ` <DemoAndCode
+    const {
+      jsLibs = [],
+      cssLibs = [],
+      showText = 'show code',
+      hideText = 'hide code',
+      minHeight
+    } = options
+
+    const onlineBtns = Object.assign({}, defaults.onlineBtns, options.onlineBtns)
+    const codesandbox = Object.assign({}, defaults.codesandbox, options.codesandbox)
+
+    const jsLibsStr = encodeAndStringify(jsLibs)
+    const cssLibsStr = encodeAndStringify(cssLibs)
+    const onlineBtnsStr = encodeAndStringify(onlineBtns)
+    const codesandboxStr = encodeAndStringify(codesandbox)
+    const renderedContent = content.replace(/<script>[\w\W]*<\/script>/g, '')
+    const scripts = encodeURIComponent(content.match(/<script>[\w\W]*?<\/script>/g))
+
+    const str = ` <DemoAndCode
                   htmlStr="${encodeURIComponent(htmlStr)}"
                   language="${language}"
                   showText="${showText}"
@@ -101,6 +99,7 @@ module.exports = (options = {}) => {
                     </template>
                  </DemoAndCode>
                `
-        return str
-    }
+
+    return str
+  }
 }

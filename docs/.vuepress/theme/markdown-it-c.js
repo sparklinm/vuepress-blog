@@ -1,14 +1,14 @@
 // Process block-level custom containers
 //
 'use strict'
-function container_plugin(md, name = 'demo', options) {
+function container_plugin (md, name = 'demo', options) {
   // Second param may be useful if you decide
   // to increase minimal allowed marker length
-  function validateDefault(params /*, markup*/) {
+  function validateDefault (params /* , markup*/) {
     return params.trim().split(' ', 2)[0] === name
   }
 
-  function renderDefault(tokens, idx, _options, env, slf) {
+  function renderDefault (tokens, idx, _options, env, slf) {
     // add a class to the opening tag
     if (tokens[idx].nesting === 1) {
       tokens[idx].attrJoin('class', name)
@@ -19,36 +19,36 @@ function container_plugin(md, name = 'demo', options) {
 
   options = options || {}
 
-  var min_markers = 3,
-    marker_str = options.marker || ':',
-    marker_char = marker_str.charCodeAt(0),
-    marker_len = marker_str.length,
-    validate = options.validate || validateDefault,
-    render = options.render || renderDefault
+  const min_markers = 3
+  const marker_str = options.marker || ':'
+  const marker_char = marker_str.charCodeAt(0)
+  const marker_len = marker_str.length
+  const validate = options.validate || validateDefault
+  const render = options.render || renderDefault
 
   // startLine 每一个块的开始
   // endLine 文档结尾
   //
-  function container(state, startLine, endLine, silent) {
-    let open = `'''`
-    let close = `'''`
-    var openDelim,
-      len,
-      params,
-      nextLine,
-      token,
-      firstLine,
-      lastLine,
-      lastLinePos,
-      haveEndMarker = false,
-      // 该行开始字符的索引
-      pos = state.bMarks[startLine] + state.tShift[startLine],
-      // 该行结束字符的索引
-      max = state.eMarks[startLine]
+  function container (state, startLine, endLine, silent) {
+    const open = '\'\'\''
+    const close = '\'\'\''
+    let openDelim
+    let len
+    let params
+    let nextLine
+    let token
+    let firstLine
+    let lastLine
+    let lastLinePos
+    let haveEndMarker = false
+    // 该行开始字符的索引
+    let pos = state.bMarks[startLine] + state.tShift[startLine]
+    // 该行结束字符的索引
+    let max = state.eMarks[startLine]
 
     // console.log(state.blkIndent);
     // console.log(state.sCount);
-    
+
 
     // console.log(state.bMarks);
 
@@ -67,7 +67,7 @@ function container_plugin(md, name = 'demo', options) {
     pos += open.length
     firstLine = state.src.slice(pos, max)
 
-    let tags = firstLine.split(' ')
+    const tags = firstLine.split(' ')
 
     params = tags[0]
 
@@ -79,7 +79,7 @@ function container_plugin(md, name = 'demo', options) {
       return false
     }
 
-    let marker = firstLine.split(' ')[1]
+    const marker = firstLine.split(' ')[1]
 
     if (marker !== name) {
       return false
@@ -177,20 +177,21 @@ function container_plugin(md, name = 'demo', options) {
   md.renderer.rules['container_' + name] = render
 }
 
-let markdownit = require('markdown-it')
-let markdownitc = container_plugin
-let md = new markdownit({
+const markdownit = require('markdown-it')
+const markdownitc = container_plugin
+const md = new markdownit({
   html: true,
   linkify: true,
   typographer: true
 })
 
 md.use(markdownitc, 'demo', {
-  render: function(tokens, idx) {
-    let content = tokens[idx].content
+  render: function (tokens, idx) {
+    const content = tokens[idx].content
 
     const renderedContent = content.replace(/<script>[\w\W]+<\/script>/g, '')
     const scripts = content.match(/<script>[\w\W]+<\/script>/g)
+
     return ` <DemoAndCode>
                     <template slot="demo">
                         ${renderedContent}
@@ -200,7 +201,7 @@ md.use(markdownitc, 'demo', {
   }
 })
 
-let t = md.render(
+const t = md.render(
   `
 - 456
 
