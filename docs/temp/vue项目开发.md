@@ -105,7 +105,6 @@ props 对于组件而言是配置作用，如果需要对 props 进行更改，�
 
 通用性高的组件是趋向于无状态的组件，但并不是要求所有状态都由父组件控制，只需要根据功能将主要的部分（需要面对不同情况改变）交出控制权，同时为这些部分设定默认值，防止父组件不对这些部分控制时，组件有一个默认的显示。
 
-
 ## todo 项目
 
 画圆弧：
@@ -197,3 +196,43 @@ https://github.com/GeoffZhu/vue-event-calendar
 
 [axios 中文网](http://www.axios-js.com/zh-cn/docs/)
 
+### 跨域
+
+proxy 跨域：
+
+```js
+// vue.config.js
+
+module.exports = {
+  //...
+  devServer: {
+    proxy: {
+      '/api': {
+        target: 'http://www.baidu.com/',
+        changeOrigin: true, // 如果跨域需要设置为true
+        secure: false, // 设置支持https协议的代理
+        pathRewrite: {
+          '^/api': ''
+        }
+      },
+      '/api2': {
+        // .....
+      }
+    }
+  }
+}
+```
+
+这里会将 `/api/users` 代理为 `http://www.baidu.com/user`。
+
+`pathRewrite`: 路径重写，也就是说会修改最终请求的 API 路径。如果不设置：`/api/users` 会被代理为 `http://www.baidu.com/api/users`。但如上面设置后 `api` 代理后的 `/api` 会被设置为 `''`。
+
+`secure: false`: 不检查安全问题。设置后，可以接受运行在 HTTPS 上，也可以使用无效证书的后端服务器。
+
+跨域只会发生在浏览器端，也就是我们前端去请求一个不在同一个域下的接口就会发生跨域问题。
+
+如果是服务端请求，则不会发生跨域。
+
+`devServer.proxy` 运用的就是这样的原理。
+
+通过上面的配置，将原本直接发给其他服务器的请求，先发给本地 `nodejs` 构建的服务器，再利用 [http-proxy-middleware](https://github.com/chimurai/http-proxy-middleware) 这个 http 代理中间件，转发给其他服务器。
