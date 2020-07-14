@@ -71,7 +71,6 @@ module.exports = {
       // })
     }
   },
-  base: '/vuepress-blog/',
   plugins: [
     [
       '@vuepress/active-header-links',
