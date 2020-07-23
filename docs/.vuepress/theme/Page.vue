@@ -103,6 +103,7 @@ export default {
       if (this.$page.lastUpdated) {
         return new Date(this.$page.lastUpdated).toLocaleString(this.$lang)
       }
+      return ''
     },
 
     lastUpdatedText () {

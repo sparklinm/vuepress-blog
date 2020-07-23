@@ -208,9 +208,12 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
+        // 不能直接写ip地址，需要http开头
         target: 'http://www.baidu.com/',
-        changeOrigin: true, // 如果跨域需要设置为true
-        secure: false, // 设置支持https协议的代理
+        // 如果跨域需要设置为true
+        changeOrigin: true,
+        // 设置支持https协议的代理
+        secure: false,
         pathRewrite: {
           '^/api': ''
         }
@@ -270,7 +273,32 @@ https://www.cnblogs.com/flyuz/p/9962491.html
 
 https://www.cnblogs.com/chenleideblog/p/10499807.html
 
-
 防火墙
 
 https://www.cnblogs.com/kluan/p/5993767.html
+
+### 部署
+
+Github pages
+
+腾讯 cdn 加速：
+
+1. 国内加速需要备案。
+2. 备案除了购买域名还需要购买腾讯云服务器（阿里云一样）。
+3. 需要先为 github page 绑定自定义域名，例如 blog.xxx.cn
+4. 再用加速域名，例如：www.xxx.cn 加速 blog.xxx.cn
+5. cdn 加速具体腾讯云文档。
+
+其他部署：Netlify 和 Vercel
+
+它们都提供对 github 仓库一键式部署，并能够部署后端。
+
+Netlify 国内网速较慢，Vercel 很快。
+
+如果 Vercel 注册不成功，很可能是邮箱问题，需要更换邮箱。
+
+部署到云服务器：
+
+ftp 工具（例如：File Zilla）压缩后的代码，不压缩上传慢。
+
+云服务器配置安全组开放相应接口。

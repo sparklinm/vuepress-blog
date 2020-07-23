@@ -16,9 +16,10 @@
           <ol class="title-list">
             <li
               v-for="(item, index) in hotArticleAry"
+              :key="index"
               @click="toArticle(item.path)"
             >
-              <!-- <span class="order">{{index+1}}</span> -->
+              <span class="order">{{ index+1 }}</span>
               {{ item.title }}
             </li>
           </ol>
@@ -263,7 +264,7 @@ export default {
   .order {
     margin-right: 10px;
     padding: 3px 5px;
-    background: #d9534f;
+    background: #FF9933;
     color: white;
     border-radius: 5px;
   }

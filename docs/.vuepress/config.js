@@ -2,13 +2,20 @@ const Mode = require('frontmatter-markdown-loader/mode')
 
 module.exports = {
   cache: false,
-  title: 'My Blog',
+  title: 'Spark',
   description: 'Just playing around',
+  dest: 'public',
   head: [
     [
       'script',
       {
         src: 'https://cdn.jsdelivr.net/gh/sparklinm/js-library/d/bundle.umd.js'
+      }
+    ],
+    [
+      'link', {
+        rel: 'icon',
+        href: '/logo.png'
       }
     ],
     [
@@ -20,6 +27,7 @@ module.exports = {
     ]
   ],
   themeConfig: {
+    logo: '/logo.png',
     nav: [
       {
         text: '首页',

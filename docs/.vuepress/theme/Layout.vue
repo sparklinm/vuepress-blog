@@ -173,6 +173,8 @@ export default {
 
   mounted () {
     // configure progress bar
+    document.querySelector('.cm-enter-loading').remove()
+
     nprogress.configure({
       showSpinner: false
     })
