@@ -426,7 +426,7 @@ Vue.mixin({
 
 **效果演示：**
 
-![路由缓存和动画演示](https:/fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1592539227159.jpg)
+![路由缓存和动画演示](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/%E8%B7%AF%E7%94%B1%E5%8A%A8%E7%94%BB%E5%92%8C%E7%BC%93%E5%AD%98.gif))
 
 ## 参考文献
 
