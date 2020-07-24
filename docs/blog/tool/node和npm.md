@@ -68,8 +68,6 @@ npm config set registry https://registry.npmjs.org
 npm config set registry https://registry.npm.scutech.com
 ```
 
-she
-
 ## 五 npm 常用命令
 
 ### 1. 安装

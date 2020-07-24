@@ -92,7 +92,7 @@ socket.on(event, function(data) {
 
 这里事件机制继承 `EventEmitter` 类，拥有 `EventEmitter` 的全部方法。
 
-## 房间和命名空间
+### 房间和命名空间
 
 在 socket.io 里有房间与命名空间两个概念。房间和命名空间可分割通信并将单个套接字分组。
 

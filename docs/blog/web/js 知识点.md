@@ -103,7 +103,7 @@ valueOf：Date 对象返回日期的毫秒数，String、Boolean、Number 返回
 
 toString：
 
-1. Array：将数组元素用","连接成一个字符串，数组中空数组[]、null、undefined 转为空字符串，数组中 object 按照 ToPrimitive 方式转换，层叠的数组会被依次拆分。
+1. Array：将数组元素用","连接成一个字符串,即：调用 join() 方法，数组中空数组[]、null、undefined 转为空字符串，数组中 object 按照 ToPrimitive 方式转换，层叠的数组会被依次拆分。
 2. 普通对象：调用 Object.prototype.toString()，返回"[object Object]"。
 
 > Symbol 对象无法隐式转换为原始值和字符串，即隐式转换时，Symbol 对象不会自动调用 valueOf 或者 toString。
@@ -120,7 +120,15 @@ toString：
 
 #### 减、乘、除、取余、大于、小于
 
-都是转换为 Number。
+减、乘、除、取余，都是转换为 Number。
+
+当对象比较大小时，先 ToPrimitive 转换为原始值。再按照上面的隐式转换规则作转换。
+
+当有 null 和 undefined 时，null 和 undefined 转换为数字。
+
+最后要么是数字和数字之间比较，要么是字符与字符之间比较。
+
+当字符串之间比较大小时，按第一个不相同的字符的 ASCLL 码值来比较的。
 
 #### 非元素（!）、if（condition）、与（&&）、或（||）
 

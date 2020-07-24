@@ -98,13 +98,27 @@ export default {
 
     // 获得推荐博客
     getHotArticleAry () {
+      const articles = ['小球碰撞与反射', '拖拽排序', '实践 token 验证', 'vue 项目配置', '用 websocket 打造一个在线聊天室']
       const currentPages = this.$site.pages.filter(page => {
         return page.path.includes('/blog/')
       })
 
+
+
+
+
       const blogs = currentPages.map((page, index) => {
         return Object.assign(page.frontmatter.meta[0], page.frontmatter.path)
       })
+
+      if (articles.length) {
+        blogs.forEach(blog => {
+          if (articles.includes(blog.title)) {
+            this.hotArticleAry.push(blog)
+          }
+        })
+        return
+      }
       const obj = {}
 
       while (true) {
@@ -145,7 +159,7 @@ export default {
     },
     // 标签点击去往相应标签页面
     toBlogByTag (tag) {
-      this.$router.push(`/tag/${tag}/`)
+      this.$router.push(`/tag/?tag=${tag}`)
 
       // this.$emit("transfer-blogs",this.blogs[tag])
     }

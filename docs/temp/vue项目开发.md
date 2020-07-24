@@ -156,7 +156,12 @@ props 对于组件而言是配置作用，如果需要对 props 进行更改，�
 ```javascript
 plugins: [
   new webpack.ProvidePlugin({
-    Velocity: 'velocity-animate'
+    Velocity: 'velocity-animate',
+    // 引入某个函数
+    _cloneDeep: ['lodash', 'cloneDeep'],
+    _isEmpty: ['lodash', 'isEmpty'],
+    // 但lodash应该这样单个引入才能treeshake
+    _isEmpty: 'lodash/isEmpty'
   })
 ]
 ```
@@ -248,11 +253,8 @@ module.exports = {
 
 如果是直接点开打包后的 index.html 文件，即使设置的是 `publicPath: './'`，那么从绝对路径导入资源依然会找不到。需要将打包后的文件放入一个 web 服务器中。
 
-Chrome 如何禁用同源策略，快捷方式 —— 目标后面添加：
+<!-- mark -->
 
-```bash
---args --disable-web-security --user-data-dir
-```
 
 三丰云：
 https://www.sanfengyun.com/freeServer/
@@ -260,6 +262,28 @@ https://www.sanfengyun.com/freeServer/
 https://www.zhihu.com/question/53891486
 
 https://www.21yunbox.com/services/
+
+### 打包体积优化
+
+打包体积优化
+
+1. productionSourceMap
+
+删除打包后的 source map 文件，优化很小。
+
+2. gzip
+
+compression-webpack-plugin: 开启 gzip 压缩
+
+3. TerserPlugin
+
+terser-webpack-plugin
+
+https://github.com/webpack-contrib/terser-webpack-plugin
+
+https://www.html.cn/doc/webpack2/plugins/uglifyjs-webpack-plugin/
+
+压缩优化）js 文件
 
 ### nginx 配置
 
@@ -277,28 +301,3 @@ https://www.cnblogs.com/chenleideblog/p/10499807.html
 
 https://www.cnblogs.com/kluan/p/5993767.html
 
-### 部署
-
-Github pages
-
-腾讯 cdn 加速：
-
-1. 国内加速需要备案。
-2. 备案除了购买域名还需要购买腾讯云服务器（阿里云一样）。
-3. 需要先为 github page 绑定自定义域名，例如 blog.xxx.cn
-4. 再用加速域名，例如：www.xxx.cn 加速 blog.xxx.cn
-5. cdn 加速具体腾讯云文档。
-
-其他部署：Netlify 和 Vercel
-
-它们都提供对 github 仓库一键式部署，并能够部署后端。
-
-Netlify 国内网速较慢，Vercel 很快。
-
-如果 Vercel 注册不成功，很可能是邮箱问题，需要更换邮箱。
-
-部署到云服务器：
-
-ftp 工具（例如：File Zilla）压缩后的代码，不压缩上传慢。
-
-云服务器配置安全组开放相应接口。

@@ -1,14 +1,12 @@
 <!DOCTYPE html>
 <html lang="{{ lang }}">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>{{ title }}</title>
-    <meta name="generator" content="VuePress {{ version }}">
-    {{{ userHeadTags }}}
-    {{{ pageMeta }}}
-    {{{ renderResourceHints() }}}
-    {{{ renderStyles() }}}
+    <meta name="generator" content="VuePress {{ version }}" />
+    {{{ userHeadTags }}} {{{ pageMeta }}} {{{ renderResourceHints() }}} {{{
+    renderStyles() }}}
   </head>
   <body>
     <!--vue-ssr-outlet-->
@@ -43,8 +41,10 @@
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+        text-align: center;
       }
       .cm-configure-border-1 {
+        display: inline-block;
         width: 115px;
         height: 115px;
         padding: 3px;
@@ -54,6 +54,7 @@
       }
 
       .cm-configure-border-2 {
+        display: inline-block;
         width: 115px;
         height: 115px;
         padding: 3px;
@@ -72,7 +73,8 @@
       .cm-loading-text {
         font-size: 40px;
         color: white;
-        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
+        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
+          'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
       }
 
       @keyframes configure-clockwise {
@@ -111,6 +113,5 @@
         }
       }
     </style>
-
   </body>
 </html>
