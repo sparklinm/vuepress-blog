@@ -194,3 +194,66 @@ const exist = function (board, word) {
 
   return false
 }
+
+
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {number[]} preorder
+ * @param {number[]} inorder
+ * @return {TreeNode}
+ */
+
+function TreeNode (val) {
+  this.val = val
+  this.left = this.right = null
+}
+const buildTree = function (preorder, inorder) {
+
+  const build = function (pStart, pEnd, iStart, iEnd) {
+    if (pStart > pEnd || iStart > iEnd) {
+      return null
+    }
+
+    const val = preorder[pStart]
+    const node = new TreeNode(val)
+    const index = inorder.findIndex(item => item === val)
+
+    node.left = build(pStart + 1, pStart + index, iStart, index - 1)
+    node.right = build(pStart + index + 1, pEnd, index + 1, iEnd)
+
+    return node
+  }
+
+  return build(0, preorder.length - 1, 0, inorder.length - 1)
+}
+
+console.log(buildTree([3, 9, 20, 15, 7], [9, 3, 15, 20, 7]))
+
+
+const obj = {
+  _a: 1,
+  set a (val) {
+    this._a = val
+  }
+}
+
+Object.defineProperty(obj, 'a', {
+  get () {
+    console.log('ss')
+
+    return this._a
+  }
+})
+const property = Object.getOwnPropertyDescriptor(obj, 'a')
+
+
+
+console.log(property)
+
+

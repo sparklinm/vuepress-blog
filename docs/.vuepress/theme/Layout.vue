@@ -43,7 +43,6 @@
 
     <Doc
       v-else-if="isDoc"
-      :items="fielDocSidebar"
     />
 
     <Page
@@ -140,7 +139,7 @@ export default {
     },
 
     isDoc () {
-      return this.$route.path.includes('/docs/')
+      return this.$route.path.includes('/docs/') || this.$route.path.includes('/algorithm/')
     },
 
     fielDocSidebar () {

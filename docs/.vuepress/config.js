@@ -50,10 +50,6 @@ module.exports = {
         link: '/tool/'
       },
       {
-        text: '数据结构和算法',
-        link: '/algorithm/'
-      },
-      {
         text: '微代码',
         link: '/docs/'
       }
@@ -68,7 +64,20 @@ module.exports = {
       ['/docs/marquee', '文字走马灯'],
       ['/docs/sorter', '拖拽排序'],
       ['/docs/slide-select', '滑动选择'],
-      ['/docs/broadcast', '轮播图']
+      ['/docs/broadcast', '轮播图'],
+      {
+        title: '算法题总结',
+        children: [
+          ['/algorithm/树', '树'],
+          ['/algorithm/二分法', '二分法'],
+          ['/algorithm/排序算法', '排序算法'],
+          ['/algorithm/分治法', '分治法'],
+          ['/algorithm/动态规划', '动态规划'],
+          ['/algorithm/深度优先遍历', '深度优先遍历'],
+          ['/algorithm/回溯算法', '回溯算法'],
+          ['/algorithm/其他', '其他']
+        ]
+      }
     ]
   },
   markdown: {
