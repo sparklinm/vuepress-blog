@@ -79,6 +79,12 @@ module.exports = {
 1. [一份不可多得的 TS 学习指南（1.8W 字）](https://juejin.im/post/6872111128135073806)
 2. [TypeScript 中文网](https://www.tslang.cn/docs/handbook/basic-types.html)
 
+TS 工具泛型：
+
+1. [TS 一些工具泛型的使用及其实现](https://zhuanlan.zhihu.com/p/40311981)
+2. [TS 一些工具泛型的使用及其实现(续一)](https://zhuanlan.zhihu.com/p/137745695)
+3. [github utility-types](https://github.com/piotrwitek/utility-types)
+
 官方网站在线编辑器，可供学习使用：
 
 [TypeScript 在线编辑器](https://www.typescriptlang.org/play)
@@ -117,3 +123,34 @@ function test({ a }: { a: string }) {
   console.log(a)
 }
 ```
+
+### 类的静态部分
+
+```ts
+// 静态部分接口
+interface ClockConstructor {
+    new (hour: number, minute: number): ClockInterface;
+}
+// 实例部分接口
+interface ClockInterface {
+    tick();
+}
+
+function createClock(ctor: ClockConstructor, hour: number, minute: number): any {
+    return new ctor(hour, minute);
+}
+
+class DigitalClock {
+    constructor(h: number, m: number) { }
+    tick(){
+        console.log("tick toc");
+    }
+    
+}
+
+let digital = createClock(DigitalClock, 12, 17);
+```
+
+如果一个 `class` 的类型满足 `ClockConstructor` ，则这个类实例化后必须有 `tick` 方法。
+
+[typescript类类型-实例部分与静态部分详解](https://juejin.cn/post/6844903881860874254)。

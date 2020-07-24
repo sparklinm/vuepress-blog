@@ -29,16 +29,17 @@ meta:
 
 1. 首先在 node 安装目录下创建两个文件夹：`node_cahe`、`node_global`
    ![](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560933933165.png)
+
 2. 打开 cmd 输入
 
-```bash
-npm config set prefix "F:\My development tools\node\node_global"
-npm config set cache "F:\My development tools\node\node_cache"
-```
+   ```bash
+   npm config set prefix "F:\My development tools\node\node_global"
+   npm config set cache "F:\My development tools\node\node_cache"
+   ```
 
-设置完毕后可以使用`npm config list`查看设置是否成功。
+   设置完毕后可以使用`npm config list`查看设置是否成功。
 
-如果出现 npm 命令卡死的情况，可以删除`C:\Users\{账户}\.npmrc`文件。
+   如果出现 npm 命令卡死的情况，可以删除`C:\Users\{账户}\.npmrc`文件。
 
 3. 打开系统的环境配置页面，`我的电脑-属性-高级系统设置-系统属性-环境变量`
    ![](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560931065120.png)
@@ -130,6 +131,43 @@ core.editord 的值可以配置多个，删除多个时：
 生成密钥：`ssh-keygen -t rsa -C "邮箱"`
 
 C 盘：`C:\Users\{用户}\.ssh` 下，将`id_rsa.pub`文件中复制到 GitHub 网站个人用户 ssh keys 处
+
+## yarn
+
+1. **`yarn global` 全局安装包无法使用。**
+
+   使用 `yarn global bin`：
+
+   ```bash
+   yarn global bin
+   // F:\My development tools\node\node_global\bin
+   ```
+
+   还需要将这个路径添加到环境变量 `path` 才可以使用 `yarn` 全局添加的包。
+
+2. **`yarn` 命令时错误：安装包后，文件名、目录名或卷标语法不正确**
+
+   前面，我们自定义了全局包的安装和缓存位置：
+
+   ```bash
+   npm config set prefix "F:\My development tools\node\node_global"
+   npm config set cache "F:\My development tools\node\node_cache"
+   ```
+
+   查看 `yarn` 全局包位置：
+
+   ```bash
+      yarn global dir
+   ```
+
+   这里也可以设置 `yarn` 全局包的安装和缓存位置：
+
+   ```bash
+   yarn config set global-folder "F:\My development tools\yarn\global"
+   yarn config set cache-folder "F:\My development tools\yarn\cache"
+   ```
+
+   将 `yarn` 全局包位置设置得和 `node` 全局包同一磁盘，就可以解决这个问题。
 
 六 参考文献
 

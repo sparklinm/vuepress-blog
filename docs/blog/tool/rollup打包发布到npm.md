@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: rollup打包发布到npm
-    time: 2020-07-03 10:17:47
-    tag: rollup
+    - title: rollup打包发布到npm
+      time: 2020-07-03 10:17:47
+      tag: rollup
 ---
 
 # rollup 打包发布到 npm
@@ -31,36 +31,36 @@ meta:
 
 ```js
 // rollup.config
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import babel from 'rollup-plugin-babel'
-import { terser } from 'rollup-plugin-terser'
-import { eslint } from 'rollup-plugin-eslint'
+import resolve from 'rollup-plugin-node-resolve';
+import commonjs from 'rollup-plugin-commonjs';
+import babel from 'rollup-plugin-babel';
+import { terser } from 'rollup-plugin-terser';
+import { eslint } from 'rollup-plugin-eslint';
 
 export default [
-  {
-    input: 'src/main.js',
-    output: {
-      name: 'timeout',
-      file: '/lib/tool.js',
-      format: 'umd'
-    },
-    plugins: [
-      resolve(), // 这样 Rollup 能找到 `ms`
-      commonjs(), // 这样 Rollup 能转换 `ms` 为一个ES模块
-      eslint({
-        throwOnError: true,
-        throwOnWarning: true,
-        include: ['src/**'],
-        exclude: ['node_modules/**']
-      }),
-      babel({
-        exclude: 'node_modules/**' // 只编译我们的源代码
-      }),
-      terser()
-    ]
-  }
-]
+    {
+        input: 'src/main.js',
+        output: {
+            name: 'timeout',
+            file: '/lib/tool.js',
+            format: 'umd'
+        },
+        plugins: [
+            resolve(), // 这样 Rollup 能找到 `ms`
+            commonjs(), // 这样 Rollup 能转换 `ms` 为一个ES模块
+            eslint({
+                throwOnError: true,
+                throwOnWarning: true,
+                include: ['src/**'],
+                exclude: ['node_modules/**']
+            }),
+            babel({
+                exclude: 'node_modules/**' // 只编译我们的源代码
+            }),
+            terser()
+        ]
+    }
+];
 ```
 
 ### Babel
@@ -89,49 +89,42 @@ yarn add @babel/plugin-transform-runtime
 
 ```js
 module.exports = {
-  presets: [
-    [
-      '@babel/preset-env',
-      {
-        modules: false,
-        useBuiltIns: 'usage',
-        corejs: 3,
-        targets: {
-          // 目标浏览器版本，该浏览器缺失某新语法，babel才会引入这个新语法
-          ie: 11
-        }
-      }
-    ]
-  ],
-  plugins: [
-    [
-      '@babel/plugin-transform-runtime',
-      {
-        corejs: 3, // 可选 false | 2 | 3
-        proposals: true //corejs 3 可设置
-      }
-    ]
-  ],
-  // 不编译的文件夹
-  ignore: ['node_modules/**']
-}
+    presets: [
+        [
+            '@babel/preset-env',
+            {
+                modules: false,
+                useBuiltIns: false,
+                corejs: 2,
+                targets: {
+                    // 目标浏览器版本，该浏览器缺失某新语法，babel才会引入这个新语法
+                    ie: 11
+                }
+            }
+        ]
+    ],
+    plugins: [
+        [
+            '@babel/plugin-transform-runtime',
+            {
+                corejs: 3, // 可选 false | 2 | 3
+                proposals: true //corejs 3 可设置
+            }
+        ]
+    ],
+    // 不编译的文件夹
+    ignore: ['node_modules/**']
+};
 ```
 
-这里使用的 `@babel/runtime-corejs3`，适用于：
+corejs 配置的不同，需要安装不同的 `runtime-corejs`:
+| `corejs` option | Install command |
+| --------------- | ------------------------------------------- |
+| `false` | `npm install --save @babel/runtime` |
+| `2` | `npm install --save @babel/runtime-corejs2` |
+| `3` | `npm install --save @babel/runtime-corejs3` |
 
-- 开发类库/工具（生成不污染全局空间和内置对象原型的代码）
-- 借助 @babel/runtime 中帮助函数（helper function）移除冗余工具函数
-
-详情见：[结合 Babel 7.4.0 谈一下 Babel-runtime 和 Babel-polyfill](https://juejin.im/post/5d0373a95188251e1b5ebb6c)
-
-`corejs` 可选值为 `false | 2 | 3`，区别在于：
-
-- corejs: 2 only supports global variables (e.g. Promise) and static properties (e.g. Array.from)。
-- corejs: 3 also supports instance properties (e.g. [].includes)。
-
-`corejs` 选择的版本越高，也意味着打包体积的增加。
-
-参考：[babel plugin-transform-runtime](https://www.babeljs.cn/docs/babel-plugin-transform-runtime)。
+这里千万不能配置 `useBuiltIns`，具体查看：[babel7 配置](./babel7配置.md)
 
 同时需要设置 `modules: false` ，否则 `Babel` 会在 `Rollup` 有机会做处理之前，将我们的模块转成 `CommonJS` ，导致 `Rollup` 的一些处理失败。
 
@@ -139,13 +132,16 @@ module.exports = {
 
 ```js
 export default {
-    babel({
-      exclude: 'node_modules/**', // 只编译我们的源代码
-      // plugin-transform-runtime 生效
-      runtimeHelpers: true
-    })
-  ]
-}
+    plugins: [
+        babel({
+            exclude: 'node_modules/**', // 只编译我们的源代码
+            // plugin-transform-runtime 生效
+            runtimeHelpers: true,
+            // 默认情况下，babel只处理js文件，如果要处理ts之类的文件，需在这里指定
+            extensions: ['.ts', '.tsx']
+        })
+    ]
+};
 ```
 
 ### Eslint
@@ -165,16 +161,16 @@ yarn add rollup-plugin-postcss autoprefixer cssnano -D
 ```
 
 ```js
-import postcss from 'rollup-plugin-postcss'
-import autoprefixer from 'autoprefixer'
-import cssnano from 'cssnano'
+import postcss from 'rollup-plugin-postcss';
+import autoprefixer from 'autoprefixer';
+import cssnano from 'cssnano';
 
 plugins: [
-  postcss({
-    plugins: [autoprefixer, cssnano],
-    extract: 'dist/css/bundle.css' // 输出路径
-  })
-]
+    postcss({
+        plugins: [autoprefixer, cssnano],
+        extract: 'dist/css/bundle.css' // 输出路径
+    })
+];
 ```
 
 > [autoprefixer](https://github.com/postcss/autoprefixer#readme)，为 css 添加前缀。
@@ -198,9 +194,9 @@ npx postcss ./src/*.css --use autoprefixer -d build/
 
 ```json
 {
-  "scripts": {
-    "postcss": "npx postcss ./src/*.css --use autoprefixer -d dist/css/"
-  }
+    "scripts": {
+        "postcss": "npx postcss ./src/*.css --use autoprefixer -d dist/css/"
+    }
 }
 ```
 
@@ -217,21 +213,21 @@ yarn add typescript rollup-plugin-typescript2 -D
 `rollup.config.js`:
 
 ```js
-import typescript from 'rollup-plugin-typescript2'
+import typescript from 'rollup-plugin-typescript2';
 
 export default {
-  input: 'src/index.ts',
+    input: 'src/index.ts',
 
-  plugins: [
-    typescript({
-      tsconfigOverride: {
-        compilerOptions: {
-          module: 'ESNext'
-        }
-      }
-    })
-  ]
-}
+    plugins: [
+        typescript({
+            tsconfigOverride: {
+                compilerOptions: {
+                    module: 'ESNext'
+                }
+            }
+        })
+    ]
+};
 ```
 
 ## 开发环境和生产环境
@@ -253,15 +249,15 @@ export default {
 
 ```js
 //
-const isDev = process.env.NODE_ENV !== 'production'
+const isDev = process.env.NODE_ENV !== 'production';
 export default {
-  output: {
-    file: (!isDev && 'bundle.min.js') || 'bundle.js',
-    format: 'umd',
-    name: 'util'
-  },
-  plugins: [!isDev && terser()]
-}
+    output: {
+        file: (!isDev && 'bundle.min.js') || 'bundle.js',
+        format: 'umd',
+        name: 'util'
+    },
+    plugins: [!isDev && terser()]
+};
 ```
 
 ## 多出口打包
@@ -270,16 +266,16 @@ export default {
 
 ```json
 {
-  "main": "d/bundle.min.cjs.js",
-  "module": "d/bundle.min.esm.js",
-  "browser": "d/bundle.min.umd.js",
-  "scripts": {
-    "build": "cross-env NODE_ENV=production rollup -c",
-    "dev": "rollup -c -w",
-    "test": "node test/test.js"
-  },
-  "dependencies": {},
-  "devDependencies": {}
+    "main": "d/bundle.min.cjs.js",
+    "module": "d/bundle.min.esm.js",
+    "browser": "d/bundle.min.umd.js",
+    "scripts": {
+        "build": "cross-env NODE_ENV=production rollup -c",
+        "dev": "rollup -c -w",
+        "test": "node test/test.js"
+    },
+    "dependencies": {},
+    "devDependencies": {}
 }
 ```
 
@@ -330,15 +326,15 @@ export default {
 
 ```js
 export default {
-  output: {
-    file: (!isDev && 'bundle.min.js') || 'bundle.js',
-    format: 'iife',
-    name: 'util',
-    globals: {
-      jquery: '$'
+    output: {
+        file: (!isDev && 'bundle.min.js') || 'bundle.js',
+        format: 'iife',
+        name: 'util',
+        globals: {
+            jquery: '$'
+        }
     }
-  }
-}
+};
 ```
 
 `iife` 包是一个自动执行函数，适合作为 `<script>` 标签。
@@ -346,15 +342,15 @@ export default {
 配置了 `globals` 后，`$` 会作为一个参数传入自动执行函数：
 
 ```js
-;(function(exports, $) {
-  // code
-})({}, $)
+(function (exports, $) {
+    // code
+})({}, $);
 ```
 
 为什么要这样做？原因如下：
 
-- 外部类库可能已经被打包压缩，自己用 `rollup` 再打包一次，效果也许并不如之前。
-- 不利于缓存，类库不经常更新，可以当做静态资源充分发挥缓存优势，而手动 build 的内容受工具配置影响。
+-   外部类库可能已经被打包压缩，自己用 `rollup` 再打包一次，效果也许并不如之前。
+-   不利于缓存，类库不经常更新，可以当做静态资源充分发挥缓存优势，而手动 build 的内容受工具配置影响。
 
 但如果引入的是 lodash 中几个函数，这时候将这几个函数打包进去。
 
@@ -365,21 +361,21 @@ export default {
 ```js
 // rollup.config.js
 export default {
-  output: {
-    file: (!isDev && 'bundle.min.js') || 'bundle.js',
-    format: 'iife',
-    name: 'util',
-    paths: {
-      jquery: 'https://cdn.bootcss.com/jquery/3.2.1/jquery.js'
+    output: {
+        file: (!isDev && 'bundle.min.js') || 'bundle.js',
+        format: 'iife',
+        name: 'util',
+        paths: {
+            jquery: 'https://cdn.bootcss.com/jquery/3.2.1/jquery.js'
+        }
     }
-  }
-}
+};
 
 // bundle.js
-define(['https://cdn.bootcss.com/jquery/3.2.1/jquery.js'], function(jquery) {
-  jquery.selectAll('p').style('color', 'purple')
-  // ...
-})
+define(['https://cdn.bootcss.com/jquery/3.2.1/jquery.js'], function (jquery) {
+    jquery.selectAll('p').style('color', 'purple');
+    // ...
+});
 ```
 
 ## 发布到 npm
@@ -392,33 +388,33 @@ define(['https://cdn.bootcss.com/jquery/3.2.1/jquery.js'], function(jquery) {
 
 ```json
 {
-  "name": "名字",
-  "version": "0.0.1",
-  "description": "tool library",
-  // 入口文件 import pkg from 'package-name'，导入的就是这个文件
-  "main": "d/bundle.min.cjs.js",
-  // es模块打包
-  "module": "d/bundle.min.esm.js",
-  // 浏览器模块打包
-  "browser": "d/bundle.min.umd.js",
-  // TypeScript 的入口文件，用于代码提示
-  "typings": "dist/types/index.d.ts",
-  "author": "作者",
-  // 协议
-  "license": "",
-  // 主页
-  "homepage": "",
-  // 关键字
-  "keywords": ["tools", "javascript", "library"],
-  // 仓库地址
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/sparklinm/js-library"
-  },
-  // npm publish 前自动build
-  "prepublishOnly": "npm run build",
-  // 包对NodeJs版本要求
-  "engines": "6.0"
+    "name": "名字",
+    "version": "0.0.1",
+    "description": "tool library",
+    // 入口文件 import pkg from 'package-name'，导入的就是这个文件
+    "main": "d/bundle.min.cjs.js",
+    // es模块打包
+    "module": "d/bundle.min.esm.js",
+    // 浏览器模块打包
+    "browser": "d/bundle.min.umd.js",
+    // TypeScript 的入口文件，用于代码提示
+    "typings": "dist/types/index.d.ts",
+    "author": "作者",
+    // 协议
+    "license": "",
+    // 主页
+    "homepage": "",
+    // 关键字
+    "keywords": ["tools", "javascript", "library"],
+    // 仓库地址
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sparklinm/js-library"
+    },
+    // npm publish 前自动build
+    "prepublishOnly": "npm run build",
+    // 包对NodeJs版本要求
+    "engines": "6.0"
 }
 ```
 
@@ -455,31 +451,56 @@ npm publish
 
 1. 登录时问题，`npm ERR! code E409`
 
-   需要切换源为 npm 源，`npm config set registry https://registry.npmjs.org`
-   注册后需要先验证邮箱，才能发布。
+    需要切换源为 npm 源，`npm config set registry https://registry.npmjs.org`
+    注册后需要先验证邮箱，才能发布。
 
 2. 打包时错误，`EACCES: permission denied, mkdir...`
 
-   npm 会有生命周期，某个包会有生命周期来执行一些东西，安全起见会自动降级导致没有权限执行一些操作，通过--unsafe-perm 参数来解锁该限制。
+    npm 会有生命周期，某个包会有生命周期来执行一些东西，安全起见会自动降级导致没有权限执行一些操作，通过--unsafe-perm 参数来解锁该限制。
 
-   `npm build --unsafe-perm`
+    `npm build --unsafe-perm`
 
-   一劳永逸的方法：
+    一劳永逸的方法：
 
-   - `npm config set unsafe-perm`（针对当前用户的）
-   - `npm config -g set unsafe-perm`(全局的）
+    - `npm config set unsafe-perm`（针对当前用户的）
+    - `npm config -g set unsafe-perm`(全局的）
 
 3. 邮箱未验证，`npm ERR! you must verify your email...`
 
-   去邮箱验证即可。
+    去邮箱验证即可。
 
 4. 无法发布私有包，`npm ERR! You must sign up for private packages`
 
-   默认情况下，包名为 `@<username>/<your-package>` 的包为私有包，私有包是需要付费的。以下命令可以指明为公有包：
+    默认情况下，包名为 `@<username>/<your-package>` 的包为私有包，私有包是需要付费的。以下命令可以指明为公有包：
 
-   ```bash
-   npm publish --access public
-   ```
+    ```bash
+    npm publish --access public
+    ```
+
+## 问题
+
+### es6 模块语法
+
+书写代码时，只能使用 `es6` 模块语法，不能使用 `commonJS` 模块语法，不然通过 `commonJS` 引入的包不会被打包到最终文件中。
+
+### [name] is not exported by [module]
+
+打包时提示 `[name] is not exported by [module]`，这是因为 `rollup` 严格使用 `es6` 模块打包，对于一些第三方模块，可能是使用 `commonJS` 模块声明的，这种时候一般会使用 `rollup-plugin-commonjs` 插件将 `commonJS` 模块转换为 `es6` 模块。
+
+当转换失败时，就会提示这个错误。解决方法，配置 `namedExports` 选项：
+
+```js
+export default [
+ plugins: [
+    commonjs({
+        namedExports: {
+            // 对应 module ：name
+            'module': ['name'],
+        }
+    }),
+  ]
+}
+```
 
 ## 参考文献
 
