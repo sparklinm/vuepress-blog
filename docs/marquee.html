@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>marquee | Spark</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <script src="https://cdn.jsdelivr.net/gh/sparklinm/js-library/d/bundle.umd.js"></script>
+    <link rel="icon" href="/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/dist/markdown-it.js"></script>
+    <meta name="description" content="Just playing around">
+    <meta title="marquee.js 文档" time="2020-07-02T16:25:14.000Z" tag="js,文档">
+    <link rel="preload" href="/assets/css/0.styles.0c2811eb.css" as="style"><link rel="preload" href="/assets/js/app.61190595.js" as="script"><link rel="preload" href="/assets/js/46.4d738550.js" as="script"><link rel="prefetch" href="/assets/js/10.2414efa1.js"><link rel="prefetch" href="/assets/js/11.06130b25.js"><link rel="prefetch" href="/assets/js/12.33bbb473.js"><link rel="prefetch" href="/assets/js/13.b1db4ecb.js"><link rel="prefetch" href="/assets/js/14.f777e5f5.js"><link rel="prefetch" href="/assets/js/15.25bcc4f3.js"><link rel="prefetch" href="/assets/js/16.96bc9df6.js"><link rel="prefetch" href="/assets/js/17.b28d9c78.js"><link rel="prefetch" href="/assets/js/18.b0cb2472.js"><link rel="prefetch" href="/assets/js/19.5236e7cb.js"><link rel="prefetch" href="/assets/js/20.9b39d48b.js"><link rel="prefetch" href="/assets/js/21.413d7e5c.js"><link rel="prefetch" href="/assets/js/22.9b4b5648.js"><link rel="prefetch" href="/assets/js/23.429db586.js"><link rel="prefetch" href="/assets/js/24.a4b2bf53.js"><link rel="prefetch" href="/assets/js/25.da7f6f44.js"><link rel="prefetch" href="/assets/js/26.1c86c8c4.js"><link rel="prefetch" href="/assets/js/27.567853cd.js"><link rel="prefetch" href="/assets/js/28.e79e9272.js"><link rel="prefetch" href="/assets/js/29.4c76ffad.js"><link rel="prefetch" href="/assets/js/3.ff140cd7.js"><link rel="prefetch" href="/assets/js/30.024d7314.js"><link rel="prefetch" href="/assets/js/31.33031f17.js"><link rel="prefetch" href="/assets/js/32.6e130523.js"><link rel="prefetch" href="/assets/js/33.58b44621.js"><link rel="prefetch" href="/assets/js/34.7400e94e.js"><link rel="prefetch" href="/assets/js/35.f2767470.js"><link rel="prefetch" href="/assets/js/36.0c59cfbe.js"><link rel="prefetch" href="/assets/js/37.d2c43d60.js"><link rel="prefetch" href="/assets/js/38.27af19fa.js"><link rel="prefetch" href="/assets/js/39.80642131.js"><link rel="prefetch" href="/assets/js/4.754dfb46.js"><link rel="prefetch" href="/assets/js/40.08f6c317.js"><link rel="prefetch" href="/assets/js/41.1f789247.js"><link rel="prefetch" href="/assets/js/42.22aa889a.js"><link rel="prefetch" href="/assets/js/43.ce3ab661.js"><link rel="prefetch" href="/assets/js/44.1a0e84c4.js"><link rel="prefetch" href="/assets/js/45.362e5ef5.js"><link rel="prefetch" href="/assets/js/47.07a89f4e.js"><link rel="prefetch" href="/assets/js/48.c5699e18.js"><link rel="prefetch" href="/assets/js/49.7cdcb266.js"><link rel="prefetch" href="/assets/js/5.9db707e5.js"><link rel="prefetch" href="/assets/js/50.caaed377.js"><link rel="prefetch" href="/assets/js/51.c8eb298c.js"><link rel="prefetch" href="/assets/js/52.97badafd.js"><link rel="prefetch" href="/assets/js/53.7a9e10fc.js"><link rel="prefetch" href="/assets/js/54.273c8ea9.js"><link rel="prefetch" href="/assets/js/6.a3a6a4b1.js"><link rel="prefetch" href="/assets/js/7.ec11f840.js"><link rel="prefetch" href="/assets/js/8.86b5445f.js"><link rel="prefetch" href="/assets/js/9.c2af3ea8.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.46847213.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.0c2811eb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><div class="navbar-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="Spark" class="logo"> <span class="site-name can-hide">Spark</span></a> <div class="links" style="max-width:nullpx;"><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link router-link-active">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></header></div> <div class="sidebar-mask"></div> <div class="sidebar doc-sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link router-link-active">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/docs/" aria-current="page" class="sidebar-link">工具函数</a></li><li><a href="/docs/marquee.html" aria-current="page" class="active sidebar-link">文字走马灯</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/marquee.html#使用方法" class="sidebar-link">使用方法</a></li><li class="sidebar-sub-header"><a href="/docs/marquee.html#配置项" class="sidebar-link">配置项</a></li><li class="sidebar-sub-header"><a href="/docs/marquee.html#实例方法" class="sidebar-link">实例方法</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/docs/marquee.html#destory" class="sidebar-link">destory</a></li></ul></li><li class="sidebar-sub-header"><a href="/docs/marquee.html#示例" class="sidebar-link">示例</a></li></ul></li><li><a href="/docs/sorter.html" class="sidebar-link">拖拽排序</a></li><li><a href="/docs/slide-select.html" class="sidebar-link">滑动选择</a></li><li><a href="/docs/broadcast.html" class="sidebar-link">轮播图</a></li></ul> </div> <main class="page-doc"><div class="doc-content content__default"><h1 id="marquee"><a href="#marquee" class="header-anchor">#</a> marquee</h1> <h2 id="使用方法"><a href="#使用方法" class="header-anchor">#</a> 使用方法</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">let</span> textNode <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'.text'</span><span class="token punctuation">)</span>
+<span class="token keyword">let</span> m <span class="token operator">=</span> <span class="token function">marquee</span><span class="token punctuation">(</span>textNode<span class="token punctuation">)</span>
+</code></pre></div><h2 id="配置项"><a href="#配置项" class="header-anchor">#</a> 配置项</h2> <table><thead><tr><th>参数</th> <th>类型</th> <th>说明</th> <th>可选值</th> <th>默认值</th></tr></thead> <tbody><tr><td><code>duration</code></td> <td>Number</td> <td>动画时长（ms）。</td> <td>-</td> <td>10000</td></tr> <tr><td><code>gap</code></td> <td>Number</td> <td>两个文本之间的距离，单位：px。</td> <td>-</td> <td>undefined</td></tr> <tr><td><code>start</code></td> <td>Number</td> <td>文本距离容器左边缘距离，单位：px。</td> <td>-</td> <td>0</td></tr> <tr><td><code>scrollIn</code></td> <td>String</td> <td>在哪里滚动，<code>parent</code>表示在父容器里滚动，<code>self</code> 在自身里滚动。</td> <td>parent, self</td> <td>parent</td></tr> <tr><td><code>scrollOverflowed</code></td> <td>Boolean</td> <td>是否多行时才滚动。</td> <td>-</td> <td>false</td></tr></tbody></table> <h2 id="实例方法"><a href="#实例方法" class="header-anchor">#</a> 实例方法</h2> <h3 id="destory"><a href="#destory" class="header-anchor">#</a> destory</h3> <p>销毁实例，移除监听事件、更改的 <code>dom</code> 和样式。</p> <h2 id="示例"><a href="#示例" class="header-anchor">#</a> 示例</h2> <section class="demo-and-code-wrapper"><style>
+  .container {
+    border: 1px solid pink;
+    padding: 10px;
+  }
+  .marquee-terms {
+    display: inline-block;
+    margin: 0 15px;
+  }
+</style> <p class="container"><span class="marquee">世上最甜美的欢乐都是忧伤的果实。人间最纯美的东西都是从苦难中来的。我们没有经历过艰怎么懂得去安慰别人。</span>
+  不那么好过的日子里，要学会每天给自己找一个<span class="marquee-terms">开心的理由</span>，哪怕只是阳光很暖，电量很满。
+</p> <div class="demo-script"></div> <div class="code-control" style="top:0px;cursor:pointer;"><span class="control-btn" style="display:;">
+      hide code
+      <i class="arrow-icon" style="transform:rotate(0);"></i></span> <div class="online-wrapper"><form target="_blank" action="https://codepen.io/pen/define" method="post" class="demo-and-code-online-edit-wrapper"><input type="hidden" name="data" value="{&quot;js&quot;:&quot;util.marquee(document.querySelector('.marquee'))\n  util.marquee(document.querySelector('.marquee-terms'), {\n    scrollIn: 'self'\n  })&quot;,&quot;css&quot;:&quot;.container {\n    border: 1px solid pink;\n    padding: 10px;\n  }\n  .marquee-terms {\n    display: inline-block;\n    margin: 0 15px;\n  }&quot;,&quot;html&quot;:&quot;&lt;p class=\&quot;container\&quot;&gt;\n  &lt;span class=\&quot;marquee\&quot;\n    &gt;世上最甜美的欢乐都是忧伤的果实。人间最纯美的东西都是从苦难中来的。我们没有经历过艰怎么懂得去安慰别人。&lt;/span\n  &gt;\n  不那么好过的日子里，要学会每天给自己找一个&lt;span class=\&quot;marquee-terms\&quot;\n    &gt;开心的理由&lt;/span\n  &gt;，哪怕只是阳光很暖，电量很满。\n&lt;/p&gt;&quot;,&quot;layout&quot;:&quot;left&quot;,&quot;editors&quot;:&quot;111&quot;,&quot;js_external&quot;:&quot;https://cdn.jsdelivr.net/npm/@sparklinm/util/d/bundle.min.umd.js;https://unpkg.com/vue/dist/vue.js&quot;,&quot;css_external&quot;:&quot;&quot;,&quot;js_pre_processor&quot;:&quot;babel&quot;}"> <!----> <!----> <button type="submit" data-tip="Codepen"><svg id="Layer_1" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 500 500" xml:space="preserve"><g><path d="M250.001,0C111.927,0,0,111.927,0,250.001C0,388.077,111.927,500,250.001,500C388.073,500,500,388.077,500,250.001
+          C500,111.927,388.073,0,250.001,0z M250.001,458.943c-115.212,0-208.941-93.733-208.941-208.942
+          c0-115.208,93.729-208.941,208.941-208.941c115.208,0,208.938,93.733,208.938,208.941
+          C458.939,365.21,365.21,458.943,250.001,458.943z"></path> <path d="M404.462,201.172c-0.028-0.195-0.076-0.382-0.109-0.577c-0.065-0.374-0.135-0.748-0.232-1.114
+          c-0.057-0.22-0.138-0.431-0.206-0.642c-0.106-0.326-0.212-0.651-0.342-0.968c-0.091-0.22-0.196-0.439-0.297-0.651
+          c-0.14-0.3-0.285-0.593-0.452-0.877c-0.122-0.212-0.251-0.416-0.377-0.618c-0.18-0.277-0.362-0.546-0.562-0.806
+          c-0.146-0.194-0.3-0.39-0.454-0.577c-0.212-0.243-0.432-0.487-0.664-0.716c-0.174-0.178-0.346-0.357-0.528-0.521
+          c-0.244-0.219-0.496-0.431-0.752-0.633c-0.198-0.155-0.395-0.31-0.602-0.456c-0.078-0.049-0.146-0.114-0.22-0.163L257.369,97.656
+          c-4.464-2.976-10.274-2.976-14.738,0l-141.295,94.196c-0.073,0.049-0.142,0.114-0.219,0.163c-0.208,0.146-0.403,0.301-0.598,0.456
+          c-0.26,0.203-0.512,0.415-0.752,0.633c-0.187,0.164-0.357,0.342-0.533,0.521c-0.231,0.229-0.451,0.473-0.658,0.716
+          c-0.159,0.188-0.313,0.383-0.459,0.577c-0.195,0.26-0.383,0.529-0.557,0.806c-0.134,0.203-0.26,0.406-0.382,0.618
+          c-0.163,0.284-0.309,0.577-0.451,0.877c-0.102,0.211-0.208,0.431-0.297,0.651c-0.13,0.317-0.236,0.642-0.341,0.968
+          c-0.07,0.211-0.146,0.422-0.208,0.642c-0.097,0.366-0.162,0.74-0.231,1.114c-0.032,0.195-0.081,0.382-0.106,0.577
+          c-0.077,0.569-0.122,1.146-0.122,1.732v94.197c0,0.585,0.044,1.162,0.122,1.74c0.025,0.188,0.074,0.382,0.106,0.568
+          c0.069,0.374,0.134,0.748,0.231,1.114c0.062,0.22,0.138,0.432,0.208,0.643c0.105,0.324,0.211,0.65,0.341,0.975
+          c0.089,0.222,0.195,0.433,0.297,0.645c0.143,0.3,0.289,0.592,0.451,0.885c0.122,0.204,0.248,0.406,0.382,0.61
+          c0.174,0.276,0.362,0.545,0.557,0.806c0.146,0.203,0.301,0.391,0.459,0.577c0.208,0.243,0.427,0.488,0.658,0.716
+          c0.175,0.178,0.346,0.357,0.533,0.52c0.24,0.221,0.492,0.432,0.752,0.635c0.195,0.155,0.391,0.31,0.598,0.454
+          c0.077,0.05,0.146,0.115,0.219,0.163l141.295,94.197c2.231,1.487,4.802,2.236,7.371,2.236c2.566,0,5.135-0.749,7.368-2.236
+          l141.295-94.197c0.074-0.048,0.142-0.113,0.22-0.163c0.207-0.145,0.403-0.299,0.602-0.454c0.256-0.203,0.508-0.414,0.752-0.635
+          c0.183-0.162,0.354-0.342,0.528-0.52c0.232-0.228,0.452-0.473,0.664-0.716c0.154-0.187,0.308-0.374,0.454-0.577
+          c0.2-0.261,0.383-0.529,0.562-0.806c0.126-0.204,0.255-0.406,0.377-0.61c0.167-0.293,0.312-0.585,0.452-0.885
+          c0.101-0.212,0.206-0.423,0.297-0.645c0.13-0.324,0.235-0.65,0.342-0.975c0.068-0.211,0.149-0.423,0.206-0.643
+          c0.098-0.366,0.167-0.74,0.232-1.114c0.033-0.187,0.081-0.381,0.109-0.568c0.073-0.578,0.119-1.155,0.119-1.74v-94.197
+          C404.581,202.318,404.535,201.741,404.462,201.172z M263.286,133.533l104.088,69.387l-46.493,31.103l-57.595-38.527V133.533z
+           M236.715,133.533v61.963l-57.592,38.527l-46.497-31.103L236.715,133.533z M121.99,227.771l33.238,22.231l-33.238,22.233V227.771z
+           M236.715,366.471l-104.088-69.388l46.497-31.094l57.592,38.52V366.471z M250.001,281.431l-46.988-31.429l46.988-31.428
+          l46.985,31.428L250.001,281.431z M263.286,366.471v-61.962l57.595-38.52l46.493,31.094L263.286,366.471z M378.01,272.234
+          l-33.233-22.233l33.233-22.231V272.234z"></path></g></svg></button></form><form target="_blank" action="https://jsfiddle.net/api/post/library/pure" method="post" class="demo-and-code-online-edit-wrapper" style="display:none;"><!----> <input type="hidden" name="js" value="util.marquee(document.querySelector('.marquee'))
+  util.marquee(document.querySelector('.marquee-terms'), {
+    scrollIn: 'self'
+  })"> <input type="hidden" name="css" value=".container {
+    border: 1px solid pink;
+    padding: 10px;
+  }
+  .marquee-terms {
+    display: inline-block;
+    margin: 0 15px;
+  }"> <input type="hidden" name="html" value="&lt;p class=&quot;container&quot;&gt;
+  &lt;span class=&quot;marquee&quot;
+    &gt;世上最甜美的欢乐都是忧伤的果实。人间最纯美的东西都是从苦难中来的。我们没有经历过艰怎么懂得去安慰别人。&lt;/span
+  &gt;
+  不那么好过的日子里，要学会每天给自己找一个&lt;span class=&quot;marquee-terms&quot;
+    &gt;开心的理由&lt;/span
+  &gt;，哪怕只是阳光很暖，电量很满。
+&lt;/p&gt;"> <input type="hidden" name="panel_js" value="3"> <input type="hidden" name="resources" value="https://cdn.jsdelivr.net/npm/@sparklinm/util/d/bundle.min.umd.js,https://unpkg.com/vue/dist/vue.js"> <!----> <button type="submit" data-tip="JSFiddle"><svg t="1547088289967" viewBox="0 0 1170 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1952" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon"><path d="M1028.571429 441.142857q63.428571 26.285714 102.571428 83.142857T1170.285714 650.857143q0 93.714286-67.428571 160.285714T940 877.714286q-2.285714 0-6.571429-0.285715t-6-0.285714H232q-97.142857-5.714286-164.571429-71.714286T0 645.142857q0-62.857143 31.428571-116t84-84q-6.857143-22.285714-6.857142-46.857143 0-65.714286 46.857142-112t113.714286-46.285714q54.285714 0 98.285714 33.142857 42.857143-88 127.142858-141.714286t186.571428-53.714285q94.857143 0 174.857143 46T982.571429 248.571429t46.571428 172q0 3.428571-0.285714 10.285714t-0.285714 10.285714zM267.428571 593.142857q0 69.714286 48 110.285714t118.857143 40.571429q78.285714 0 137.142857-56.571429-9.142857-11.428571-27.142857-32.285714T519.428571 626.285714q-38.285714 37.142857-82.285714 37.142857-31.428571 0-53.428571-19.142857T361.714286 594.285714q0-30.285714 22-49.714285t52.285714-19.428572q25.142857 0 48.285714 12t41.714286 31.428572 37.142857 42.857142 39.428572 46.857143 44 42.857143 55.428571 31.428572 69.428571 12q69.142857 0 116.857143-40.857143T936 594.857143q0-69.142857-48-109.714286t-118.285714-40.571428q-81.714286 0-137.714286 55.428571l53.142857 61.714286q37.714286-36.571429 81.142857-36.571429 29.714286 0 52.571429 18.857143t22.857143 48q0 32.571429-21.142857 52.285714t-53.714286 19.714286q-24.571429 0-47.142857-12t-41.142857-31.428571-37.428572-42.857143-39.714286-46.857143-44.285714-42.857143-55.142857-31.428571T434.285714 444.571429q-69.714286 0-118.285714 40.285714T267.428571 593.142857z" p-id="1953"></path></svg></button></form><form target="_blank" action="https://codesandbox.io/api/v1/sandboxes/define" method="post" class="demo-and-code-online-edit-wrapper" style="display:none;"><!----> <!----> <input type="hidden" name="parameters" value="N4IgZglgNgpgziAXKCA7AJjAHgOgFYLIgDGA9qgC4yVIgA6qEAtgA6kBOFABAGoCuMLmHakmXAOQA3AeIbM2nLgEEWLISLHicAehUsc0mLNQNUMAO68BACmAMuDrjCiIJAYgCGq8QBp7jqlYoDypXcQAePW0APl9_BzJWcmoKOFdgZVUuAF8_VGyAShBckD0DASRQMkoU2nDAlmCqaIYGcLViYLg4AF46EnIKDzQYdn6W1AdwuBYPSc6Pbr6QJg92AEcBGH74rmjANDlAKDlAAHNAHFdAOP9AELdAImtABTlAX4TAejNAc_1AEnlLwBzzQDztQCAGQC65QAvqcdAPV-V0AOHKAf0inoA5uUAZ0GAPrTALRygFNzS4_QCIRoAbuUAhTaASHNAPN-gDDlQDj8YAHIMAcAaACTlAEOGgHT9QDdyoBI7UADoaAaiU_j9wtoZnN_BMHIBYOUAxQmUwC-msTLoBT00ACtqAGcTADD_gEDIwBm2oAseUA89aASk1AJt-gCvAwCPuoA_I0AAHKAKjlprN5l1ev1VhstgBaKjsJhwHaTRzRQAA-oBh_UugDAXQCMrlyeSYPdF5YArlUAqAaAK-VHoBmNMAkoqACP1AGlm8sArK6AecSU4BDux-bW0LAmRYaTRgpdQ02I7AgLAoEz4FGgODtmxgMGs6FIxD4TBSOA77AAngBlZwwYgUDjWLTtrbiAoFfzN1sLzvd3v9wfD8eT6ez-drDswJ2jV1LnxcOwehxwWukKBQACSqDCcGcYGMDkKRYfdYNlW0wUCOsATDg1RDCM7A3rsABGHCYOwrgAIwsFgXBwE-EDoFwLBoAA1gA3LsszoOgaAAOZoQADBhpEetk_htiejrOq6cF3lwlEzMEI6uGgUAjA68FQL2JG7HaVFoK4tFcKhACsDH-Mx1bcqB4EMMUPggGgmC4AAFhQTBQJUAw1DQiAgDWgHcHA7DEMsxkUCwaTaNoxDoKg-BwJgwmSOwOBmBQ2ioCwTDaAAAjy7CEcJqCRWuUDaOg2jwXwGCwG2aA4P26C-eMIa1vWjatNWlGSFwuHLF4LBFalECSNEOkgLMxCER4VEwL55DmVBtREJgLDUJgqDEBA8DmYYtAVnAFDFNkS3ZEAA"> <input type="hidden" name="query" value="module=App.vue"> <!----> <!----> <button type="submit" data-tip="CodeSandbox"><svg t="1547088313123" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2783" xmlns:xlink="http://www.w3.org/1999/xlink" class="icon"><path d="M737.828571 166.857143l0.457143-0.228572h0.228572L512 36.571429 285.6 166.628571h-0.228571l0.8 0.342858L100 274.285714v475.428572L512 987.428571l412-237.714285V274.285714l-186.171429-107.428571zM478.514286 890.971429L314.971429 796.571429V637.028571L166.857143 552.914286V353.028571l311.657143 179.771429v358.171429zM199.085714 294.285714l153.942857-88.914285 158.742858 91.085714 158.971428-91.314286 154.514286 89.142857-313.028572 180.571429-313.142857-180.571429zM857.142857 553.485714l-147.2 83.542857v158.971429l-164.457143 94.857143V533.028571L857.142857 353.257143v200.228571z" p-id="2784"></path></svg></button></form></div></div> <div class="code-wrapper" style="max-height:9999px;"><div class="language-html extra-class"><pre v-pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+  <span class="token selector">.container</span> <span class="token punctuation">{</span>
+    <span class="token property">border</span><span class="token punctuation">:</span> 1px solid pink<span class="token punctuation">;</span>
+    <span class="token property">padding</span><span class="token punctuation">:</span> 10px<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token selector">.marquee-terms</span> <span class="token punctuation">{</span>
+    <span class="token property">display</span><span class="token punctuation">:</span> inline-block<span class="token punctuation">;</span>
+    <span class="token property">margin</span><span class="token punctuation">:</span> 0 15px<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>p</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>container<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>marquee<span class="token punctuation">"</span></span>
+    <span class="token punctuation">></span></span>世上最甜美的欢乐都是忧伤的果实。人间最纯美的东西都是从苦难中来的。我们没有经历过艰怎么懂得去安慰别人。<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span>
+  <span class="token punctuation">></span></span>
+  不那么好过的日子里，要学会每天给自己找一个<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">class</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">"</span>marquee-terms<span class="token punctuation">"</span></span>
+    <span class="token punctuation">></span></span>开心的理由<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span>
+  <span class="token punctuation">></span></span>，哪怕只是阳光很暖，电量很满。
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>p</span><span class="token punctuation">></span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">></span></span><span class="token script"><span class="token language-javascript">
+  util<span class="token punctuation">.</span><span class="token function">marquee</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'.marquee'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  util<span class="token punctuation">.</span><span class="token function">marquee</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'.marquee-terms'</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    scrollIn<span class="token operator">:</span> <span class="token string">'self'</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+</code></pre></div></div></section></div></main> <!----></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.61190595.js" defer></script><script src="/assets/js/46.4d738550.js" defer></script>
+
+    <div class="cm-enter-loading">
+      <div class="cm-spinner-box">
+        <div class="cm-configure-border-1">
+          <div class="cm-configure-core"></div>
+        </div>
+        <div class="cm-configure-border-2">
+          <div class="cm-configure-core"></div>
+        </div>
+        <p class="cm-loading-text">loading...</p>
+      </div>
+    </div>
+
+    <style>
+      .cm-enter-loading {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #37474f;
+        z-index: 10000;
+      }
+
+      .cm-spinner-box {
+        display: inline-block;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .cm-configure-border-1 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        position: absolute;
+        background: #ffab91;
+        animation: configure-clockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-border-2 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        left: -115px;
+        background: rgb(63, 249, 220);
+        transform: rotate(45deg);
+        animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-core {
+        width: 100%;
+        height: 100%;
+        background-color: #37474f;
+      }
+
+      .cm-loading-text {
+        font-size: 40px;
+        color: white;
+        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
+      }
+
+      @keyframes configure-clockwise {
+        0% {
+          transform: rotate(0);
+        }
+        25% {
+          transform: rotate(90deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        75% {
+          transform: rotate(270deg);
+        }
+        100% {
+          transform: rotate(359deg);
+        }
+      }
+
+      @keyframes configure-xclockwise {
+        0% {
+          transform: rotate(45deg);
+        }
+        25% {
+          transform: rotate(-45deg);
+        }
+        50% {
+          transform: rotate(-135deg);
+        }
+        75% {
+          transform: rotate(-215deg);
+        }
+        100% {
+          transform: rotate(-305deg);
+        }
+      }
+    </style>
+
+  </body>
+</html>

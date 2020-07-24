@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Eslint Eslint 使用和问题 | Spark</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <script src="https://cdn.jsdelivr.net/gh/sparklinm/js-library/d/bundle.umd.js"></script>
+    <link rel="icon" href="/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/dist/markdown-it.js"></script>
+    <meta name="description" content="Just playing around">
+    <meta title="Eslint使用和问题" time="2020-07-02T10:54:04.000Z" tag="eslint,工具使用">
+    <link rel="preload" href="/assets/css/0.styles.0c2811eb.css" as="style"><link rel="preload" href="/assets/js/app.61190595.js" as="script"><link rel="preload" href="/assets/js/5.9db707e5.js" as="script"><link rel="prefetch" href="/assets/js/10.2414efa1.js"><link rel="prefetch" href="/assets/js/11.06130b25.js"><link rel="prefetch" href="/assets/js/12.33bbb473.js"><link rel="prefetch" href="/assets/js/13.b1db4ecb.js"><link rel="prefetch" href="/assets/js/14.f777e5f5.js"><link rel="prefetch" href="/assets/js/15.25bcc4f3.js"><link rel="prefetch" href="/assets/js/16.96bc9df6.js"><link rel="prefetch" href="/assets/js/17.b28d9c78.js"><link rel="prefetch" href="/assets/js/18.b0cb2472.js"><link rel="prefetch" href="/assets/js/19.5236e7cb.js"><link rel="prefetch" href="/assets/js/20.9b39d48b.js"><link rel="prefetch" href="/assets/js/21.413d7e5c.js"><link rel="prefetch" href="/assets/js/22.9b4b5648.js"><link rel="prefetch" href="/assets/js/23.429db586.js"><link rel="prefetch" href="/assets/js/24.a4b2bf53.js"><link rel="prefetch" href="/assets/js/25.da7f6f44.js"><link rel="prefetch" href="/assets/js/26.1c86c8c4.js"><link rel="prefetch" href="/assets/js/27.567853cd.js"><link rel="prefetch" href="/assets/js/28.e79e9272.js"><link rel="prefetch" href="/assets/js/29.4c76ffad.js"><link rel="prefetch" href="/assets/js/3.ff140cd7.js"><link rel="prefetch" href="/assets/js/30.024d7314.js"><link rel="prefetch" href="/assets/js/31.33031f17.js"><link rel="prefetch" href="/assets/js/32.6e130523.js"><link rel="prefetch" href="/assets/js/33.58b44621.js"><link rel="prefetch" href="/assets/js/34.7400e94e.js"><link rel="prefetch" href="/assets/js/35.f2767470.js"><link rel="prefetch" href="/assets/js/36.0c59cfbe.js"><link rel="prefetch" href="/assets/js/37.d2c43d60.js"><link rel="prefetch" href="/assets/js/38.27af19fa.js"><link rel="prefetch" href="/assets/js/39.80642131.js"><link rel="prefetch" href="/assets/js/4.754dfb46.js"><link rel="prefetch" href="/assets/js/40.08f6c317.js"><link rel="prefetch" href="/assets/js/41.1f789247.js"><link rel="prefetch" href="/assets/js/42.22aa889a.js"><link rel="prefetch" href="/assets/js/43.ce3ab661.js"><link rel="prefetch" href="/assets/js/44.1a0e84c4.js"><link rel="prefetch" href="/assets/js/45.362e5ef5.js"><link rel="prefetch" href="/assets/js/46.4d738550.js"><link rel="prefetch" href="/assets/js/47.07a89f4e.js"><link rel="prefetch" href="/assets/js/48.c5699e18.js"><link rel="prefetch" href="/assets/js/49.7cdcb266.js"><link rel="prefetch" href="/assets/js/50.caaed377.js"><link rel="prefetch" href="/assets/js/51.c8eb298c.js"><link rel="prefetch" href="/assets/js/52.97badafd.js"><link rel="prefetch" href="/assets/js/53.7a9e10fc.js"><link rel="prefetch" href="/assets/js/54.273c8ea9.js"><link rel="prefetch" href="/assets/js/6.a3a6a4b1.js"><link rel="prefetch" href="/assets/js/7.ec11f840.js"><link rel="prefetch" href="/assets/js/8.86b5445f.js"><link rel="prefetch" href="/assets/js/9.c2af3ea8.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.46847213.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.0c2811eb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><div class="navbar-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="Spark" class="logo"> <span class="site-name can-hide">Spark</span></a> <div class="links" style="max-width:nullpx;"><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></header></div> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><div depth="0" class="sidebar-group"><p class="sidebar-heading open"><span>Eslint Eslint 使用和问题</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/blog/tool/Eslint.html#使用" class="sidebar-link">使用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/tool/Eslint.html#规则" class="sidebar-link">规则</a></li><li class="sidebar-sub-header"><a href="/blog/tool/Eslint.html#globals" class="sidebar-link">globals</a></li><li class="sidebar-sub-header"><a href="/blog/tool/Eslint.html#vue-添加-eslint" class="sidebar-link">vue 添加 eslint</a></li><li class="sidebar-sub-header"><a href="/blog/tool/Eslint.html#检测隐藏文件" class="sidebar-link">检测隐藏文件</a></li></ul></li><li><a href="/blog/tool/Eslint.html#问题" class="sidebar-link">问题</a></li></ul></div></li></ul> </div> <div class="page"> <div class="article-list-inner" style="display:none;"><div class="tag-container"><div class="tag-item-container" style="display:none;"><span class="tag">
+        eslint
+      </span><span class="tag">
+        工具使用
+      </span><span class="tag">
+        VuePress
+      </span><span class="tag">
+        babel
+      </span><span class="tag">
+        总结
+      </span><span class="tag">
+        jsdoc
+      </span><span class="tag">
+        环境搭建
+      </span><span class="tag">
+        rollup
+      </span><span class="tag">
+        收藏
+      </span><span class="tag">
+        html
+      </span><span class="tag">
+        图片下载
+      </span><span class="tag">
+        canvas
+      </span><span class="tag">
+        布局
+      </span><span class="tag">
+        js
+      </span><span class="tag">
+        模块
+      </span><span class="tag">
+        vue
+      </span><span class="tag">
+        echart
+      </span><span class="tag">
+        moment
+      </span><span class="tag">
+        拖拽
+      </span><span class="tag">
+        css
+      </span><span class="tag">
+        组件
+      </span><span class="tag">
+        文档
+      </span><span class="tag">
+        websocket
+      </span><span class="tag">
+        socket.io
+      </span><span class="tag">
+        移动端
+      </span></div> <div class="tag-tip" style="display:none;">
+      标签为
+      <span></span>下的文章
+    </div></div> <div></div></div> <div class="content__default"><h1 id="eslint-eslint-使用和问题"><a href="#eslint-eslint-使用和问题" class="header-anchor">#</a> Eslint Eslint 使用和问题</h1> <h2 id="使用"><a href="#使用" class="header-anchor">#</a> 使用</h2> <h3 id="规则"><a href="#规则" class="header-anchor">#</a> 规则</h3> <div class="language-js extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  rules<span class="token operator">:</span> <span class="token punctuation">{</span>
+    strict<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+    indent<span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token number">2</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        SwitchCase<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        MemberExpression<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        ArrayExpression<span class="token operator">:</span> <span class="token number">1</span><span class="token punctuation">,</span>
+        FunctionDeclaration<span class="token operator">:</span> <span class="token punctuation">{</span>
+          parameters<span class="token operator">:</span> <span class="token string">'first'</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        CallExpression<span class="token operator">:</span> <span class="token punctuation">{</span>
+          arguments<span class="token operator">:</span> <span class="token number">1</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        ImportDeclaration<span class="token operator">:</span> <span class="token string">'first'</span><span class="token punctuation">,</span>
+        ObjectExpression<span class="token operator">:</span> <span class="token number">1</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'no-sequences'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'linebreak-style'</span><span class="token operator">:</span> <span class="token string">'off'</span><span class="token punctuation">,</span>
+    quotes<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'single'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    semi<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'never'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'semi-style'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'last'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'semi-spacing'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        before<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        after<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    camelcase<span class="token operator">:</span> <span class="token string">'off'</span><span class="token punctuation">,</span>
+    <span class="token string">'default-case'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-new-func'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-void'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'array-bracket-spacing'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'never'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'no-tabs'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-var'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'one-var'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'never'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'prefer-const'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        destructuring<span class="token operator">:</span> <span class="token string">'all'</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'no-trailing-spaces'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'operator-assignment'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'always'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'dot-location'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'property'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'no-alert'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-else-return'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        allowElseIf<span class="token operator">:</span> <span class="token boolean">false</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'no-case-declarations'</span><span class="token operator">:</span> <span class="token string">'off'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-console'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'warn'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        allow<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'warn'</span><span class="token punctuation">,</span> <span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'trace'</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'no-unused-vars'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-multi-spaces'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'valid-jsdoc'</span><span class="token operator">:</span> <span class="token string">'warn'</span><span class="token punctuation">,</span>
+    eqeqeq<span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'guard-for-in'</span><span class="token operator">:</span> <span class="token string">'warn'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-multi-str'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-return-await'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-return-assign'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-throw-literal'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-undef-init'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'no-use-before-define'</span><span class="token operator">:</span> <span class="token string">'warn'</span><span class="token punctuation">,</span>
+    <span class="token string">'key-spacing'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        beforeColon<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        afterColon<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        mode<span class="token operator">:</span> <span class="token string">'strict'</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'keyword-spacing'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        before<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        after<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'space-before-blocks'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        functions<span class="token operator">:</span> <span class="token string">'always'</span><span class="token punctuation">,</span>
+        keywords<span class="token operator">:</span> <span class="token string">'always'</span><span class="token punctuation">,</span>
+        classes<span class="token operator">:</span> <span class="token string">'always'</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'spaced-comment'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'always'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'space-infix-ops'</span><span class="token operator">:</span> <span class="token string">'error'</span><span class="token punctuation">,</span>
+    <span class="token string">'arrow-spacing'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        before<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        after<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'no-useless-constructor'</span><span class="token operator">:</span> <span class="token string">'warn'</span><span class="token punctuation">,</span>
+    <span class="token string">'comma-dangle'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'never'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'comma-spacing'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        before<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        after<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'space-before-function-paren'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'always'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'no-param-reassign'</span><span class="token operator">:</span> <span class="token string">'warn'</span><span class="token punctuation">,</span>
+    <span class="token string">'object-curly-spacing'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'always'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token comment">// 数组中存在对象时</span>
+    <span class="token comment">// 第一个对象和最后一个对象和数组的 &quot;[]&quot; 符号之间的换行</span>
+    <span class="token string">'array-bracket-newline'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        multiline<span class="token operator">:</span> <span class="token boolean">true</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token comment">// 属性与属性之间换行</span>
+    <span class="token string">'object-property-newline'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        allowAllPropertiesOnSameLine<span class="token operator">:</span> <span class="token boolean">false</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token comment">// 花括号换行配置</span>
+    <span class="token string">'object-curly-newline'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        <span class="token comment">// 对象字面量时换行</span>
+        ObjectExpression<span class="token operator">:</span> <span class="token punctuation">{</span>
+          multiline<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          minProperties<span class="token operator">:</span> <span class="token number">1</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token comment">// 解构赋值属性内部或属性之间有换行符要求换行符</span>
+        ObjectPattern<span class="token operator">:</span> <span class="token punctuation">{</span>
+          multiline<span class="token operator">:</span> <span class="token boolean">true</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        <span class="token comment">// import 导入不换行</span>
+        ImportDeclaration<span class="token operator">:</span> <span class="token string">'never'</span><span class="token punctuation">,</span>
+        <span class="token comment">// export 导出超过三个或导出对象内部有换行时换行</span>
+        ExportDeclaration<span class="token operator">:</span> <span class="token punctuation">{</span>
+          multiline<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+          minProperties<span class="token operator">:</span> <span class="token number">3</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token comment">// 强制 &quot;(&quot; 号右边 和 &quot;)&quot; 号左边无空格</span>
+    <span class="token string">'space-in-parens'</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'error'</span><span class="token punctuation">,</span> <span class="token string">'never'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token string">'padding-line-between-statements'</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token string">'error'</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        blankLine<span class="token operator">:</span> <span class="token string">'always'</span><span class="token punctuation">,</span>
+        next<span class="token operator">:</span> <span class="token string">'*'</span><span class="token punctuation">,</span>
+        prev<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'const'</span><span class="token punctuation">,</span> <span class="token string">'let'</span><span class="token punctuation">,</span> <span class="token string">'var'</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        blankLine<span class="token operator">:</span> <span class="token string">'any'</span><span class="token punctuation">,</span>
+        next<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'const'</span><span class="token punctuation">,</span> <span class="token string">'let'</span><span class="token punctuation">,</span> <span class="token string">'var'</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        prev<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">'const'</span><span class="token punctuation">,</span> <span class="token string">'let'</span><span class="token punctuation">,</span> <span class="token string">'var'</span><span class="token punctuation">]</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        blankLine<span class="token operator">:</span> <span class="token string">'always'</span><span class="token punctuation">,</span>
+        next<span class="token operator">:</span> <span class="token string">'export'</span><span class="token punctuation">,</span>
+        prev<span class="token operator">:</span> <span class="token string">'*'</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="globals"><a href="#globals" class="header-anchor">#</a> globals</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token string">'globals'</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+  <span class="token string">'Velocity'</span><span class="token operator">:</span><span class="token boolean">true</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="vue-添加-eslint"><a href="#vue-添加-eslint" class="header-anchor">#</a> vue 添加 eslint</h3> <p>安装插件：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">yarn</span> <span class="token function">add</span> eslint-plugin-vue --dev
+</code></pre></div><p><code>vscode</code> 添加 <code>eslint</code> 和 <code>vetur</code> 插件。</p> <p>最新 vscode 不需要额外的用户配置，也可保存自动修复代码。</p> <h3 id="检测隐藏文件"><a href="#检测隐藏文件" class="header-anchor">#</a> 检测隐藏文件</h3> <p>默认情况下，eslint 不会检测隐藏文件——以 <code>.</code> 开头的文件夹或文件。</p> <p>在 <code>.eslintignore</code> 配置：</p> <div class="language-text extra-class"><pre class="language-text"><code>!/src/**
+</code></pre></div><p>以 <code>!</code> 开头的行是否定模式。这样会检测 <code>src/</code> 下的所有文件，包括隐藏文件。</p> <h2 id="问题"><a href="#问题" class="header-anchor">#</a> 问题</h2> <p><code>es6</code> <code>class</code> 中出现：<code>Parsing error: Unexpected token =</code>。</p> <p><strong>解决：</strong></p> <p>安装 <a href="https://github.com/babel/babel-eslint" target="_blank" rel="noopener noreferrer">babel-eslint<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p> <p><code>.eslintrc</code> 配置：</p> <div class="language-js extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  parserOptions<span class="token operator">:</span> <span class="token punctuation">{</span>
+    parser<span class="token operator">:</span> <span class="token string">'babel-eslint'</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>配置 <code>plugins</code> 出现：<code>createRequire is not a function</code>。</p> <p><strong>解决：</strong></p> <p>更新 vscode。</p> <p>参考文献：</p> <ol><li><a href="https://github.com/babel/babel-eslint" target="_blank" rel="noopener noreferrer">babel-eslint github 地址<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ol></div> <div class="sidebar-right"><div class="sidebar-right-inner"><div class="newest"><div class="title">
+          推荐阅读
+        </div> <ol class="title-list"></ol></div> <div class="about"><div class="title">
+          云标签
+        </div> <div class="title-list"><span class="tag">
+            eslint
+          </span><span class="tag">
+            工具使用
+          </span><span class="tag">
+            VuePress
+          </span><span class="tag">
+            babel
+          </span><span class="tag">
+            总结
+          </span><span class="tag">
+            jsdoc
+          </span><span class="tag">
+            环境搭建
+          </span><span class="tag">
+            rollup
+          </span><span class="tag">
+            收藏
+          </span><span class="tag">
+            html
+          </span><span class="tag">
+            图片下载
+          </span><span class="tag">
+            canvas
+          </span><span class="tag">
+            布局
+          </span><span class="tag">
+            js
+          </span><span class="tag">
+            模块
+          </span><span class="tag">
+            vue
+          </span><span class="tag">
+            echart
+          </span><span class="tag">
+            moment
+          </span><span class="tag">
+            拖拽
+          </span><span class="tag">
+            css
+          </span><span class="tag">
+            组件
+          </span><span class="tag">
+            文档
+          </span><span class="tag">
+            websocket
+          </span><span class="tag">
+            socket.io
+          </span><span class="tag">
+            移动端
+          </span></div></div> <div class="catalog"><div class="title">
+          目录
+        </div> <ul class="sidebar-links"><li><div depth="0" class="sidebar-group"><p class="sidebar-heading open"><span>Eslint Eslint 使用和问题</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/blog/tool/Eslint.html#使用" class="sidebar-link">使用</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/tool/Eslint.html#规则" class="sidebar-link">规则</a></li><li class="sidebar-sub-header"><a href="/blog/tool/Eslint.html#globals" class="sidebar-link">globals</a></li><li class="sidebar-sub-header"><a href="/blog/tool/Eslint.html#vue-添加-eslint" class="sidebar-link">vue 添加 eslint</a></li><li class="sidebar-sub-header"><a href="/blog/tool/Eslint.html#检测隐藏文件" class="sidebar-link">检测隐藏文件</a></li></ul></li><li><a href="/blog/tool/Eslint.html#问题" class="sidebar-link">问题</a></li></ul></div></li></ul></div></div></div> <div class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">7/10/2020, 6:37:16 PM</span></div></div> <!----> </div> <!----></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.61190595.js" defer></script><script src="/assets/js/5.9db707e5.js" defer></script>
+
+    <div class="cm-enter-loading">
+      <div class="cm-spinner-box">
+        <div class="cm-configure-border-1">
+          <div class="cm-configure-core"></div>
+        </div>
+        <div class="cm-configure-border-2">
+          <div class="cm-configure-core"></div>
+        </div>
+        <p class="cm-loading-text">loading...</p>
+      </div>
+    </div>
+
+    <style>
+      .cm-enter-loading {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #37474f;
+        z-index: 10000;
+      }
+
+      .cm-spinner-box {
+        display: inline-block;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .cm-configure-border-1 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        position: absolute;
+        background: #ffab91;
+        animation: configure-clockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-border-2 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        left: -115px;
+        background: rgb(63, 249, 220);
+        transform: rotate(45deg);
+        animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-core {
+        width: 100%;
+        height: 100%;
+        background-color: #37474f;
+      }
+
+      .cm-loading-text {
+        font-size: 40px;
+        color: white;
+        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
+      }
+
+      @keyframes configure-clockwise {
+        0% {
+          transform: rotate(0);
+        }
+        25% {
+          transform: rotate(90deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        75% {
+          transform: rotate(270deg);
+        }
+        100% {
+          transform: rotate(359deg);
+        }
+      }
+
+      @keyframes configure-xclockwise {
+        0% {
+          transform: rotate(45deg);
+        }
+        25% {
+          transform: rotate(-45deg);
+        }
+        50% {
+          transform: rotate(-135deg);
+        }
+        75% {
+          transform: rotate(-215deg);
+        }
+        100% {
+          transform: rotate(-305deg);
+        }
+      }
+    </style>
+
+  </body>
+</html>

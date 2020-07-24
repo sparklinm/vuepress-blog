@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>node 与 npm | Spark</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <script src="https://cdn.jsdelivr.net/gh/sparklinm/js-library/d/bundle.umd.js"></script>
+    <link rel="icon" href="/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/dist/markdown-it.js"></script>
+    <meta name="description" content="Just playing around">
+    <meta title="node与npm" time="2019-06-19T16:33:55.000Z" tag="环境搭建,工具使用">
+    <link rel="preload" href="/assets/css/0.styles.0c2811eb.css" as="style"><link rel="preload" href="/assets/js/app.61190595.js" as="script"><link rel="preload" href="/assets/js/10.2414efa1.js" as="script"><link rel="prefetch" href="/assets/js/11.06130b25.js"><link rel="prefetch" href="/assets/js/12.33bbb473.js"><link rel="prefetch" href="/assets/js/13.b1db4ecb.js"><link rel="prefetch" href="/assets/js/14.f777e5f5.js"><link rel="prefetch" href="/assets/js/15.25bcc4f3.js"><link rel="prefetch" href="/assets/js/16.96bc9df6.js"><link rel="prefetch" href="/assets/js/17.b28d9c78.js"><link rel="prefetch" href="/assets/js/18.b0cb2472.js"><link rel="prefetch" href="/assets/js/19.5236e7cb.js"><link rel="prefetch" href="/assets/js/20.9b39d48b.js"><link rel="prefetch" href="/assets/js/21.413d7e5c.js"><link rel="prefetch" href="/assets/js/22.9b4b5648.js"><link rel="prefetch" href="/assets/js/23.429db586.js"><link rel="prefetch" href="/assets/js/24.a4b2bf53.js"><link rel="prefetch" href="/assets/js/25.da7f6f44.js"><link rel="prefetch" href="/assets/js/26.1c86c8c4.js"><link rel="prefetch" href="/assets/js/27.567853cd.js"><link rel="prefetch" href="/assets/js/28.e79e9272.js"><link rel="prefetch" href="/assets/js/29.4c76ffad.js"><link rel="prefetch" href="/assets/js/3.ff140cd7.js"><link rel="prefetch" href="/assets/js/30.024d7314.js"><link rel="prefetch" href="/assets/js/31.33031f17.js"><link rel="prefetch" href="/assets/js/32.6e130523.js"><link rel="prefetch" href="/assets/js/33.58b44621.js"><link rel="prefetch" href="/assets/js/34.7400e94e.js"><link rel="prefetch" href="/assets/js/35.f2767470.js"><link rel="prefetch" href="/assets/js/36.0c59cfbe.js"><link rel="prefetch" href="/assets/js/37.d2c43d60.js"><link rel="prefetch" href="/assets/js/38.27af19fa.js"><link rel="prefetch" href="/assets/js/39.80642131.js"><link rel="prefetch" href="/assets/js/4.754dfb46.js"><link rel="prefetch" href="/assets/js/40.08f6c317.js"><link rel="prefetch" href="/assets/js/41.1f789247.js"><link rel="prefetch" href="/assets/js/42.22aa889a.js"><link rel="prefetch" href="/assets/js/43.ce3ab661.js"><link rel="prefetch" href="/assets/js/44.1a0e84c4.js"><link rel="prefetch" href="/assets/js/45.362e5ef5.js"><link rel="prefetch" href="/assets/js/46.4d738550.js"><link rel="prefetch" href="/assets/js/47.07a89f4e.js"><link rel="prefetch" href="/assets/js/48.c5699e18.js"><link rel="prefetch" href="/assets/js/49.7cdcb266.js"><link rel="prefetch" href="/assets/js/5.9db707e5.js"><link rel="prefetch" href="/assets/js/50.caaed377.js"><link rel="prefetch" href="/assets/js/51.c8eb298c.js"><link rel="prefetch" href="/assets/js/52.97badafd.js"><link rel="prefetch" href="/assets/js/53.7a9e10fc.js"><link rel="prefetch" href="/assets/js/54.273c8ea9.js"><link rel="prefetch" href="/assets/js/6.a3a6a4b1.js"><link rel="prefetch" href="/assets/js/7.ec11f840.js"><link rel="prefetch" href="/assets/js/8.86b5445f.js"><link rel="prefetch" href="/assets/js/9.c2af3ea8.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.46847213.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.0c2811eb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><div class="navbar-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="Spark" class="logo"> <span class="site-name can-hide">Spark</span></a> <div class="links" style="max-width:nullpx;"><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></header></div> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><div depth="0" class="sidebar-group"><p class="sidebar-heading open"><span>node 与 npm</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/blog/tool/node%E5%92%8Cnpm.html#一-下载" class="sidebar-link">一 下载</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#二-安装" class="sidebar-link">二 安装</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#三-自定义全局包安装路径" class="sidebar-link">三 自定义全局包安装路径</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#四-安装-cnpm" class="sidebar-link">四 安装 cnpm</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#五-npm-常用命令" class="sidebar-link">五 npm 常用命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/tool/node%E5%92%8Cnpm.html#_1-安装" class="sidebar-link">1. 安装</a></li><li class="sidebar-sub-header"><a href="/blog/tool/node%E5%92%8Cnpm.html#_2-更新" class="sidebar-link">2. 更新</a></li><li class="sidebar-sub-header"><a href="/blog/tool/node%E5%92%8Cnpm.html#_3-卸载" class="sidebar-link">3. 卸载</a></li><li class="sidebar-sub-header"><a href="/blog/tool/node%E5%92%8Cnpm.html#_4-save-和-save-dev-的区别" class="sidebar-link">4. --save 和--save-dev 的区别</a></li></ul></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#git-更改-windows-下默认编辑器" class="sidebar-link">git 更改 Windows 下默认编辑器</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#git-配置-ssh" class="sidebar-link">git 配置 ssh</a></li></ul></div></li></ul> </div> <div class="page"> <div class="article-list-inner" style="display:none;"><div class="tag-container"><div class="tag-item-container" style="display:none;"><span class="tag">
+        eslint
+      </span><span class="tag">
+        工具使用
+      </span><span class="tag">
+        VuePress
+      </span><span class="tag">
+        babel
+      </span><span class="tag">
+        总结
+      </span><span class="tag">
+        jsdoc
+      </span><span class="tag">
+        环境搭建
+      </span><span class="tag">
+        rollup
+      </span><span class="tag">
+        收藏
+      </span><span class="tag">
+        html
+      </span><span class="tag">
+        图片下载
+      </span><span class="tag">
+        canvas
+      </span><span class="tag">
+        布局
+      </span><span class="tag">
+        js
+      </span><span class="tag">
+        模块
+      </span><span class="tag">
+        vue
+      </span><span class="tag">
+        echart
+      </span><span class="tag">
+        moment
+      </span><span class="tag">
+        拖拽
+      </span><span class="tag">
+        css
+      </span><span class="tag">
+        组件
+      </span><span class="tag">
+        文档
+      </span><span class="tag">
+        websocket
+      </span><span class="tag">
+        socket.io
+      </span><span class="tag">
+        移动端
+      </span></div> <div class="tag-tip" style="display:none;">
+      标签为
+      <span></span>下的文章
+    </div></div> <div></div></div> <div class="content__default"><h1 id="node-与-npm"><a href="#node-与-npm" class="header-anchor">#</a> node 与 npm</h1> <h2 id="一-下载"><a href="#一-下载" class="header-anchor">#</a> 一 下载</h2> <p>打开<a href="https://nodejs.org/en/download/" target="_blank" rel="noopener noreferrer">node 官网下载链接<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>，下载自己需要的 node 安装包，由于我的电脑是 Windows，所以我下载的是 windows 下的安装包
+<img src="https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560931065098.png" alt=""></p> <h2 id="二-安装"><a href="#二-安装" class="header-anchor">#</a> 二 安装</h2> <p>一路点是，安装到自己需要的目录，这里我安装的目录是<code>F:\My development tools\node</code>，在安装过程中，程序会自动为你配置环境变量。</p> <p>如果没有自动配置环境变量，可以手动在<code>path</code>中添加<code>F:\My development tools\node</code></p> <p>安装完后，打开<code>cmd</code>，输入<code>node -v</code>,<code>npm -v</code>,如果出现对应的版本信息，安装成功：
+<img src="https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560933415483.png" alt=""></p> <h2 id="三-自定义全局包安装路径"><a href="#三-自定义全局包安装路径" class="header-anchor">#</a> 三 自定义全局包安装路径</h2> <p>默认情况下，使用<code>npm install 包名 -g</code>全局安装的包在<code>C:\Users\Administrator\AppData\Roaming\npm</code>目录下，这样会占据 C 盘的空间，通过自定义全局包安装路径可以更改全局包的默认安装位置。</p> <ol><li>首先在 node 安装目录下创建两个文件夹：<code>node_cahe</code>、<code>node_global</code> <img src="https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560933933165.png" alt=""></li> <li>打开 cmd 输入</li></ol> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> config <span class="token builtin class-name">set</span> prefix <span class="token string">&quot;F:\My development tools<span class="token entity" title="\n">\n</span>ode<span class="token entity" title="\n">\n</span>ode_global&quot;</span>
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> cache <span class="token string">&quot;F:\My development tools<span class="token entity" title="\n">\n</span>ode<span class="token entity" title="\n">\n</span>ode_cache&quot;</span>
+</code></pre></div><p>设置完毕后可以使用<code>npm config list</code>查看设置是否成功。</p> <p>如果出现 npm 命令卡死的情况，可以删除<code>C:\Users\{账户}\.npmrc</code>文件。</p> <ol start="3"><li>打开系统的环境配置页面，<code>我的电脑-属性-高级系统设置-系统属性-环境变量</code> <img src="https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560931065120.png" alt=""></li> <li>在系统变量下新建一个<code>NODE_PATH</code>，输入<code>F:\My development tools\nodejs\node_global\node_modules</code></li> <li>将用户变量 Path 默认的<code>C:\Users\Administrator\AppData\Roaming\npm</code>修改为<code>F:\My development tools\nodejs\node_global</code></li> <li>配置完成后，安装一个全局模块进行测试，例如：<code>npm install express -g</code>，可以看到<code>express</code>模块已经安装在了目录<code>F:\My development tools\node\node_global\node_modules</code>下
+<img src="https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560933710046.png" alt="enter description here"></li></ol> <h2 id="四-安装-cnpm"><a href="#四-安装-cnpm" class="header-anchor">#</a> 四 安装 cnpm</h2> <ol><li>安装命令，通过 cnpm 使用</li></ol> <div class="language-tcl extra-class"><pre class="language-tcl"><code>npm install <span class="token operator">-</span>g cnpm <span class="token operator">-</span><span class="token operator">-</span>registry=https:<span class="token operator">/</span><span class="token operator">/</span>registry.npm.taobao.org
+</code></pre></div><ol start="2"><li><p>添加环境变量</p> <p>经过上面的配置，<code>cnpm</code>会被安装到<code>F:\My development tools\node\node_global</code>目录下，所以需要对<code>cnpm</code>进行环境变量的配置，用户变量<code>Path</code>添加<code>F:\My development tools\node\node_global</code>（即 cnpm 脚本的地址）
+<img src="https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/1560933710146.png" alt=""></p></li></ol> <p>切换源：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.taobao.org
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npmjs.org
+<span class="token function">npm</span> config <span class="token builtin class-name">set</span> registry https://registry.npm.scutech.com
+</code></pre></div><p>she</p> <h2 id="五-npm-常用命令"><a href="#五-npm-常用命令" class="header-anchor">#</a> 五 npm 常用命令</h2> <h3 id="_1-安装"><a href="#_1-安装" class="header-anchor">#</a> 1. 安装</h3> <div class="language- extra-class"><pre class="language-text"><code>npm install [&lt;name&gt;&lt;version&gt;][-g]/[--save][-dev]
+</code></pre></div><h3 id="_2-更新"><a href="#_2-更新" class="header-anchor">#</a> 2. 更新</h3> <div class="language- extra-class"><pre class="language-text"><code>npm update [&lt;name&gt;&lt;version&gt;][-g]/[--save][-dev]
+</code></pre></div><h3 id="_3-卸载"><a href="#_3-卸载" class="header-anchor">#</a> 3. 卸载</h3> <div class="language- extra-class"><pre class="language-text"><code>npm uninstall [&lt;name&gt;&lt;version&gt;][-g]/[--save][-dev]
+</code></pre></div><h3 id="_4-save-和-save-dev-的区别"><a href="#_4-save-和-save-dev-的区别" class="header-anchor">#</a> 4. --save 和--save-dev 的区别</h3> <ol><li><code>-save(-S)</code></li></ol> <ul><li>会将模块依赖写入 dependencies 节点。</li> <li>运行 npm install 初始化项目时，会将模块下载到项目目录下。</li> <li>运行 npm install --production 或者注明 NODE_ENV 变量值为 production 时，会自动下载模块到 node_modules 目录中。</li></ul> <ol start="2"><li><code>--save-dev(-D)</code></li></ol> <ul><li>会将模块依赖写入 dependencies 节点。</li> <li>运行 npm install 初始化项目时，会将模块下载到项目目录下。</li> <li>运行 npm install --production 或者注明 NODE_ENV 变量值为 production 时，不会自动下载模块到 node_modules 目录中。</li></ul> <ol start="3"><li>总结</li></ol> <ul><li>-D 安装的模块是开发时需要的，但在部署（生产环境）不需要，例如：压缩 css、js 的模块。</li> <li>-S 安装的模块开发生产环境都需要。</li></ul> <h2 id="git-更改-windows-下默认编辑器"><a href="#git-更改-windows-下默认编辑器" class="header-anchor">#</a> git 更改 Windows 下默认编辑器</h2> <p>在 git commit --amend 时，会通过编辑器打开提交信息的文件，可以通过命令修改默认编辑器。</p> <p><code>git config --global core.editor &quot;D:/'My development tools'/'Microsoft VS Code'/Code.exe&quot; --wait</code></p> <p>路径中有空格时，需要使用''。</p> <p>使用<code>git config --list</code>，可以查看配置。</p> <p>删除全局配置：</p> <p>core.editord 的值可以配置多个，删除多个时：
+<code>git config --global --unset-all core.editor</code></p> <p>删除一个时:
+<code>git config --global --unset core.editor</code></p> <h2 id="git-配置-ssh"><a href="#git-配置-ssh" class="header-anchor">#</a> git 配置 ssh</h2> <p>生成密钥：<code>ssh-keygen -t rsa -C &quot;邮箱&quot;</code></p> <p>C 盘：<code>C:\Users\{用户}\.ssh</code> 下，将<code>id_rsa.pub</code>文件中复制到 GitHub 网站个人用户 ssh keys 处</p> <p>六 参考文献</p> <ol><li><a href="https://www.cnblogs.com/zhouyu2017/p/6485265.html" target="_blank" rel="noopener noreferrer">Node.js 安装及环境配置之 Windows 篇<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://www.cnblogs.com/limitcode/p/7906447.html" target="_blank" rel="noopener noreferrer">NPM install -save 和 -save-dev 傻傻分不清<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://www.jianshu.com/p/7ea13d57638b" target="_blank" rel="noopener noreferrer">npm 常用命令<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://www.jianshu.com/p/96d7558e643b" target="_blank" rel="noopener noreferrer">安装 cnpm （npm 淘宝镜像）<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ol></div> <div class="sidebar-right"><div class="sidebar-right-inner"><div class="newest"><div class="title">
+          推荐阅读
+        </div> <ol class="title-list"></ol></div> <div class="about"><div class="title">
+          云标签
+        </div> <div class="title-list"><span class="tag">
+            eslint
+          </span><span class="tag">
+            工具使用
+          </span><span class="tag">
+            VuePress
+          </span><span class="tag">
+            babel
+          </span><span class="tag">
+            总结
+          </span><span class="tag">
+            jsdoc
+          </span><span class="tag">
+            环境搭建
+          </span><span class="tag">
+            rollup
+          </span><span class="tag">
+            收藏
+          </span><span class="tag">
+            html
+          </span><span class="tag">
+            图片下载
+          </span><span class="tag">
+            canvas
+          </span><span class="tag">
+            布局
+          </span><span class="tag">
+            js
+          </span><span class="tag">
+            模块
+          </span><span class="tag">
+            vue
+          </span><span class="tag">
+            echart
+          </span><span class="tag">
+            moment
+          </span><span class="tag">
+            拖拽
+          </span><span class="tag">
+            css
+          </span><span class="tag">
+            组件
+          </span><span class="tag">
+            文档
+          </span><span class="tag">
+            websocket
+          </span><span class="tag">
+            socket.io
+          </span><span class="tag">
+            移动端
+          </span></div></div> <div class="catalog"><div class="title">
+          目录
+        </div> <ul class="sidebar-links"><li><div depth="0" class="sidebar-group"><p class="sidebar-heading open"><span>node 与 npm</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/blog/tool/node%E5%92%8Cnpm.html#一-下载" class="sidebar-link">一 下载</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#二-安装" class="sidebar-link">二 安装</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#三-自定义全局包安装路径" class="sidebar-link">三 自定义全局包安装路径</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#四-安装-cnpm" class="sidebar-link">四 安装 cnpm</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#五-npm-常用命令" class="sidebar-link">五 npm 常用命令</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/tool/node%E5%92%8Cnpm.html#_1-安装" class="sidebar-link">1. 安装</a></li><li class="sidebar-sub-header"><a href="/blog/tool/node%E5%92%8Cnpm.html#_2-更新" class="sidebar-link">2. 更新</a></li><li class="sidebar-sub-header"><a href="/blog/tool/node%E5%92%8Cnpm.html#_3-卸载" class="sidebar-link">3. 卸载</a></li><li class="sidebar-sub-header"><a href="/blog/tool/node%E5%92%8Cnpm.html#_4-save-和-save-dev-的区别" class="sidebar-link">4. --save 和--save-dev 的区别</a></li></ul></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#git-更改-windows-下默认编辑器" class="sidebar-link">git 更改 Windows 下默认编辑器</a></li><li><a href="/blog/tool/node%E5%92%8Cnpm.html#git-配置-ssh" class="sidebar-link">git 配置 ssh</a></li></ul></div></li></ul></div></div></div> <div class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">7/14/2020, 7:16:17 PM</span></div></div> <!----> </div> <!----></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.61190595.js" defer></script><script src="/assets/js/10.2414efa1.js" defer></script>
+
+    <div class="cm-enter-loading">
+      <div class="cm-spinner-box">
+        <div class="cm-configure-border-1">
+          <div class="cm-configure-core"></div>
+        </div>
+        <div class="cm-configure-border-2">
+          <div class="cm-configure-core"></div>
+        </div>
+        <p class="cm-loading-text">loading...</p>
+      </div>
+    </div>
+
+    <style>
+      .cm-enter-loading {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #37474f;
+        z-index: 10000;
+      }
+
+      .cm-spinner-box {
+        display: inline-block;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .cm-configure-border-1 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        position: absolute;
+        background: #ffab91;
+        animation: configure-clockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-border-2 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        left: -115px;
+        background: rgb(63, 249, 220);
+        transform: rotate(45deg);
+        animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-core {
+        width: 100%;
+        height: 100%;
+        background-color: #37474f;
+      }
+
+      .cm-loading-text {
+        font-size: 40px;
+        color: white;
+        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
+      }
+
+      @keyframes configure-clockwise {
+        0% {
+          transform: rotate(0);
+        }
+        25% {
+          transform: rotate(90deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        75% {
+          transform: rotate(270deg);
+        }
+        100% {
+          transform: rotate(359deg);
+        }
+      }
+
+      @keyframes configure-xclockwise {
+        0% {
+          transform: rotate(45deg);
+        }
+        25% {
+          transform: rotate(-45deg);
+        }
+        50% {
+          transform: rotate(-135deg);
+        }
+        75% {
+          transform: rotate(-215deg);
+        }
+        100% {
+          transform: rotate(-305deg);
+        }
+      }
+    </style>
+
+  </body>
+</html>

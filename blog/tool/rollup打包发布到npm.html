@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>rollup 打包发布到 npm | Spark</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <script src="https://cdn.jsdelivr.net/gh/sparklinm/js-library/d/bundle.umd.js"></script>
+    <link rel="icon" href="/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/dist/markdown-it.js"></script>
+    <meta name="description" content="Just playing around">
+    <meta title="rollup打包发布到npm" time="2020-07-03T10:17:47.000Z" tag="rollup">
+    <link rel="preload" href="/assets/css/0.styles.0c2811eb.css" as="style"><link rel="preload" href="/assets/js/app.61190595.js" as="script"><link rel="preload" href="/assets/js/11.06130b25.js" as="script"><link rel="prefetch" href="/assets/js/10.2414efa1.js"><link rel="prefetch" href="/assets/js/12.33bbb473.js"><link rel="prefetch" href="/assets/js/13.b1db4ecb.js"><link rel="prefetch" href="/assets/js/14.f777e5f5.js"><link rel="prefetch" href="/assets/js/15.25bcc4f3.js"><link rel="prefetch" href="/assets/js/16.96bc9df6.js"><link rel="prefetch" href="/assets/js/17.b28d9c78.js"><link rel="prefetch" href="/assets/js/18.b0cb2472.js"><link rel="prefetch" href="/assets/js/19.5236e7cb.js"><link rel="prefetch" href="/assets/js/20.9b39d48b.js"><link rel="prefetch" href="/assets/js/21.413d7e5c.js"><link rel="prefetch" href="/assets/js/22.9b4b5648.js"><link rel="prefetch" href="/assets/js/23.429db586.js"><link rel="prefetch" href="/assets/js/24.a4b2bf53.js"><link rel="prefetch" href="/assets/js/25.da7f6f44.js"><link rel="prefetch" href="/assets/js/26.1c86c8c4.js"><link rel="prefetch" href="/assets/js/27.567853cd.js"><link rel="prefetch" href="/assets/js/28.e79e9272.js"><link rel="prefetch" href="/assets/js/29.4c76ffad.js"><link rel="prefetch" href="/assets/js/3.ff140cd7.js"><link rel="prefetch" href="/assets/js/30.024d7314.js"><link rel="prefetch" href="/assets/js/31.33031f17.js"><link rel="prefetch" href="/assets/js/32.6e130523.js"><link rel="prefetch" href="/assets/js/33.58b44621.js"><link rel="prefetch" href="/assets/js/34.7400e94e.js"><link rel="prefetch" href="/assets/js/35.f2767470.js"><link rel="prefetch" href="/assets/js/36.0c59cfbe.js"><link rel="prefetch" href="/assets/js/37.d2c43d60.js"><link rel="prefetch" href="/assets/js/38.27af19fa.js"><link rel="prefetch" href="/assets/js/39.80642131.js"><link rel="prefetch" href="/assets/js/4.754dfb46.js"><link rel="prefetch" href="/assets/js/40.08f6c317.js"><link rel="prefetch" href="/assets/js/41.1f789247.js"><link rel="prefetch" href="/assets/js/42.22aa889a.js"><link rel="prefetch" href="/assets/js/43.ce3ab661.js"><link rel="prefetch" href="/assets/js/44.1a0e84c4.js"><link rel="prefetch" href="/assets/js/45.362e5ef5.js"><link rel="prefetch" href="/assets/js/46.4d738550.js"><link rel="prefetch" href="/assets/js/47.07a89f4e.js"><link rel="prefetch" href="/assets/js/48.c5699e18.js"><link rel="prefetch" href="/assets/js/49.7cdcb266.js"><link rel="prefetch" href="/assets/js/5.9db707e5.js"><link rel="prefetch" href="/assets/js/50.caaed377.js"><link rel="prefetch" href="/assets/js/51.c8eb298c.js"><link rel="prefetch" href="/assets/js/52.97badafd.js"><link rel="prefetch" href="/assets/js/53.7a9e10fc.js"><link rel="prefetch" href="/assets/js/54.273c8ea9.js"><link rel="prefetch" href="/assets/js/6.a3a6a4b1.js"><link rel="prefetch" href="/assets/js/7.ec11f840.js"><link rel="prefetch" href="/assets/js/8.86b5445f.js"><link rel="prefetch" href="/assets/js/9.c2af3ea8.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.46847213.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.0c2811eb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><div class="navbar-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="Spark" class="logo"> <span class="site-name can-hide">Spark</span></a> <div class="links" style="max-width:nullpx;"><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></header></div> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><div depth="0" class="sidebar-group"><p class="sidebar-heading open"><span>rollup 打包发布到 npm</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#前言" class="sidebar-link">前言</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#插件" class="sidebar-link">插件</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#常用插件" class="sidebar-link">常用插件</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#babel" class="sidebar-link">Babel</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#eslint" class="sidebar-link">Eslint</a></li></ul></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#开发环境和生产环境" class="sidebar-link">开发环境和生产环境</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#多出口打包" class="sidebar-link">多出口打包</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#排除不打包的第三方库" class="sidebar-link">排除不打包的第三方库</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#加载-cdn-的库" class="sidebar-link">加载 cdn 的库</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#发布到-npm" class="sidebar-link">发布到 npm</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#基本信息" class="sidebar-link">基本信息</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#忽略的文件" class="sidebar-link">忽略的文件</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#发布" class="sidebar-link">发布</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#发布中的问题" class="sidebar-link">发布中的问题</a></li></ul></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#参考文献" class="sidebar-link">参考文献</a></li></ul></div></li></ul> </div> <div class="page"> <div class="article-list-inner" style="display:none;"><div class="tag-container"><div class="tag-item-container" style="display:none;"><span class="tag">
+        eslint
+      </span><span class="tag">
+        工具使用
+      </span><span class="tag">
+        VuePress
+      </span><span class="tag">
+        babel
+      </span><span class="tag">
+        总结
+      </span><span class="tag">
+        jsdoc
+      </span><span class="tag">
+        环境搭建
+      </span><span class="tag">
+        rollup
+      </span><span class="tag">
+        收藏
+      </span><span class="tag">
+        html
+      </span><span class="tag">
+        图片下载
+      </span><span class="tag">
+        canvas
+      </span><span class="tag">
+        布局
+      </span><span class="tag">
+        js
+      </span><span class="tag">
+        模块
+      </span><span class="tag">
+        vue
+      </span><span class="tag">
+        echart
+      </span><span class="tag">
+        moment
+      </span><span class="tag">
+        拖拽
+      </span><span class="tag">
+        css
+      </span><span class="tag">
+        组件
+      </span><span class="tag">
+        文档
+      </span><span class="tag">
+        websocket
+      </span><span class="tag">
+        socket.io
+      </span><span class="tag">
+        移动端
+      </span></div> <div class="tag-tip" style="display:none;">
+      标签为
+      <span></span>下的文章
+    </div></div> <div></div></div> <div class="content__default"><h1 id="rollup-打包发布到-npm"><a href="#rollup-打包发布到-npm" class="header-anchor">#</a> rollup 打包发布到 npm</h1> <h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>安装，配置文件就不多说了，具体参考官网即可：</p> <p><a href="https://www.rollupjs.com/guide/introduction/" target="_blank" rel="noopener noreferrer">Rollupjs 文档<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <h2 id="插件"><a href="#插件" class="header-anchor">#</a> 插件</h2> <h3 id="常用插件"><a href="#常用插件" class="header-anchor">#</a> 常用插件</h3> <p>需要几个常用插件：</p> <ol><li>rollup-plugin-node-resolve ---帮助 Rollup 查找外部模块，然后导入</li> <li>rollup-plugin-commonjs ---将 CommonJS 模块转换为 ES2015 供 Rollup 处理</li> <li>rollup-plugin-terser --- 压缩 js 代码，包括 es6 代码压缩</li> <li>rollup-plugin-babel --- 让我们可以使用 es6 新特性来编写代码</li> <li>rollup-plugin-eslint --- js 代码检测</li></ol> <p>配置文件：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// rollup.config</span>
+<span class="token keyword">import</span> resolve <span class="token keyword">from</span> <span class="token string">&quot;rollup-plugin-node-resolve&quot;</span>
+<span class="token keyword">import</span> commonjs <span class="token keyword">from</span> <span class="token string">&quot;rollup-plugin-commonjs&quot;</span>
+<span class="token keyword">import</span> babel <span class="token keyword">from</span> <span class="token string">&quot;rollup-plugin-babel&quot;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> terser <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;rollup-plugin-terser&quot;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> eslint <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&quot;rollup-plugin-eslint&quot;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">[</span>
+  <span class="token punctuation">{</span>
+    input<span class="token operator">:</span> <span class="token string">&quot;src/main.js&quot;</span><span class="token punctuation">,</span>
+    output<span class="token operator">:</span> <span class="token punctuation">{</span>
+      name<span class="token operator">:</span> <span class="token string">&quot;timeout&quot;</span><span class="token punctuation">,</span>
+      file<span class="token operator">:</span> <span class="token string">&quot;/lib/tool.js&quot;</span><span class="token punctuation">,</span>
+      format<span class="token operator">:</span> <span class="token string">&quot;umd&quot;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+      <span class="token function">resolve</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 这样 Rollup 能找到 `ms`</span>
+      <span class="token function">commonjs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token comment">// 这样 Rollup 能转换 `ms` 为一个ES模块</span>
+      <span class="token function">eslint</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        throwOnError<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        throwOnWarning<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
+        include<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;src/**&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+        exclude<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;node_modules/**&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function">babel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        exclude<span class="token operator">:</span> <span class="token string">&quot;node_modules/**&quot;</span><span class="token punctuation">,</span> <span class="token comment">// 只编译我们的源代码</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token function">terser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span>
+</code></pre></div><h3 id="babel"><a href="#babel" class="header-anchor">#</a> Babel</h3> <p>其中需要注意 <code>babel</code> 插件的配置，见官网：</p> <p><a href="https://www.rollupjs.com/guide/tools/#npm-packages" target="_blank" rel="noopener noreferrer">Rollup 与其他工具集成<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p>当然也可以自己配置 <code>babel</code>，安装 <code>@babel/preset-env</code> 和 <code>@babel/runtime-corejs3</code></p> <p><code>dependencies</code>：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">yarn</span> <span class="token function">add</span> @babel/runtime-corejs3 --dev
+</code></pre></div><p><code>devDependencies</code>：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">yarn</span> <span class="token function">add</span> @babel/preset-env
+<span class="token function">yarn</span> <span class="token function">add</span> @babel/core
+<span class="token function">yarn</span> <span class="token function">add</span> @babel/plugin-transform-runtime
+</code></pre></div><p>新建 <code>babel.config</code> 文件：</p> <div class="language-js extra-class"><pre class="language-js"><code>module<span class="token punctuation">.</span>exports <span class="token operator">=</span> <span class="token punctuation">{</span>
+  presets<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">[</span>
+      <span class="token string">&quot;@babel/preset-env&quot;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        modules<span class="token operator">:</span> <span class="token boolean">false</span><span class="token punctuation">,</span>
+        useBuiltIns<span class="token operator">:</span> <span class="token string">&quot;usage&quot;</span><span class="token punctuation">,</span>
+        corejs<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span>
+        targets<span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token comment">// 目标浏览器版本，该浏览器缺失某新语法，babel才会引入这个新语法</span>
+          ie<span class="token operator">:</span> <span class="token number">11</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  plugins<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">[</span>
+      <span class="token string">&quot;@babel/plugin-transform-runtime&quot;</span><span class="token punctuation">,</span>
+      <span class="token punctuation">{</span>
+        corejs<span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token comment">// 可选 false | 2 | 3</span>
+        proposals<span class="token operator">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span> <span class="token comment">//corejs 3 可设置</span>
+      <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">// 不编译的文件夹</span>
+  ignore<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;node_modules/**&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这里使用的 <code>@babel/runtime-corejs3</code>，适用于：</p> <ul><li>开发类库/工具（生成不污染全局空间和内置对象原型的代码）</li> <li>借助 @babel/runtime 中帮助函数（helper function）移除冗余工具函数</li></ul> <p>详情见：<a href="https://juejin.im/post/5d0373a95188251e1b5ebb6c" target="_blank" rel="noopener noreferrer">结合 Babel 7.4.0 谈一下 Babel-runtime 和 Babel-polyfill<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <p><code>corejs</code> 可选值为 <code>false | 2 | 3</code>，区别在于：</p> <ul><li>corejs: 2 only supports global variables (e.g. Promise) and static properties (e.g. Array.from)。</li> <li>corejs: 3 also supports instance properties (e.g. [].includes)。</li></ul> <p><code>corejs</code> 选择的版本越高，也意味着打包体积的增加。</p> <p>参考：<a href="https://www.babeljs.cn/docs/babel-plugin-transform-runtime" target="_blank" rel="noopener noreferrer">babel plugin-transform-runtime<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p> <p>同时需要设置 <code>modules: false</code> ，否则 <code>Babel</code> 会在 <code>Rollup</code> 有机会做处理之前，将我们的模块转成 <code>CommonJS</code> ，导致 <code>Rollup</code> 的一些处理失败。</p> <p>在 <code>rollup.config.js</code> 文件中，也需要做一些配置来使 <code>@babel/plugin-transform-runtime</code> 插件生效：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function">babel</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+      exclude<span class="token operator">:</span> <span class="token string">'node_modules/**'</span><span class="token punctuation">,</span> <span class="token comment">// 只编译我们的源代码</span>
+      <span class="token operator">/</span><span class="token operator">/</span> plugin<span class="token operator">-</span>transform<span class="token operator">-</span>runtime 生效
+      runtimeHelpers<span class="token operator">:</span> <span class="token boolean">true</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="eslint"><a href="#eslint" class="header-anchor">#</a> Eslint</h3> <p>新建 <code>.eslintrc.js</code>，在里面配置 <code>eslint</code> 即可。</p> <p>对于 <code>Eslint</code>，同样可以不使用 <code>rollup-plugin-eslint</code> 插件，自己配置。</p> <h2 id="开发环境和生产环境"><a href="#开发环境和生产环境" class="header-anchor">#</a> 开发环境和生产环境</h2> <div class="language-json extra-class"><pre class="language-json"><code><span class="token comment">// package.json</span>
+  <span class="token property">&quot;scripts&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 生产环境打包</span>
+    <span class="token property">&quot;build&quot;</span><span class="token operator">:</span> <span class="token string">&quot;NODE_ENV=production rollup -c&quot;</span><span class="token punctuation">,</span>
+    <span class="token comment">// 开发环境打包</span>
+    <span class="token property">&quot;dev&quot;</span><span class="token operator">:</span> <span class="token string">&quot;rollup -c -w&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;test&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node test/test.js&quot;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+</code></pre></div><p><code>-w/--watch</code>：监听源文件是否有改动，如果有改动，重新打包。</p> <p>开发环境不压缩代码</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">//</span>
+<span class="token keyword">const</span> isDev <span class="token operator">=</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">&quot;production&quot;</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  output<span class="token operator">:</span> <span class="token punctuation">{</span>
+    file<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token operator">!</span>isDev <span class="token operator">&amp;&amp;</span> <span class="token string">&quot;bundle.min.js&quot;</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">&quot;bundle.js&quot;</span><span class="token punctuation">,</span>
+    format<span class="token operator">:</span> <span class="token string">&quot;umd&quot;</span><span class="token punctuation">,</span>
+    name<span class="token operator">:</span> <span class="token string">&quot;util&quot;</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  plugins<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token operator">!</span>isDev <span class="token operator">&amp;&amp;</span> <span class="token function">terser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="多出口打包"><a href="#多出口打包" class="header-anchor">#</a> 多出口打包</h2> <p>如果是发布到 <code>npm</code>，需要在<code>package.json</code> 中定义需要的包：</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;main&quot;</span><span class="token operator">:</span> <span class="token string">&quot;d/bundle.min.cjs.js&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;module&quot;</span><span class="token operator">:</span> <span class="token string">&quot;d/bundle.min.esm.js&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;browser&quot;</span><span class="token operator">:</span> <span class="token string">&quot;d/bundle.min.umd.js&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;scripts&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;build&quot;</span><span class="token operator">:</span> <span class="token string">&quot;cross-env NODE_ENV=production rollup -c&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;dev&quot;</span><span class="token operator">:</span> <span class="token string">&quot;rollup -c -w&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;test&quot;</span><span class="token operator">:</span> <span class="token string">&quot;node test/test.js&quot;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;dependencies&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;devDependencies&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// 引入</span>
+<span class="token keyword">import</span> pkg <span class="token keyword">from</span> <span class="token string">'./package.json'</span>
+<span class="token keyword">const</span> isDev <span class="token operator">=</span> process<span class="token punctuation">.</span>env<span class="token punctuation">.</span><span class="token constant">NODE_ENV</span> <span class="token operator">!==</span> <span class="token string">'production'</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  input<span class="token operator">:</span> <span class="token string">'main.js'</span><span class="token punctuation">,</span>
+  output<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      file<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token operator">!</span>isDev <span class="token operator">&amp;&amp;</span> pkg<span class="token punctuation">.</span>main<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'d/bundle.cjs.js'</span><span class="token punctuation">,</span>
+      format<span class="token operator">:</span> <span class="token string">'cjs'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      file<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token operator">!</span>isDev <span class="token operator">&amp;&amp;</span> pkg<span class="token punctuation">.</span>module<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'d/bundle.esm.js'</span><span class="token punctuation">,</span>
+      format<span class="token operator">:</span> <span class="token string">'esm'</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+    <span class="token punctuation">{</span>
+      file<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token operator">!</span>isDev <span class="token operator">&amp;&amp;</span> pkg<span class="token punctuation">.</span>browser<span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">'d/bundle.umd.js'</span><span class="token punctuation">,</span>
+      format<span class="token operator">:</span> <span class="token string">'umd'</span><span class="token punctuation">,</span>
+      name<span class="token operator">:</span> <span class="token string">'util'</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="排除不打包的第三方库"><a href="#排除不打包的第三方库" class="header-anchor">#</a> 排除不打包的第三方库</h2> <p>例如项目依赖于 <code>jquery</code>，正常来说 <code>rollup</code> 打包会将整个 <code>jquery</code> 一起打包。可以通过设置 <code>external</code> 来指明不打包的文件库。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// rollup.config.js</span>
+<span class="token keyword">import</span> path <span class="token keyword">from</span> <span class="token string">'path'</span><span class="token punctuation">;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  <span class="token operator">...</span><span class="token punctuation">,</span>
+  external<span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token string">'jquery'</span><span class="token punctuation">,</span>
+    path<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span> <span class="token string">'./src/some-local-file-that-should-not-be-bundled.js'</span> <span class="token punctuation">)</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+</code></pre></div><p>在 <code>umd/iife</code> 包的情况下，还需要给 <code>jquery</code> 设置成全局模块：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  output<span class="token operator">:</span> <span class="token punctuation">{</span>
+    file<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token operator">!</span>isDev <span class="token operator">&amp;&amp;</span> <span class="token string">&quot;bundle.min.js&quot;</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">&quot;bundle.js&quot;</span><span class="token punctuation">,</span>
+    format<span class="token operator">:</span> <span class="token string">&quot;iife&quot;</span><span class="token punctuation">,</span>
+    name<span class="token operator">:</span> <span class="token string">&quot;util&quot;</span><span class="token punctuation">,</span>
+    globals<span class="token operator">:</span> <span class="token punctuation">{</span>
+      jquery<span class="token operator">:</span> <span class="token string">&quot;$&quot;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p><code>iife</code> 包是一个自动执行函数，适合作为 <code>&lt;script&gt;</code> 标签。</p> <p>配置了 <code>globals</code> 后，<code>$</code> 会作为一个参数传入自动执行函数：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token punctuation">;</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">exports<span class="token punctuation">,</span> $</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token comment">// code</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">,</span> $<span class="token punctuation">)</span>
+</code></pre></div><p>为什么要这样做？原因如下：</p> <ul><li>外部类库可能已经被打包压缩，自己用 <code>rollup</code> 再打包一次，效果也许并不如之前。</li> <li>不利于缓存，类库不经常更新，可以当做静态资源充分发挥缓存优势，而手动 build 的内容受工具配置影响。</li></ul> <p>但如果引入的是 lodash 中几个函数，这时候将这几个函数打包进去。</p> <h2 id="加载-cdn-的库"><a href="#加载-cdn-的库" class="header-anchor">#</a> 加载 cdn 的库</h2> <p>对于 jquery，我们可能还会用 cdn 引入，通过配置 <code>paths</code> 可以做到：</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token comment">// rollup.config.js</span>
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+  output<span class="token operator">:</span> <span class="token punctuation">{</span>
+    file<span class="token operator">:</span> <span class="token punctuation">(</span><span class="token operator">!</span>isDev <span class="token operator">&amp;&amp;</span> <span class="token string">&quot;bundle.min.js&quot;</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token string">&quot;bundle.js&quot;</span><span class="token punctuation">,</span>
+    format<span class="token operator">:</span> <span class="token string">&quot;iife&quot;</span><span class="token punctuation">,</span>
+    name<span class="token operator">:</span> <span class="token string">&quot;util&quot;</span><span class="token punctuation">,</span>
+    paths<span class="token operator">:</span> <span class="token punctuation">{</span>
+      jquery<span class="token operator">:</span> <span class="token string">&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.js&quot;</span><span class="token punctuation">,</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// bundle.js</span>
+<span class="token function">define</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token string">&quot;https://cdn.bootcss.com/jquery/3.2.1/jquery.js&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">jquery</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  jquery<span class="token punctuation">.</span><span class="token function">selectAll</span><span class="token punctuation">(</span><span class="token string">&quot;p&quot;</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">style</span><span class="token punctuation">(</span><span class="token string">&quot;color&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;purple&quot;</span><span class="token punctuation">)</span>
+  <span class="token comment">// ...</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre></div><h2 id="发布到-npm"><a href="#发布到-npm" class="header-anchor">#</a> 发布到 npm</h2> <h3 id="基本信息"><a href="#基本信息" class="header-anchor">#</a> 基本信息</h3> <p>官网注册，或者使用 <code>npm adduser</code> 命令依次填入用户名，邮箱，密码注册。</p> <p>库信息说明，在 <code>package.json</code> 中：</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token punctuation">{</span>
+  <span class="token property">&quot;name&quot;</span><span class="token operator">:</span> <span class="token string">&quot;名字&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;version&quot;</span><span class="token operator">:</span> <span class="token string">&quot;0.0.1&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;description&quot;</span><span class="token operator">:</span> <span class="token string">&quot;tool library&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 入口文件 import pkg from 'package-name'，导入的就是这个文件</span>
+  <span class="token property">&quot;main&quot;</span><span class="token operator">:</span> <span class="token string">&quot;d/bundle.min.cjs.js&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// es模块打包</span>
+  <span class="token property">&quot;module&quot;</span><span class="token operator">:</span> <span class="token string">&quot;d/bundle.min.esm.js&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 浏览器模块打包</span>
+  <span class="token property">&quot;browser&quot;</span><span class="token operator">:</span> <span class="token string">&quot;d/bundle.min.umd.js&quot;</span><span class="token punctuation">,</span>
+  <span class="token property">&quot;author&quot;</span><span class="token operator">:</span> <span class="token string">&quot;作者&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 协议</span>
+  <span class="token property">&quot;license&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 主页</span>
+  <span class="token property">&quot;homepage&quot;</span><span class="token operator">:</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 关键字</span>
+  <span class="token property">&quot;keywords&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">&quot;tools&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;javascript&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;library&quot;</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+  <span class="token comment">// 仓库地址</span>
+  <span class="token property">&quot;repository&quot;</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">&quot;type&quot;</span><span class="token operator">:</span> <span class="token string">&quot;git&quot;</span><span class="token punctuation">,</span>
+    <span class="token property">&quot;url&quot;</span><span class="token operator">:</span> <span class="token string">&quot;https://github.com/sparklinm/js-library&quot;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token comment">// npm publish 前自动build</span>
+  <span class="token property">&quot;prepublishOnly&quot;</span><span class="token operator">:</span> <span class="token string">&quot;npm run build&quot;</span><span class="token punctuation">,</span>
+  <span class="token comment">// 包对NodeJs版本要求</span>
+  <span class="token property">&quot;engines&quot;</span><span class="token operator">:</span> <span class="token string">&quot;6.0&quot;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="忽略的文件"><a href="#忽略的文件" class="header-anchor">#</a> 忽略的文件</h3> <p><code>.npmignore</code> 文件中可以定义不用上传的文件。</p> <p>如果有 <code>.gitignore</code> 文件，则发布时会忽略<code>.gitignore</code> 中定义的文件; 也即这些文件不需要在 <code>.npmignore</code> 重新定义。如果用 <code>.gitignore</code> 忽略了 <code>dist</code> 目录，但发包时又需要发布 <code>dist</code> 目录，此时可以在 <code>package.json</code> 定义 <code>files</code> 字段，这是一个白名单，里面的文件都会被发布出去。</p> <div class="language-json extra-class"><pre class="language-json"><code><span class="token property">&quot;files&quot;</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+  <span class="token string">&quot;dist&quot;</span>
+<span class="token punctuation">]</span>
+</code></pre></div><p>需要注意的是，子文件夹 <code>.gitignore</code> 或 <code>.npmignore</code> 同样有效，而它们优先级高于 <code>files</code> 字段。</p> <p>另外，有些文件无论如何设置，都不会发布出去：<code>node_modules</code>, <code>.git</code>(包括<code>.gitignore</code>)</p> <h3 id="发布"><a href="#发布" class="header-anchor">#</a> 发布</h3> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> login
+<span class="token function">npm</span> build
+<span class="token function">npm</span> publish
+</code></pre></div><h3 id="发布中的问题"><a href="#发布中的问题" class="header-anchor">#</a> 发布中的问题</h3> <ol><li><p>登录时问题，<code>npm ERR! code E409</code></p> <p>需要切换源为 npm 源，<code>npm config set registry https://registry.npmjs.org</code>
+注册后需要先验证邮箱，才能发布。</p></li> <li><p>打包时错误，<code>EACCES: permission denied, mkdir...</code></p> <p>npm 会有生命周期，某个包会有生命周期来执行一些东西，安全起见会自动降级导致没有权限执行一些操作，通过--unsafe-perm 参数来解锁该限制。</p> <p><code>npm build --unsafe-perm</code></p> <p>一劳永逸的方法：</p> <ul><li><code>npm config set unsafe-perm</code>（针对当前用户的）</li> <li><code>npm config -g set unsafe-perm</code>(全局的）</li></ul></li> <li><p>邮箱未验证，<code>npm ERR! you must verify your email...</code></p> <p>去邮箱验证即可。</p></li> <li><p>无法发布私有包，<code>npm ERR! You must sign up for private packages</code></p> <p>默认情况下，包名为 <code>@&lt;username&gt;/&lt;your-package&gt;</code> 的包为私有包，私有包是需要付费的。以下命令可以指明为公有包：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> publish --access public
+</code></pre></div></li></ol> <h2 id="参考文献"><a href="#参考文献" class="header-anchor">#</a> 参考文献</h2> <ol><li><a href="https://zhuanlan.zhihu.com/p/95119407" target="_blank" rel="noopener noreferrer">如何使用 rollup 打包前端组件/库<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://www.rollupjs.com/guide/introduction/" target="_blank" rel="noopener noreferrer">Rollupjs 文档<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://www.jianshu.com/p/530451cf95c9" target="_blank" rel="noopener noreferrer">web 前端: rollup.js 打包 vue 组件并发布到 npm 网站<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li> <li><a href="https://blog.csdn.net/zhangjing1019/article/details/102896421" target="_blank" rel="noopener noreferrer">发布 npm 包时遇到的一些坑<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></li></ol></div> <div class="sidebar-right"><div class="sidebar-right-inner"><div class="newest"><div class="title">
+          推荐阅读
+        </div> <ol class="title-list"></ol></div> <div class="about"><div class="title">
+          云标签
+        </div> <div class="title-list"><span class="tag">
+            eslint
+          </span><span class="tag">
+            工具使用
+          </span><span class="tag">
+            VuePress
+          </span><span class="tag">
+            babel
+          </span><span class="tag">
+            总结
+          </span><span class="tag">
+            jsdoc
+          </span><span class="tag">
+            环境搭建
+          </span><span class="tag">
+            rollup
+          </span><span class="tag">
+            收藏
+          </span><span class="tag">
+            html
+          </span><span class="tag">
+            图片下载
+          </span><span class="tag">
+            canvas
+          </span><span class="tag">
+            布局
+          </span><span class="tag">
+            js
+          </span><span class="tag">
+            模块
+          </span><span class="tag">
+            vue
+          </span><span class="tag">
+            echart
+          </span><span class="tag">
+            moment
+          </span><span class="tag">
+            拖拽
+          </span><span class="tag">
+            css
+          </span><span class="tag">
+            组件
+          </span><span class="tag">
+            文档
+          </span><span class="tag">
+            websocket
+          </span><span class="tag">
+            socket.io
+          </span><span class="tag">
+            移动端
+          </span></div></div> <div class="catalog"><div class="title">
+          目录
+        </div> <ul class="sidebar-links"><li><div depth="0" class="sidebar-group"><p class="sidebar-heading open"><span>rollup 打包发布到 npm</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#前言" class="sidebar-link">前言</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#插件" class="sidebar-link">插件</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#常用插件" class="sidebar-link">常用插件</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#babel" class="sidebar-link">Babel</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#eslint" class="sidebar-link">Eslint</a></li></ul></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#开发环境和生产环境" class="sidebar-link">开发环境和生产环境</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#多出口打包" class="sidebar-link">多出口打包</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#排除不打包的第三方库" class="sidebar-link">排除不打包的第三方库</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#加载-cdn-的库" class="sidebar-link">加载 cdn 的库</a></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#发布到-npm" class="sidebar-link">发布到 npm</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#基本信息" class="sidebar-link">基本信息</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#忽略的文件" class="sidebar-link">忽略的文件</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#发布" class="sidebar-link">发布</a></li><li class="sidebar-sub-header"><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#发布中的问题" class="sidebar-link">发布中的问题</a></li></ul></li><li><a href="/blog/tool/rollup%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83%E5%88%B0npm.html#参考文献" class="sidebar-link">参考文献</a></li></ul></div></li></ul></div></div></div> <div class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">7/6/2020, 7:20:40 PM</span></div></div> <!----> </div> <!----></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.61190595.js" defer></script><script src="/assets/js/11.06130b25.js" defer></script>
+
+    <div class="cm-enter-loading">
+      <div class="cm-spinner-box">
+        <div class="cm-configure-border-1">
+          <div class="cm-configure-core"></div>
+        </div>
+        <div class="cm-configure-border-2">
+          <div class="cm-configure-core"></div>
+        </div>
+        <p class="cm-loading-text">loading...</p>
+      </div>
+    </div>
+
+    <style>
+      .cm-enter-loading {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #37474f;
+        z-index: 10000;
+      }
+
+      .cm-spinner-box {
+        display: inline-block;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .cm-configure-border-1 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        position: absolute;
+        background: #ffab91;
+        animation: configure-clockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-border-2 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        left: -115px;
+        background: rgb(63, 249, 220);
+        transform: rotate(45deg);
+        animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-core {
+        width: 100%;
+        height: 100%;
+        background-color: #37474f;
+      }
+
+      .cm-loading-text {
+        font-size: 40px;
+        color: white;
+        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
+      }
+
+      @keyframes configure-clockwise {
+        0% {
+          transform: rotate(0);
+        }
+        25% {
+          transform: rotate(90deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        75% {
+          transform: rotate(270deg);
+        }
+        100% {
+          transform: rotate(359deg);
+        }
+      }
+
+      @keyframes configure-xclockwise {
+        0% {
+          transform: rotate(45deg);
+        }
+        25% {
+          transform: rotate(-45deg);
+        }
+        50% {
+          transform: rotate(-135deg);
+        }
+        75% {
+          transform: rotate(-215deg);
+        }
+        100% {
+          transform: rotate(-305deg);
+        }
+      }
+    </style>
+
+  </body>
+</html>

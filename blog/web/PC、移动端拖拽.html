@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>PC、移动端拖拽 | Spark</title>
+    <meta name="generator" content="VuePress 1.5.2">
+    <script src="https://cdn.jsdelivr.net/gh/sparklinm/js-library/d/bundle.umd.js"></script>
+    <link rel="icon" href="/logo.png">
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/dist/markdown-it.js"></script>
+    <meta name="description" content="Just playing around">
+    <meta title="PC、移动端拖拽" time="2020-04-23T19:19:28.000Z" tag="html">
+    <link rel="preload" href="/assets/css/0.styles.0c2811eb.css" as="style"><link rel="preload" href="/assets/js/app.61190595.js" as="script"><link rel="preload" href="/assets/js/13.b1db4ecb.js" as="script"><link rel="prefetch" href="/assets/js/10.2414efa1.js"><link rel="prefetch" href="/assets/js/11.06130b25.js"><link rel="prefetch" href="/assets/js/12.33bbb473.js"><link rel="prefetch" href="/assets/js/14.f777e5f5.js"><link rel="prefetch" href="/assets/js/15.25bcc4f3.js"><link rel="prefetch" href="/assets/js/16.96bc9df6.js"><link rel="prefetch" href="/assets/js/17.b28d9c78.js"><link rel="prefetch" href="/assets/js/18.b0cb2472.js"><link rel="prefetch" href="/assets/js/19.5236e7cb.js"><link rel="prefetch" href="/assets/js/20.9b39d48b.js"><link rel="prefetch" href="/assets/js/21.413d7e5c.js"><link rel="prefetch" href="/assets/js/22.9b4b5648.js"><link rel="prefetch" href="/assets/js/23.429db586.js"><link rel="prefetch" href="/assets/js/24.a4b2bf53.js"><link rel="prefetch" href="/assets/js/25.da7f6f44.js"><link rel="prefetch" href="/assets/js/26.1c86c8c4.js"><link rel="prefetch" href="/assets/js/27.567853cd.js"><link rel="prefetch" href="/assets/js/28.e79e9272.js"><link rel="prefetch" href="/assets/js/29.4c76ffad.js"><link rel="prefetch" href="/assets/js/3.ff140cd7.js"><link rel="prefetch" href="/assets/js/30.024d7314.js"><link rel="prefetch" href="/assets/js/31.33031f17.js"><link rel="prefetch" href="/assets/js/32.6e130523.js"><link rel="prefetch" href="/assets/js/33.58b44621.js"><link rel="prefetch" href="/assets/js/34.7400e94e.js"><link rel="prefetch" href="/assets/js/35.f2767470.js"><link rel="prefetch" href="/assets/js/36.0c59cfbe.js"><link rel="prefetch" href="/assets/js/37.d2c43d60.js"><link rel="prefetch" href="/assets/js/38.27af19fa.js"><link rel="prefetch" href="/assets/js/39.80642131.js"><link rel="prefetch" href="/assets/js/4.754dfb46.js"><link rel="prefetch" href="/assets/js/40.08f6c317.js"><link rel="prefetch" href="/assets/js/41.1f789247.js"><link rel="prefetch" href="/assets/js/42.22aa889a.js"><link rel="prefetch" href="/assets/js/43.ce3ab661.js"><link rel="prefetch" href="/assets/js/44.1a0e84c4.js"><link rel="prefetch" href="/assets/js/45.362e5ef5.js"><link rel="prefetch" href="/assets/js/46.4d738550.js"><link rel="prefetch" href="/assets/js/47.07a89f4e.js"><link rel="prefetch" href="/assets/js/48.c5699e18.js"><link rel="prefetch" href="/assets/js/49.7cdcb266.js"><link rel="prefetch" href="/assets/js/5.9db707e5.js"><link rel="prefetch" href="/assets/js/50.caaed377.js"><link rel="prefetch" href="/assets/js/51.c8eb298c.js"><link rel="prefetch" href="/assets/js/52.97badafd.js"><link rel="prefetch" href="/assets/js/53.7a9e10fc.js"><link rel="prefetch" href="/assets/js/54.273c8ea9.js"><link rel="prefetch" href="/assets/js/6.a3a6a4b1.js"><link rel="prefetch" href="/assets/js/7.ec11f840.js"><link rel="prefetch" href="/assets/js/8.86b5445f.js"><link rel="prefetch" href="/assets/js/9.c2af3ea8.js"><link rel="prefetch" href="/assets/js/vendors~docsearch.46847213.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.0c2811eb.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><div class="navbar-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><img src="/logo.png" alt="Spark" class="logo"> <span class="site-name can-hide">Spark</span></a> <div class="links" style="max-width:nullpx;"><nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div></div></header></div> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  首页
+</a></div><div class="nav-item"><a href="/web/" class="nav-link">
+  Web开发
+</a></div><div class="nav-item"><a href="/tool/" class="nav-link">
+  工具使用
+</a></div><div class="nav-item"><a href="/docs/" class="nav-link">
+  微代码
+</a></div><div class="nav-item"><a href="/tag/" class="nav-link">
+  云标签
+</a></div> <!----></nav>  <ul class="sidebar-links"><li><div depth="0" class="sidebar-group"><p class="sidebar-heading open"><span>PC、移动端拖拽</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#h5-拖拽" class="sidebar-link">H5 拖拽</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#设置元素可拖动" class="sidebar-link">设置元素可拖动</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#拖拽事件" class="sidebar-link">拖拽事件</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#放置事件" class="sidebar-link">放置事件</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#拖拽过程中鼠标位置" class="sidebar-link">拖拽过程中鼠标位置</a></li></ul></li><li><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#移动端拖拽" class="sidebar-link">移动端拖拽</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#相关事件" class="sidebar-link">相关事件</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#触摸点" class="sidebar-link">触摸点</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#触摸点位置" class="sidebar-link">触摸点位置</a></li></ul></li></ul></div></li></ul> </div> <div class="page"> <div class="article-list-inner" style="display:none;"><div class="tag-container"><div class="tag-item-container" style="display:none;"><span class="tag">
+        eslint
+      </span><span class="tag">
+        工具使用
+      </span><span class="tag">
+        VuePress
+      </span><span class="tag">
+        babel
+      </span><span class="tag">
+        总结
+      </span><span class="tag">
+        jsdoc
+      </span><span class="tag">
+        环境搭建
+      </span><span class="tag">
+        rollup
+      </span><span class="tag">
+        收藏
+      </span><span class="tag">
+        html
+      </span><span class="tag">
+        图片下载
+      </span><span class="tag">
+        canvas
+      </span><span class="tag">
+        布局
+      </span><span class="tag">
+        js
+      </span><span class="tag">
+        模块
+      </span><span class="tag">
+        vue
+      </span><span class="tag">
+        echart
+      </span><span class="tag">
+        moment
+      </span><span class="tag">
+        拖拽
+      </span><span class="tag">
+        css
+      </span><span class="tag">
+        组件
+      </span><span class="tag">
+        文档
+      </span><span class="tag">
+        websocket
+      </span><span class="tag">
+        socket.io
+      </span><span class="tag">
+        移动端
+      </span></div> <div class="tag-tip" style="display:none;">
+      标签为
+      <span></span>下的文章
+    </div></div> <div></div></div> <div class="content__default"><h1 id="pc、移动端拖拽"><a href="#pc、移动端拖拽" class="header-anchor">#</a> PC、移动端拖拽</h1> <h2 id="h5-拖拽"><a href="#h5-拖拽" class="header-anchor">#</a> H5 拖拽</h2> <h3 id="设置元素可拖动"><a href="#设置元素可拖动" class="header-anchor">#</a> 设置元素可拖动</h3> <p>设置拖拽属性<code>draggable=&quot;true&quot;</code>。</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>img</span> <span class="token attr-name">draggable</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>true<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+</code></pre></div> <h3 id="拖拽事件"><a href="#拖拽事件" class="header-anchor">#</a> 拖拽事件</h3> <h4 id="dragstart"><a href="#dragstart" class="header-anchor">#</a> dragstart</h4> <p>拖拽开始，使用 <code>dataTransfer.setData()</code> 方法设置被拖数据的数据类型和值。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">dragstart</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  e<span class="token punctuation">.</span>dataTransfer<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token string">&quot;Text&quot;</span><span class="token punctuation">,</span> e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>需要注意的是：在 <code>IE</code> 下 <code>setData</code> 会报错，在火狐浏览器下必须有 <code>setData</code> 才能拖动。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">let</span> id <span class="token operator">=</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">;</span>
+<span class="token keyword">function</span> <span class="token function">dragstart</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>dataTransfer<span class="token punctuation">.</span>setData<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    e<span class="token punctuation">.</span>dataTransfer<span class="token punctuation">.</span><span class="token function">setData</span><span class="token punctuation">(</span><span class="token string">&quot;text/plain&quot;</span><span class="token punctuation">,</span> e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>e<span class="token punctuation">.</span>dataTransfer<span class="token punctuation">.</span>dropEffect<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// 拖动效果，兼容性不明</span>
+    e<span class="token punctuation">.</span>dataTransfer<span class="token punctuation">.</span>dropEffect <span class="token operator">=</span> <span class="token string">&quot;move&quot;</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
+  id <span class="token operator">=</span> e<span class="token punctuation">.</span>target<span class="token punctuation">.</span>id<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>关于 <code>dataTransfer</code> 的更多：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/DataTransfer" target="_blank" rel="noopener noreferrer">MDN dataTransfer<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p> <h4 id="drag"><a href="#drag" class="header-anchor">#</a> drag</h4> <p>拖拽过程中触发。</p> <h4 id="dragend"><a href="#dragend" class="header-anchor">#</a> dragend</h4> <p>在释放鼠标后触发（无论是把元素放到了有效的放置目标，还是放置到了无效的放置目标上）。</p> <h3 id="放置事件"><a href="#放置事件" class="header-anchor">#</a> 放置事件</h3> <h4 id="dragenter"><a href="#dragenter" class="header-anchor">#</a> dragenter</h4> <p>元素被拖动到放置目标上触发</p> <h4 id="dragover"><a href="#dragover" class="header-anchor">#</a> dragover</h4> <p>被拖动的元素在放置目标的范围内移动时，持续触发。</p> <p>默认地，无法将数据/元素放置到其他元素中。如果需要设置允许放置，我们必须阻止对元素的默认处理方式。</p> <p>这要通过调用 <code>dragover</code> 事件的 <code>event.preventDefault()</code> 方法。</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">function</span> <span class="token function">dragover</span><span class="token punctuation">(</span><span class="token parameter">ev</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  ev<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h4 id="dragleave"><a href="#dragleave" class="header-anchor">#</a> dragleave</h4> <p>被拖到元素离开放置目标。</p> <h4 id="drop"><a href="#drop" class="header-anchor">#</a> drop</h4> <p>被拖动元素放置到目标元素上。</p> <div class="language-javascript extra-class"><pre class="language-javascript"><code><span class="token keyword">function</span> <span class="token function">drop</span><span class="token punctuation">(</span><span class="token parameter">e</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  e<span class="token punctuation">.</span><span class="token function">preventDefault</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">var</span> data <span class="token operator">=</span> e<span class="token punctuation">.</span>dataTransfer<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token string">&quot;Text&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  e<span class="token punctuation">.</span>target<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">getElementById</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>说明：</p> <ol><li>调用 <code>preventDefault()</code> 来避免浏览器对数据的默认处理（drop 事件的默认行为是以链接形式打开）</li> <li>通过 <code>dataTransfer.getData(&quot;Text&quot;)</code> 方法获得被拖的数据。该方法将返回在 <code>setData()</code> 方法中设置为相同类型的任何数据。</li> <li>把被拖元素追加到放置元素（目标元素）中</li></ol> <p>完整的事件触发顺序：</p> <p><code>dragstart</code> -&gt; <code>drag</code> -&gt; <code>dragenter</code> -&gt; <code>dragover</code> -&gt; (<code>dragleave</code>)-&gt; <code>drop</code> -&gt; <code>dragend</code></p> <p>更详细的说明见：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/HTML_Drag_and_Drop_API" target="_blank" rel="noopener noreferrer">MDN 拖放<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p> <h3 id="拖拽过程中鼠标位置"><a href="#拖拽过程中鼠标位置" class="header-anchor">#</a> 拖拽过程中鼠标位置</h3> <ol><li><code>e.pageX</code>: 距整个文档左上角距离，包括滚动条等</li> <li><code>e.clientX</code>: 距离可视窗口左上角距离</li> <li><code>e.screenX</code>：距屏幕左上角距离</li> <li><code>e.offsetX</code>: 鼠标相比较于触发事件的元素的位置,以元素盒子模型的内容区域(不包括 <code>border</code>)的左上角为参考</li> <li><code>e.layerX</code>: 如果触发元素设置了定位，将相对于元素左上角（包括 <code>border</code>)；如果没有，相对于页面左上角</li> <li><code>e.x</code>: 和 <code>layerX</code> 一样</li></ol> <p>其中 <code>layerX</code> 和 <code>x</code> 兼容性不太好，尽量不要使用，其他参考<a href="https://www.caniuse.com/" target="_blank" rel="noopener noreferrer">Can I use<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p> <h2 id="移动端拖拽"><a href="#移动端拖拽" class="header-anchor">#</a> 移动端拖拽</h2> <h3 id="相关事件"><a href="#相关事件" class="header-anchor">#</a> 相关事件</h3> <p>H5 拖拽 api 在移动端是无效的。移动端的拖拽只能使用触摸事件。</p> <p><strong>touchstart</strong>
+手指接触屏幕</p> <p><strong>touchmove</strong>
+手指在屏幕上移动</p> <p><strong>touchend</strong>
+手指离开屏幕</p> <p>参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Touch_events" target="_blank" rel="noopener noreferrer">MDN touch events<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p> <h3 id="触摸点"><a href="#触摸点" class="header-anchor">#</a> 触摸点</h3> <ul><li><code>target</code> 触发事件节点</li> <li><code>touches</code> 当前位于屏幕上的所有手指触摸点的一个列表。</li> <li><code>targetTouches</code> 当前元素对象上所有触摸点的列表。</li> <li><code>changedTouches</code> 涉及当前事件的触摸点的列表。</li></ul> <p>三者的区别：</p> <ol><li><p>用一个手指接触屏幕，触发事件，此时这三个属性有相同的值。</p></li> <li><p>用第二个手指接触屏幕，此时，<code>touches</code> 有两个元素，每个手指触摸点为一个值。</p> <ul><li>当两个手指触摸相同元素时，<code>targetTouches</code> 和 <code>touches</code> 的值相同，</li> <li>否则 <code>targetTouches</code> 只有一个值。<code>changedTouches</code> 此时只有一个值，为第二个手指的触摸点，因为第二个手指是引发事件的原因</li></ul></li> <li><p>用两个手指同时接触屏幕，此时 <code>changedTouches</code> 有两个值，每一个手指的触摸点都有一个值。</p></li> <li><p>手指滑动时，三个值都会发生变化。</p></li> <li><p>一个手指离开屏幕，<code>touches</code> 和 <code>targetTouches</code> 中对应的元素会同时移除，而 <code>changedTouches</code> 仍然会存在元素。</p></li> <li><p>手指都离开屏幕之后，<code>touches</code> 和 <code>targetTouches</code> 中将不会再有值，<code>changedTouches</code> 还会有一个值，此值为最后一个离开屏幕的手指的接触点。</p></li></ol> <blockquote><p>总结来说：</p> <ol><li><code>targetTouches</code> 是你监听元素上的触摸点。</li> <li><code>touches</code> 屏幕上的所有触摸点。</li> <li><code>changedTouches</code> 每次触摸改变的触摸点。</li></ol></blockquote> <h3 id="触摸点位置"><a href="#触摸点位置" class="header-anchor">#</a> 触摸点位置</h3> <p>触摸点属性：</p> <ul><li><code>clientX</code>、<code>clientY</code> 触摸点相对于可视窗口的 x、y 坐标。</li> <li><code>pageX</code>、<code>pageY</code> 触摸点相对于 html 文档左上方，也就是包括滚动区域。</li> <li><code>screenX</code>、<code>screenY</code> 触摸点相对于屏幕的坐标。</li></ul> <p>获取触摸点坐标：</p> <p>touchstart、touchmove: <code>e.targetTouches[0].pageX</code></p> <p>touchend: <code>e.changedTouches[0].pageX</code></p></div> <div class="sidebar-right"><div class="sidebar-right-inner"><div class="newest"><div class="title">
+          推荐阅读
+        </div> <ol class="title-list"></ol></div> <div class="about"><div class="title">
+          云标签
+        </div> <div class="title-list"><span class="tag">
+            eslint
+          </span><span class="tag">
+            工具使用
+          </span><span class="tag">
+            VuePress
+          </span><span class="tag">
+            babel
+          </span><span class="tag">
+            总结
+          </span><span class="tag">
+            jsdoc
+          </span><span class="tag">
+            环境搭建
+          </span><span class="tag">
+            rollup
+          </span><span class="tag">
+            收藏
+          </span><span class="tag">
+            html
+          </span><span class="tag">
+            图片下载
+          </span><span class="tag">
+            canvas
+          </span><span class="tag">
+            布局
+          </span><span class="tag">
+            js
+          </span><span class="tag">
+            模块
+          </span><span class="tag">
+            vue
+          </span><span class="tag">
+            echart
+          </span><span class="tag">
+            moment
+          </span><span class="tag">
+            拖拽
+          </span><span class="tag">
+            css
+          </span><span class="tag">
+            组件
+          </span><span class="tag">
+            文档
+          </span><span class="tag">
+            websocket
+          </span><span class="tag">
+            socket.io
+          </span><span class="tag">
+            移动端
+          </span></div></div> <div class="catalog"><div class="title">
+          目录
+        </div> <ul class="sidebar-links"><li><div depth="0" class="sidebar-group"><p class="sidebar-heading open"><span>PC、移动端拖拽</span> <!----></p> <ul class="sidebar-group-items"><li><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#h5-拖拽" class="sidebar-link">H5 拖拽</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#设置元素可拖动" class="sidebar-link">设置元素可拖动</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#拖拽事件" class="sidebar-link">拖拽事件</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#放置事件" class="sidebar-link">放置事件</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#拖拽过程中鼠标位置" class="sidebar-link">拖拽过程中鼠标位置</a></li></ul></li><li><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#移动端拖拽" class="sidebar-link">移动端拖拽</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#相关事件" class="sidebar-link">相关事件</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#触摸点" class="sidebar-link">触摸点</a></li><li class="sidebar-sub-header"><a href="/blog/web/PC%E3%80%81%E7%A7%BB%E5%8A%A8%E7%AB%AF%E6%8B%96%E6%8B%BD.html#触摸点位置" class="sidebar-link">触摸点位置</a></li></ul></li></ul></div></li></ul></div></div></div> <div class="page-edit"><!----> <div class="last-updated"><span class="prefix">Last Updated:</span> <span class="time">6/18/2020, 7:20:14 PM</span></div></div> <!----> </div> <!----></div><div class="global-ui"></div></div>
+    <script src="/assets/js/app.61190595.js" defer></script><script src="/assets/js/13.b1db4ecb.js" defer></script>
+
+    <div class="cm-enter-loading">
+      <div class="cm-spinner-box">
+        <div class="cm-configure-border-1">
+          <div class="cm-configure-core"></div>
+        </div>
+        <div class="cm-configure-border-2">
+          <div class="cm-configure-core"></div>
+        </div>
+        <p class="cm-loading-text">loading...</p>
+      </div>
+    </div>
+
+    <style>
+      .cm-enter-loading {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #37474f;
+        z-index: 10000;
+      }
+
+      .cm-spinner-box {
+        display: inline-block;
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .cm-configure-border-1 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        position: absolute;
+        background: #ffab91;
+        animation: configure-clockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-border-2 {
+        width: 115px;
+        height: 115px;
+        padding: 3px;
+        left: -115px;
+        background: rgb(63, 249, 220);
+        transform: rotate(45deg);
+        animation: configure-xclockwise 3s ease-in-out 0s infinite alternate;
+      }
+
+      .cm-configure-core {
+        width: 100%;
+        height: 100%;
+        background-color: #37474f;
+      }
+
+      .cm-loading-text {
+        font-size: 40px;
+        color: white;
+        font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif
+      }
+
+      @keyframes configure-clockwise {
+        0% {
+          transform: rotate(0);
+        }
+        25% {
+          transform: rotate(90deg);
+        }
+        50% {
+          transform: rotate(180deg);
+        }
+        75% {
+          transform: rotate(270deg);
+        }
+        100% {
+          transform: rotate(359deg);
+        }
+      }
+
+      @keyframes configure-xclockwise {
+        0% {
+          transform: rotate(45deg);
+        }
+        25% {
+          transform: rotate(-45deg);
+        }
+        50% {
+          transform: rotate(-135deg);
+        }
+        75% {
+          transform: rotate(-215deg);
+        }
+        100% {
+          transform: rotate(-305deg);
+        }
+      }
+    </style>
+
+  </body>
+</html>
