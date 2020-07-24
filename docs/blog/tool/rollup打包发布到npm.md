@@ -31,19 +31,19 @@ meta:
 
 ```js
 // rollup.config
-import resolve from "rollup-plugin-node-resolve"
-import commonjs from "rollup-plugin-commonjs"
-import babel from "rollup-plugin-babel"
-import { terser } from "rollup-plugin-terser"
-import { eslint } from "rollup-plugin-eslint"
+import resolve from 'rollup-plugin-node-resolve'
+import commonjs from 'rollup-plugin-commonjs'
+import babel from 'rollup-plugin-babel'
+import { terser } from 'rollup-plugin-terser'
+import { eslint } from 'rollup-plugin-eslint'
 
 export default [
   {
-    input: "src/main.js",
+    input: 'src/main.js',
     output: {
-      name: "timeout",
-      file: "/lib/tool.js",
-      format: "umd",
+      name: 'timeout',
+      file: '/lib/tool.js',
+      format: 'umd'
     },
     plugins: [
       resolve(), // 这样 Rollup 能找到 `ms`
@@ -51,15 +51,15 @@ export default [
       eslint({
         throwOnError: true,
         throwOnWarning: true,
-        include: ["src/**"],
-        exclude: ["node_modules/**"],
+        include: ['src/**'],
+        exclude: ['node_modules/**']
       }),
       babel({
-        exclude: "node_modules/**", // 只编译我们的源代码
+        exclude: 'node_modules/**' // 只编译我们的源代码
       }),
-      terser(),
-    ],
-  },
+      terser()
+    ]
+  }
 ]
 ```
 
@@ -91,29 +91,29 @@ yarn add @babel/plugin-transform-runtime
 module.exports = {
   presets: [
     [
-      "@babel/preset-env",
+      '@babel/preset-env',
       {
         modules: false,
-        useBuiltIns: "usage",
+        useBuiltIns: 'usage',
         corejs: 3,
         targets: {
           // 目标浏览器版本，该浏览器缺失某新语法，babel才会引入这个新语法
-          ie: 11,
-        },
-      },
-    ],
+          ie: 11
+        }
+      }
+    ]
   ],
   plugins: [
     [
-      "@babel/plugin-transform-runtime",
+      '@babel/plugin-transform-runtime',
       {
         corejs: 3, // 可选 false | 2 | 3
-        proposals: true, //corejs 3 可设置
-      },
-    ],
+        proposals: true //corejs 3 可设置
+      }
+    ]
   ],
   // 不编译的文件夹
-  ignore: ["node_modules/**"],
+  ignore: ['node_modules/**']
 }
 ```
 
@@ -154,6 +154,86 @@ export default {
 
 对于 `Eslint`，同样可以不使用 `rollup-plugin-eslint` 插件，自己配置。
 
+### 打包 css
+
+#### 类库中引入
+
+当组件或库中引入 `css` 时，需要使用 [rollup-plugin-postcss](https://github.com/egoist/rollup-plugin-postcss) 来打包 `css`。
+
+```bash
+yarn add rollup-plugin-postcss autoprefixer cssnano -D
+```
+
+```js
+import postcss from 'rollup-plugin-postcss'
+import autoprefixer from 'autoprefixer'
+import cssnano from 'cssnano'
+
+plugins: [
+  postcss({
+    plugins: [autoprefixer, cssnano],
+    extract: 'dist/css/bundle.css' // 输出路径
+  })
+]
+```
+
+> [autoprefixer](https://github.com/postcss/autoprefixer#readme)，为 css 添加前缀。
+> [cssnano](https://github.com/cssnano/cssnano)，压缩 css。
+
+#### 使用 postcss-cli
+
+有时候你会提供给用户可选择的 css，是否引入取决于用户自己。也就是你库中不去引入这些 css，当然也不能像上面那样使用 `rollup-plugin-postcss` 去打包这些 css。
+
+这时候可以自己去处理这些 css，例如压缩、加前缀、解析 less 预处理起等。
+
+使用 [postcss-cli](https://github.com/postcss/postcss-cli)。
+
+```bash
+yarn add postcss-cli -D
+
+npx postcss ./src/*.css --use autoprefixer -d build/
+```
+
+添加到 package.json 中：
+
+```json
+{
+  "scripts": {
+    "postcss": "npx postcss ./src/*.css --use autoprefixer -d dist/css/"
+  }
+}
+```
+
+更多 `postcss` 特性见 github：[PostCSS](https://github.com/postcss/postcss)。
+
+### 打包 TypeScript
+
+安装 `typescript` 和[typescript rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2)：
+
+```bash
+yarn add typescript rollup-plugin-typescript2 -D
+```
+
+`rollup.config.js`:
+
+```js
+import typescript from 'rollup-plugin-typescript2'
+
+export default {
+  input: 'src/index.ts',
+
+  plugins: [
+    typescript({
+      tsconfigOverride: {
+        compilerOptions: {
+          module: 'ESNext'
+        }
+      }
+    })
+  ]
+}
+```
+
 ## 开发环境和生产环境
 
 ```json
@@ -173,14 +253,14 @@ export default {
 
 ```js
 //
-const isDev = process.env.NODE_ENV !== "production"
+const isDev = process.env.NODE_ENV !== 'production'
 export default {
   output: {
-    file: (!isDev && "bundle.min.js") || "bundle.js",
-    format: "umd",
-    name: "util",
+    file: (!isDev && 'bundle.min.js') || 'bundle.js',
+    format: 'umd',
+    name: 'util'
   },
-  plugins: [!isDev && terser()],
+  plugins: [!isDev && terser()]
 }
 ```
 
@@ -251,13 +331,13 @@ export default {
 ```js
 export default {
   output: {
-    file: (!isDev && "bundle.min.js") || "bundle.js",
-    format: "iife",
-    name: "util",
+    file: (!isDev && 'bundle.min.js') || 'bundle.js',
+    format: 'iife',
+    name: 'util',
     globals: {
-      jquery: "$",
-    },
-  },
+      jquery: '$'
+    }
+  }
 }
 ```
 
@@ -286,18 +366,18 @@ export default {
 // rollup.config.js
 export default {
   output: {
-    file: (!isDev && "bundle.min.js") || "bundle.js",
-    format: "iife",
-    name: "util",
+    file: (!isDev && 'bundle.min.js') || 'bundle.js',
+    format: 'iife',
+    name: 'util',
     paths: {
-      jquery: "https://cdn.bootcss.com/jquery/3.2.1/jquery.js",
-    },
-  },
+      jquery: 'https://cdn.bootcss.com/jquery/3.2.1/jquery.js'
+    }
+  }
 }
 
 // bundle.js
-define(["https://cdn.bootcss.com/jquery/3.2.1/jquery.js"], function(jquery) {
-  jquery.selectAll("p").style("color", "purple")
+define(['https://cdn.bootcss.com/jquery/3.2.1/jquery.js'], function(jquery) {
+  jquery.selectAll('p').style('color', 'purple')
   // ...
 })
 ```
@@ -321,6 +401,8 @@ define(["https://cdn.bootcss.com/jquery/3.2.1/jquery.js"], function(jquery) {
   "module": "d/bundle.min.esm.js",
   // 浏览器模块打包
   "browser": "d/bundle.min.umd.js",
+  // TypeScript 的入口文件，用于代码提示
+  "typings": "dist/types/index.d.ts",
   "author": "作者",
   // 协议
   "license": "",
@@ -363,6 +445,11 @@ npm login
 npm build
 npm publish
 ```
+
+### 更新
+
+1. 执行 `npm version patch` 更新版本号（`patch`：小版本号，`minor`：次版本号，`major`：主版本号）
+2. 执行 `npm publish` 进行更新
 
 ### 发布中的问题
 

@@ -203,10 +203,8 @@ class MyPromise {
     typeof callback === 'function' && this.rejectedCB.push(callback)
   }
   then (onFulfilled, onRejected) {
-    onFulfilled =
-      typeof onFulfilled === 'function' ? onFulfilled : (value) => value
-    onRejected =
-      typeof onRejected === 'function' ? onRejected : (reason) => reason
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : (value) => value
+    onRejected = typeof onRejected === 'function' ? onRejected : (reason) => reason
     return new MyPromise((resove, reject) => {
       this.addFulfilledCB((value) => {
         const res = onFulfilled(value)
@@ -232,7 +230,7 @@ class MyPromise {
 
 new MyPromise((resolve, reject) => {
   setTimeout(() => {
-    reject(1)
+    resolve(1)
   }, 500)
 })
   .then((res) => {
@@ -353,6 +351,8 @@ function insertSort (array, desc = false) {
   }
   return array
 }
+
+
 
 class Node {
   constructor (value, next, pre) {
@@ -725,10 +725,7 @@ function backpackFull (c, w, v) {
           break
         }
         // 取每次最大值
-        dp[index][j] = Math.max(
-          dp[index][j],
-          dp[index - 1][j - k * w[i]] + k * v[i]
-        )
+        dp[index][j] = Math.max(dp[index][j], dp[index - 1][j - k * w[i]] + k * v[i])
       }
     }
   }
@@ -880,7 +877,6 @@ function quickSort (arr) {
   const pivotIndex = Math.floor(arr.length / 2)
   const pivot = arr.splice(pivotIndex, 1)[0]
 
-
   const left = []
   const right = []
 
@@ -895,8 +891,42 @@ function quickSort (arr) {
   return quickSort(left).concat(pivot, quickSort(right))
 }
 
-console.log(quickSort([1, 78, 33, 45, 99, 0, 1465, 452, 65746]))
 
+function quickSort2 (arr, start = 0, end = arr.length - 1) {
+  if (start >= end) {
+    return
+  }
+
+  const guard = start
+  const item = arr[guard]
+
+  let i = start + 1
+  let j = end
+
+  while (i <= j) {
+    while (arr[i] <= item && i <= j) {
+      i++
+    }
+
+    while (arr[j] >= item && j >= i) {
+      j--
+    }
+
+    if (i < j) {
+      [arr[i], arr[j]] = [arr[j], arr[i]]
+    }
+  }
+
+  const index = i - 1;
+
+  [arr[guard], arr[index]] = [arr[index], arr[guard]]
+
+  quickSort2(arr, start, index - 1)
+  quickSort2(arr, index + 1, end)
+  return arr
+}
+
+console.log(quickSort2([1, 78, 33, 45, 99, 0, 1465, 452, 65746]))
 
 Function.prototype.call = function (context, ...args) {
   const fn = Symbol('fn')
@@ -913,10 +943,21 @@ const ass = {
   a: 5
 }
 
-
 function callF () {
   console.log(this.a)
-
 }
 
 console.log(callF.call(ass))
+
+
+
+document.body.addEventListener('click', (e) => {
+  if (e.target.tagName === 'P' && e.target.id && e.target.id.includes('answer')) {
+    [...document.querySelectorAll('div')].some(item => {
+      if (item.id && item.id.includes('answer')) {
+        item.style.display = 'block'
+        return true
+      }
+    })
+  }
+})

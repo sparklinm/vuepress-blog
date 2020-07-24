@@ -50,6 +50,10 @@ module.exports = {
         link: '/tool/'
       },
       {
+        text: '数据结构和算法',
+        link: '/algorithm/'
+      },
+      {
         text: '微代码',
         link: '/docs/'
       }

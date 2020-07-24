@@ -158,8 +158,11 @@ module.exports = {
         ObjectPattern: {
           multiline: true
         },
-        // import 导入不换行
-        ImportDeclaration: 'never',
+        // import 换行
+        ImportDeclaration: {
+          multiline: true,
+          minProperties: 4
+        },
         // export 导出超过三个或导出对象内部有换行时换行
         ExportDeclaration: {
           multiline: true,
@@ -222,6 +225,73 @@ yarn add eslint-plugin-vue --dev
 ```
 
 以 `!` 开头的行是否定模式。这样会检测 `src/` 下的所有文件，包括隐藏文件。
+
+## 支持 TypeScript
+
+安装：
+
+```bash
+yarn add -D eslint typescript @typescript-eslint/parser @typescript-eslint/eslint-plugin
+```
+
+1. `@typescript-eslint/parser`：让 `eslint` 能解析 `TypeScript` 。
+2. `@typescript-eslint/eslint-plugin`：针对 `TypeScript` 的相关规则。
+
+`.eslintrc` 配置：
+
+```js
+module.exports = {
+  root: true,
+  parserOptions: {
+    parser: '@typescript-eslint/parser'
+  },
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  plugins: ['@typescript-eslint'],
+  rules: {
+    '@typescript-eslint/array-type': [
+      'error',
+      {
+        default: 'array-simple',
+        readonly: 'array-simple'
+      }
+    ]
+  }
+}
+```
+
+具体可查看文档：
+
+1. [typescript-eslint 安装开始](https://github.com/typescript-eslint/typescript-eslint/blob/master/docs/getting-started/linting/readme.md)
+2. [@typescript-eslint/parser](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/parser)
+3. [@typescript-eslint/eslint-plugin](https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin)
+4. [使用 ESLint+Prettier 规范 React+Typescript 项目](https://zhuanlan.zhihu.com/p/62401626?from_voters_page=true)
+
+使用 `tsconfig` 中的检查，例如：在 `tsconfig` 中开启严格模式，并希望 `eslint` 能提示相关错误信息：
+
+```js
+// `.eslintrc`
+module.exports = {
+  parserOptions: {
+    parser: '@typescript-eslint/parser',
+    project: './tsconfig.json'
+  }
+}
+```
+
+```json
+{
+  "compilerOptions": {
+    "strict": true
+  },
+  // 包含 .eslintrc.js 文件
+  "include": ["src", ".eslintrc.js"]
+}
+```
+
+相关 `tsconfig` 配置：
+
+1. [详解 TypeScript 项目中的 tsconfig.json 配置](https://www.jianshu.com/p/0383bbd61a6b)
+2. [TypeScript 编译选项](https://www.tslang.cn/docs/handbook/compiler-options.html)
 
 ## 问题
 

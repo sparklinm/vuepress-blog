@@ -20,6 +20,10 @@ meta:
 
 <!-- more -->
 
+以下的内容已经写成了一个插件，方便快速配置，并增加了判断前进后退的方法，**github 地址**：
+
+[vue-router-cache-animate](https://github.com/sparklinm/vue-router-cache-animate)
+
 ## 路由动画
 
 ### 如何动画
@@ -83,16 +87,16 @@ curNode 执行离开动画，nextNode 执行进入动画。由于 curNode 和 ne
 export default {
   watch: {
     $route(to, from) {
-      const toName = to.name;
-      const fromName = from.name;
-      if (fromName === "a" && toName === "b") {
-        this.transitionName = "slide-left";
-      } else if (fromName === "b" && toName === "a") {
-        this.transitionName = "slide-right";
+      const toName = to.name
+      const fromName = from.name
+      if (fromName === 'a' && toName === 'b') {
+        this.transitionName = 'slide-left'
+      } else if (fromName === 'b' && toName === 'a') {
+        this.transitionName = 'slide-right'
       }
     }
   }
-};
+}
 ```
 
 同级路由无动画，上级路由到子路由有动画（返回时相反动画）。例如：点击文章列表的文章进入文章详情页，文章详情页有返回按钮返回列表。
@@ -109,18 +113,18 @@ export default {
   watch: {
     $route(to, from) {
       if (to.meta.child && from.meta.parent) {
-        this.transitionName = "slide-left";
-        this.css = true;
+        this.transitionName = 'slide-left'
+        this.css = true
       } else if (to.meta.parent && from.meta.child) {
-        this.transitionName = "slide-right";
-        this.css = true;
+        this.transitionName = 'slide-right'
+        this.css = true
       } else {
-        this.transitionName = "";
-        this.css = false;
+        this.transitionName = ''
+        this.css = false
       }
     }
   }
-};
+}
 ```
 
 ```css
@@ -159,9 +163,7 @@ export default {
 
 即使`transition`的`name`为空，也会出现闪烁现象，此时需要设置`transition`的`css`为`false`。
 
-更多详细内容见文档：
-
-[vue 官网路由过渡](https://router.vuejs.org/zh/guide/advanced/transitions.html#%E5%8D%95%E4%B8%AA%E8%B7%AF%E7%94%B1%E7%9A%84%E8%BF%87%E6%B8%A1)
+更多详细内容可查看[vue 路由过渡](https://router.vuejs.org/zh/guide/advanced/transitions.html#%E5%8D%95%E4%B8%AA%E8%B7%AF%E7%94%B1%E7%9A%84%E8%BF%87%E6%B8%A1)。
 
 ## 路由缓存
 
@@ -205,7 +207,7 @@ export default {
 
 ```html
 <transition :name="transitionName" :css="css">
-  <keep-alive :include="keepAlive.join(',')">
+  <keep-alive :include="keepAlive">
     <router-view />
   </keep-alive>
 </transition>
@@ -235,7 +237,7 @@ beforeRouteLeave(to, from, next) {
 }
 ```
 
-> 1. 这里使用一个延时函数`setTimeout`，确保使用`router-view`的根组件在跳转前拿到 `keepAlive` 值。(`watch`是异步的)。
+> 1. 这里使用一个延时函数`setTimeout`，确保使用`router-view`的根组件在跳转前拿到 `keepAlive` 值。(`watch`是异步的)
 > 2. 同时对于无组件缓存，不要设置`keepAlive=[]`，这样所有的组件都会被缓存。
 
 **不要通过销毁组件的方式来达到让组件不缓存，类似与下面这样：**
@@ -261,15 +263,15 @@ Vue.mixin({
   beforeRouteLeave(to, from, next) {
     if (from.meta.keepAlive && to.meta.keepAlive) {
       // 根实例存储keepAlive
-      this.$root.keepAlive = ["A"];
+      this.$root.keepAlive = ['A']
     } else {
-      this.$root.keepAlive = ["None"];
+      this.$root.keepAlive = ['None']
     }
     setTimeout(() => {
-      next();
-    });
+      next()
+    })
   }
-});
+})
 ```
 
 ## 同时动画和缓存
@@ -331,7 +333,6 @@ Vue.mixin({
        if (from.meta.parent && to.meta.child || from.meta.child && to.meta.parent) {
          this.$root.keepAlive = ['A']
        } else {
-         // 不需要缓存时不要设定为空数组
          this.$root.keepAlive = ['None']
        }
        setTimeout(() => {
@@ -346,7 +347,7 @@ Vue.mixin({
    ```html
    <div id="app">
      <transition :name="transitionName" :css="css">
-       <keep-alive :include="$root.keepAlive.join(',')">
+       <keep-alive :include="$root.keepAlive">
          <router-view />
        </keep-alive>
      </transition>
@@ -360,18 +361,18 @@ Vue.mixin({
      watch: {
        $route(to, from) {
          if (to.meta.child && from.meta.parent) {
-           this.transitionName = "slide-left";
-           this.css = true;
+           this.transitionName = 'slide-left'
+           this.css = true
          } else if (to.meta.parent && from.meta.child) {
-           this.transitionName = "slide-right";
-           this.css = true;
+           this.transitionName = 'slide-right'
+           this.css = true
          } else {
-           this.transitionName = "";
-           this.css = false;
+           this.transitionName = ''
+           this.css = false
          }
        }
      }
-   };
+   }
    ```
 
    ```css
@@ -427,7 +428,3 @@ Vue.mixin({
 **效果演示：**
 
 ![路由缓存和动画演示](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/%E8%B7%AF%E7%94%B1%E5%8A%A8%E7%94%BB%E5%92%8C%E7%BC%93%E5%AD%98.gif))
-
-## 参考文献
-
-1.  [vue 官网路由过渡](https://router.vuejs.org/zh/guide/advanced/transitions.html#%E5%8D%95%E4%B8%AA%E8%B7%AF%E7%94%B1%E7%9A%84%E8%BF%87%E6%B8%A1)

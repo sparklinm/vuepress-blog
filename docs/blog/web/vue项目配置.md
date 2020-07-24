@@ -752,6 +752,49 @@ module.exports = {
 
 [webpack 做过哪些优化，开发效率方面、打包策略方面等等](https://github.com/lgwebdream/FE-Interview/issues/25)
 
+## 动态导入
+
+对于某些库，可能只在某些页面或者某种条件（例如点击某个按钮）下才会使用。在首屏渲染时，这些库的加载完全是浪费时间的。
+
+webpack 允许动态加载某个库，使用 import 语法：
+
+```js
+import('./test').then((module) => {
+  let test = module.default
+})
+```
+
+将其放入某个点击事件中，只会在点击时才动态插入 `script` 标签下载脚本并加载。
+
+```js
+handleClick() {
+  import('./test').then((module) => {
+    let test = module.default
+    // do more
+  })
+}
+```
+
+但这样点击时才加载，可能会导致卡顿，有时会需要当页面渲染完毕后，再延迟加载脚本：
+
+```js
+window.addEventListener('load', () => {
+  import('./test').then((module) => {
+    let test = module.default
+    // do more
+  })
+})
+```
+
+或是在特定路由下加载脚本：
+
+```js
+// 1. 路由组件中加载
+// 2. 路由钩子函数中加载
+```
+
+> 动态加载对首屏的渲染有很好的优化效果，需要合理的运用。
+
 ## pwa
 
 PWA 是 Progressive Web App 的英文缩写， 翻译过来就是渐进式增强 WEB 应用，目的就是在移动端利用提供的标准化框架，在网页应用中实现和原生应用相近的用户体验的渐进式网页应用。
@@ -899,5 +942,5 @@ screen -ls
 若需要继续工作时，登录实例，然后执行如下命令，恢复会话即可。
 
 ```bash
-screen -r -d
+screen -r -d [$Name]
 ```

@@ -175,7 +175,7 @@ export default {
 
       if (this.category === '') {
         currentPages = allPages.filter((page) => {
-          return page.path.includes('/blog/')
+          return page.path.includes('/blog/') && !page.path.includes('/algorithm/')
         })
       } else if (this.category === '/web/') {
         currentPages = allPages.filter((page) => {
@@ -184,6 +184,10 @@ export default {
       } else if (this.category === '/tool/') {
         currentPages = allPages.filter((page) => {
           return page.path.includes('/blog/tool/')
+        })
+      } else if (this.category === '/algorithm/') {
+        currentPages = allPages.filter((page) => {
+          return page.path.includes('/blog/algorithm/')
         })
       } else if (this.category === '/tag/') {
         if (this.currentTag) {
