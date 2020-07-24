@@ -145,7 +145,7 @@ export default {
     },
     // 标签点击去往相应标签页面
     toBlogByTag (tag) {
-      this.$router.push(`/tag/${tag}/`)
+      this.$router.push(`/tag/?tag=${tag}`)
 
       // this.$emit("transfer-blogs",this.blogs[tag])
     }

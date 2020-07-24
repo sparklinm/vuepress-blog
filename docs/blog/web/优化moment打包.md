@@ -78,12 +78,12 @@ yarn add -D webpack-bundle-analyzer
 使用：
 
 ```js
-const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
-  .BundleAnalyzerPlugin;
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 
 module.exports = {
   plugins: [new BundleAnalyzerPlugin()]
-};
+}
 ```
 
 详见：[webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)

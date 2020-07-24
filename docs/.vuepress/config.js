@@ -13,7 +13,8 @@ module.exports = {
       }
     ],
     [
-      'link', {
+      'link',
+      {
         rel: 'icon',
         href: '/logo.png'
       }
@@ -23,6 +24,13 @@ module.exports = {
       {
         src:
           'https://cdn.jsdelivr.net/npm/markdown-it@11.0.0/dist/markdown-it.js'
+      }
+    ],
+    [
+      'link',
+      {
+        rel: 'stylesheet',
+        href: 'https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css'
       }
     ]
   ],
@@ -61,22 +69,14 @@ module.exports = {
   },
   markdown: {
     lineNumbers: false,
-    extractHeaders: ['h2', 'h3'],
+    extractHeaders: ['h2', 'h3', 'h4'],
     extendMarkdown: (md) => {
-      md.use(require('markdown-it-container'), 'test', {
-        render: function (tokens, idx) {
-          return '<div>test test</div>'
-        }
-      })
-      // md.block.ruler.before('html_block', 'script', function(
-      //   tokens,
-      //   idx,
-      //   options,
-      //   env,
-      //   self
-      // ) {
-      //   return tokens
-      // })
+      // markdown-it-katex 插件使用的是老版本 katex，会出现渲染问题
+      // 这里copy了其源码
+      md.use(require('./markdown-it-katex'), {})
+      md.use(require('markdown-it-sub'))
+      md.use(require('markdown-it-sup'))
+      md.use(require('markdown-it-footnote'))
     }
   },
   plugins: [
@@ -103,7 +103,7 @@ module.exports = {
     //     footnote: true,
     //     mark: true,
     //     // flowchart: true,
-    //     // tex: true
+    //     tex: true
     //   }
     // ],
     [

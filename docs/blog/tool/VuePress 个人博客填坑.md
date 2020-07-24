@@ -145,7 +145,9 @@ export default ({
 
 > 1. 经过查阅各种资料，最后知道了原因，VuePress 路由使用的**history 模式**，history 模式什么都好，就是刷新页面时会直接请求后台相应目录下的 index.html 文件，因为没有相应文件，所以就出现了 404。
 >
-> 2. 然后我试着将路由改为 hash 模式，`theme/enhanceApp.js`文件中添加：`router.mode = "hash"`，但好像没啥用。所以只得老老实实对应路由去建立目录。
+> 2. 然后我试着将路由改为 hash 模式，`theme/enhanceApp.js`文件中添加：`router.mode = "hash"`，但好像没啥用。
+> 3. 用查询字符串传参数即可，例如：`/tag/?tag=0`
+
 
 ### 有关 computed 属性的问题
 

@@ -156,19 +156,14 @@ export default {
 
     // 得到当前分类信息
     getCurrentCategory () {
-      const pathRe = /\/[^\/]+\//
+      const pathRe = /\/[^/]+\//
+      const paths = this.$route.path.match(pathRe)
 
-      this.category = this.$route.path.match(pathRe)
-        ? this.$route.path.match(pathRe)[0]
-        : ''
+      this.category = paths && paths[0] || ''
     },
     // 得到当前标签信息
     getCurrentTagIndex () {
-      const pathRe = /[^\/]+/g
-
-      return this.$route.path.match(pathRe)
-        ? this.$route.path.match(pathRe)[1]
-        : ''
+      return this.$route.query.tag || ''
     },
     // 根据当前分类获取相应博客信息
     getArticleList () {
@@ -198,7 +193,7 @@ export default {
               const keyAry = key.split(',')
 
               return keyAry.some((item) => {
-                return item == this.currentTag
+                return item === this.currentTag
               })
             }
           })
