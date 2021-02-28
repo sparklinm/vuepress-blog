@@ -164,7 +164,7 @@ module.exports = function math_plugin (md, options) {
       return katex.renderToString(latex, options)
     }
     catch (error) {
-      if (options.throwOnError) { console.log(error) }
+      // if (options.throwOnError) { console.log(error) }
       return latex
     }
   }
@@ -179,7 +179,7 @@ module.exports = function math_plugin (md, options) {
       return '<p>' + katex.renderToString(latex, options) + '</p>'
     }
     catch (error) {
-      if (options.throwOnError) { console.log(error) }
+      // if (options.throwOnError) { console.log(error) }
       return latex
     }
   }

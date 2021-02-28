@@ -2,16 +2,16 @@
 meta:
   - title: taro插件添加唯一id
     time: 2021-02-18 14:24:39
-    tag: taro,html,parser,babel,parser
+    tag: taro,html,parser,babel
 ---
+
+::: v-pre
 
 # taro 插件添加唯一 id
 
 ## 前言
 
 最近做的小程序可回溯工具需要支持 `taro`, 为了实现可回溯，需要给每一个节点加上 `id`, 也就是**需要编写一个 taro 插件，在编译时动态为每一个节点添加 id**。
-
-<!-- more -->
 
 ## taro3 插件
 
@@ -635,6 +635,7 @@ if (v.type === 'text') {
    ```
 
 2. 如果一个组件处于 template，那它的 id 取决于 _rr_index_ 和它上层的循环
+
    ```html
    <block wx:for="{{i}}" for-index="index0">
      <text id="{{_rr_index_ + '-' + 'index0'}}"> </text>
@@ -642,3 +643,5 @@ if (v.type === 'text') {
    ```
 
 > `data="{{i : item}}"` 用 babel 解析为 ast 树会报错，可以在外面加一个`{}`，拼接成一个对象`{{{i : item}}}`
+
+:::
