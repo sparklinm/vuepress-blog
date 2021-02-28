@@ -5,7 +5,7 @@ meta:
     tag: vue3,响应式
 ---
 
-## 前言
+# vue3响应式解析
 
 ## 响应式状态
 
@@ -14,6 +14,10 @@ meta:
 当声明一个响应式对象时，会深度遍历对象，将对象和子对象放入 `targetMap` 变量中，并为它们的属性添加一个 `dep` 存储所有的 `effects`。
 
 当对应属性变化时，从 `targetMap` 读取到对应 `key` 的 `dep`，并按策略调用所有 `effects` 函数。
+
+![vue响应式数据](https://fireli-1256465711.cos.ap-chengdu.myqcloud.com/img/vue%E5%93%8D%E5%BA%94%E5%BC%8F.png)
+
+<!-- more -->
 
 ## effect
 

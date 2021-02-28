@@ -15,6 +15,8 @@ meta:
 
 3. [@babel/generator](https://babeljs.io/docs/en/babel-generator)：将 ast 树生成 js 代码。
 
+<!-- more -->
+
 ## @babel/parser
 
 [@babel/parser](https://babeljs.io/docs/en/babel-parser)用于将 js 代码解析为 ast 树。

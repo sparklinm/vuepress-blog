@@ -11,6 +11,8 @@ meta:
 
 最近做的小程序可回溯工具需要支持 `taro`, 为了实现可回溯，需要给每一个节点加上 `id`, 也就是**需要编写一个 taro 插件，在编译时动态为每一个节点添加 id**。
 
+<!-- more -->
+
 ## taro3 插件
 
 taro 插件的编写，官方已经给好了[文档](https://taro-docs.jd.com/taro/docs/plugin#%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%8F%92%E4%BB%B6)。
@@ -26,11 +28,11 @@ taro 插件的编写，官方已经给好了[文档](https://taro-docs.jd.com/ta
 `ctx.modifyBuildTempFileContent` 可以修改编译过程中的中间文件，试了一下：
 
 ```js
-module.exports = (ctx) => {
+module.exports = ctx => {
   ctx.modifyBuildTempFileContent(({ tempFiles }) => {
-    console.log(tempFilest);
-  });
-};
+    console.log(tempFilest)
+  })
+}
 ```
 
 却发现这个钩子根本不会触发。查了下资料，才发现 **modifyBuildTempFileContent 已经在 taro3 移除掉了**。
@@ -38,63 +40,63 @@ module.exports = (ctx) => {
 既然如此，只有试试 modifyBuildAssets 钩子了：
 
 ```js
-module.exports = (ctx) => {
+module.exports = ctx => {
   ctx.modifyBuildAssets(({ assets }) => {
-    console.log(assets);
+    console.log(assets)
     // 输出一个数组
     // 可以获得文件路径和文件内容
 
-    Object.keys(assets).forEach((src) => {
+    Object.keys(assets).forEach(src => {
       if (src.endsWith('.wxml')) {
-        console.log('转换的文件', src);
+        console.log('转换的文件', src)
 
         // source() 函数可以获得文件内容
         // 原生组件为 buffer 对象，需要 toString
-        const source = wxml[src].source().toString();
+        const source = wxml[src].source().toString()
 
         // parserXML 添加id
-        const domStr = parserXML(source);
+        const domStr = parserXML(source)
 
         // 覆写source函数
-        wxml[src].source = function () {
-          return domStr;
-        };
+        wxml[src].source = function() {
+          return domStr
+        }
       }
-    });
-  });
-};
+    })
+  })
+}
 ```
 
 因为要添加 `id`，就要涉及到将 `dom` 解析为 `ast` 树，这里选择了 `htmlparser2`，简单封装一下：
 
 ```js
-let { Parser, DomHandler } = require('htmlparser2');
+let { Parser, DomHandler } = require('htmlparser2')
 
 function parserDomStr(domStr) {
   if (!domStr) {
-    return;
+    return
   }
 
   const handler = new DomHandler(
     (err, dom) => {
       if (err) {
-        console.error(`XML错误:${domStr}`);
+        console.error(`XML错误:${domStr}`)
       }
     },
     {
       normalizeWhitespace: false // default:false
     }
-  );
+  )
 
   const parser = new Parser(handler, {
     xmlMode: true // forgiving html parser
-  });
+  })
 
-  parser.write(domStr);
+  parser.write(domStr)
 
-  parser.end();
+  parser.end()
 
-  return handler.dom;
+  return handler.dom
 }
 ```
 
@@ -102,41 +104,41 @@ function parserDomStr(domStr) {
 
 ```js
 function rewrite(dom) {
-  dom.forEach((v) => {
+  dom.forEach(v => {
     if (v.attribs) {
       // 如果原先不存在id，则注入ID
       if (!v.attribs.id) {
         v.attribs.id = `rr-hijack-${v.name}-${Math.floor(
           Math.random() * 100000
-        )}`;
+        )}`
       }
     }
 
     if (v.children) {
-      rewrite(v.children);
+      rewrite(v.children)
     }
-  });
+  })
 }
 ```
 
 修改 `ast` 树后，重新序列化为 `dom` 字符串：
 
 ```js
-let domSerializer = require('dom-serializer');
+let domSerializer = require('dom-serializer')
 
 function parserXML(domStr) {
   if (typeof domStr !== 'string') {
-    throw new Error('arguments error');
+    throw new Error('arguments error')
   }
 
-  let dom = parserDomStr(domStr);
+  let dom = parserDomStr(domStr)
 
-  rewrite(dom);
+  rewrite(dom)
 
   return domSerializer(dom, {
     xmlMode: true,
     decodeEntities: false
-  });
+  })
 }
 ```
 
@@ -153,7 +155,7 @@ function parserXML(domStr) {
     export default class {
       render() {
         //ec-canvas 是一个原生小程序组件
-        return <View>主页</View>;
+        return <View>主页</View>
       }
     }
     ```
@@ -214,14 +216,14 @@ function parserXML(domStr) {
       render() {
         //ec-canvas 是一个原生小程序组件
         return (
-          <View className='echarts'>
+          <View className="echarts">
             <ec-canvas
-              id='mychart-dom-area'
-              canvas-id='mychart-area'
+              id="mychart-dom-area"
+              canvas-id="mychart-area"
               ec={this.state.ec}
             ></ec-canvas>
           </View>
-        );
+        )
       }
     }
     ```
@@ -282,60 +284,60 @@ function parserXML(domStr) {
 // 快捷操作attribs
 class HandleAttribs {
   constructor(attribs) {
-    this.attribs = attribs || [];
+    this.attribs = attribs || []
   }
 
   get(key) {
-    let value;
-    this.attribs.some((item) => {
+    let value
+    this.attribs.some(item => {
       if (item[key]) {
-        value = item[key];
+        value = item[key]
       }
-      return item[key];
-    });
+      return item[key]
+    })
 
-    return value;
+    return value
   }
 
   delete(key) {
-    const index = this.attribs.findIndex((item) => item[key]);
+    const index = this.attribs.findIndex(item => item[key])
 
     if (index > -1) {
-      this.attribs.splice(index, 1);
+      this.attribs.splice(index, 1)
     }
   }
 
   push(obj) {
-    this.attribs.push(obj);
+    this.attribs.push(obj)
   }
 
   set(key, value) {
     this.attribs.push({
       [key]: value
-    });
+    })
   }
 }
 
 function rewrite(dom) {
-  dom.forEach((v) => {
-    const attribs = v.attribs;
+  dom.forEach(v => {
+    const attribs = v.attribs
     if (attribs) {
-      const attrs = new HandleAttribs(attribs);
+      const attrs = new HandleAttribs(attribs)
 
       // 为每个节点注入ID
       if (!attrs.get('id')) {
         const obj = {
           id: `wxa-hijack-${v.name}-${Math.floor(Math.random() * 100000)}`
-        };
+        }
 
-        attrs.push(obj);
+        attrs.push(obj)
       }
     }
 
     if (v.children) {
-      rewrite(v.children);
+      rewrite(v.children)
     }
-  });
+  })
 }
 ```
 
@@ -455,67 +457,67 @@ function rewrite(dom) {
 `{{}}` 中的语法本质上是一串 js 代码，可以使用[@babel/parser](https://babeljs.io/docs/en/babel-parser)来将 `js` 代码解析为 `ast` 树，遍历 `ast` 树修改指定节点。具体查看[babel-parser 解析 js](./babel-parser解析js.md)。
 
 ```js
-const { parse } = require('@babel/parser');
-const generate = require('@babel/generator').default;
-const traverse = require('@babel/traverse').default;
+const { parse } = require('@babel/parser')
+const generate = require('@babel/generator').default
+const traverse = require('@babel/traverse').default
 
 // 解析获得 `{{}}` 中的表达式
 // 匹配第一个不在引号之间的{{和第一个不在引号之间的}}
 // 它们之间的内容就是表达式中的内容
 function getExpression(content) {
-  let isSingleQuotes = false;
-  let isDoubleQuotes = false;
-  let isTemplateStr = false;
-  const singleQuotes = "'";
-  const doubleQuotes = '"';
-  const templateStr = '`';
+  let isSingleQuotes = false
+  let isDoubleQuotes = false
+  let isTemplateStr = false
+  const singleQuotes = "'"
+  const doubleQuotes = '"'
+  const templateStr = '`'
 
-  const canStart = (open) =>
-    open === '{{' && !isSingleQuotes && !isDoubleQuotes && !isTemplateStr;
-  const canEnd = (close) =>
-    close === '}}' && !isSingleQuotes && !isDoubleQuotes && !isTemplateStr;
+  const canStart = open =>
+    open === '{{' && !isSingleQuotes && !isDoubleQuotes && !isTemplateStr
+  const canEnd = close =>
+    close === '}}' && !isSingleQuotes && !isDoubleQuotes && !isTemplateStr
 
-  const isQuotes = function (s) {
-    return [singleQuotes, doubleQuotes, templateStr].includes(s);
-  };
+  const isQuotes = function(s) {
+    return [singleQuotes, doubleQuotes, templateStr].includes(s)
+  }
 
-  const expressions = [];
-  let current = '';
-  let isExpression = false;
+  const expressions = []
+  let current = ''
+  let isExpression = false
 
   for (let i = 0; i < content.length; i++) {
-    const c = content[i];
-    const n = content[i + 1];
+    const c = content[i]
+    const n = content[i + 1]
 
     if (c === '\\' && isQuotes(n)) {
-      i++;
+      i++
       if (isExpression) {
-        current += c + n;
+        current += c + n
       }
-      continue;
+      continue
     } else if (c === singleQuotes) {
-      isSingleQuotes = !isSingleQuotes;
+      isSingleQuotes = !isSingleQuotes
     } else if (c === doubleQuotes) {
-      isDoubleQuotes = !isDoubleQuotes;
+      isDoubleQuotes = !isDoubleQuotes
     } else if (c === templateStr) {
-      isTemplateStr = !isTemplateStr;
+      isTemplateStr = !isTemplateStr
     } else if (canStart(c + n)) {
-      isExpression = true;
-      i++;
-      continue;
+      isExpression = true
+      i++
+      continue
     } else if (canEnd(c + n)) {
-      expressions.push(current);
-      current = '';
-      isExpression = false;
-      i++;
+      expressions.push(current)
+      current = ''
+      isExpression = false
+      i++
     }
 
     if (isExpression) {
-      current += c;
+      current += c
     }
   }
 
-  return expressions;
+  return expressions
 }
 
 /**
@@ -526,74 +528,74 @@ function getExpression(content) {
  */
 function replaceExpression(expression, nIndexs, oIndexs) {
   if (!nIndexs || !nIndexs.length) {
-    return;
+    return
   }
 
   // ast树
-  const ast = parse(expression);
+  const ast = parse(expression)
 
   try {
     traverse(ast, {
       enter(path) {
         // 是对象属性时跳过该节点
         if (path.isMemberExpression() && !path.node.computed) {
-          path.skip();
+          path.skip()
         }
 
-        const lowerIndexs = [];
+        const lowerIndexs = []
         for (let i = nIndexs.length - 1; i >= 0; i--) {
-          const nIndex = nIndexs[i];
-          const oIndex = oIndexs[i];
+          const nIndex = nIndexs[i]
+          const oIndex = oIndexs[i]
           if (nIndex !== oIndex && !lowerIndexs.includes(nIndex)) {
             // 类型是identifier，且变量名是[oIndex]
             if (path.isIdentifier({ name: oIndex })) {
-              path.node.name = nIndex;
+              path.node.name = nIndex
             }
           }
-          lowerIndexs.push(nIndex);
+          lowerIndexs.push(nIndex)
         }
       }
-    });
+    })
   } catch (error) {
-    console.error(`表达式${expression}解析出错`);
+    console.error(`表达式${expression}解析出错`)
   }
 
-  return generate(ast).code.slice(0, -1);
+  return generate(ast).code.slice(0, -1)
 }
 
 function handleExpression(text, nIndexs, oIndexs) {
   if (!text || !nIndexs || !nIndexs.length) {
-    return text;
+    return text
   }
-  const expressions = getExpression(text);
+  const expressions = getExpression(text)
 
   if (!expressions.length) {
-    return text;
+    return text
   }
 
-  expressions.forEach((expression) => {
-    const exp = replaceExpression(expression, nIndexs, oIndexs);
-    text = text.replace(expression, exp);
-  });
+  expressions.forEach(expression => {
+    const exp = replaceExpression(expression, nIndexs, oIndexs)
+    text = text.replace(expression, exp)
+  })
 
-  return text;
+  return text
 }
 
 module.exports = {
   handleExpression
-};
+}
 ```
 
 修改 `rewrite` 函数，对所有属性和文本内容都进行表达式处理：
 
 ```js
-attribs.forEach((attr) => {
-  const key = Object.keys(attr)[0];
-  attr[key] = handleExpression(attr[key], indexs, oIndexs);
-});
+attribs.forEach(attr => {
+  const key = Object.keys(attr)[0]
+  attr[key] = handleExpression(attr[key], indexs, oIndexs)
+})
 
 if (v.type === 'text') {
-  v.data = handleExpression(v.data, indexs, oIndexs);
+  v.data = handleExpression(v.data, indexs, oIndexs)
 }
 ```
 

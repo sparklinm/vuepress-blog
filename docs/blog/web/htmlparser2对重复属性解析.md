@@ -22,6 +22,8 @@ htmlparser2 不处理重复的属性，如果节点拥有重复的属性，那�
 
 > [AST Explorer](https://astexplorer.net/#/1CHlCXc4n4) 可以看到一些 html 解析库的解析结果的区别。
 
+<!-- more -->
+
 ## DomHandler
 
 htmlparser2 是使用 [DomHandler](https://github.com/fb55/domhandler) 来处理 html 字符串的：
