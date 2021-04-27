@@ -31,10 +31,122 @@ limitations under the License.
                 width: 50px;
                 height: 50px;
                 margin-left: 50px;
+                position: absolute;
             }
         </style>
     </head>
+
+    <!-- <script>
+        let getRandom = () => {
+            return Math.floor(Math.random() * 100);
+        };
+        let boxs = document.getElementsByClassName('box1');
+
+        function myclick() {
+            for (let i = 0; i < boxs.length; i++) {
+                const box = boxs[i];
+                const effect = new KeyframeEffect(
+                    box,
+                    {
+                        left: [`${getRandom()}vw`, `${getRandom()}vw`],
+                        top: [`${getRandom()}vh`, `${getRandom()}vh`],
+                    },
+                    { duration: 5000 }
+                );
+                const animation = new Animation(effect, document.timeline);
+                animation.play();
+            }
+
+            let count = 5
+            let num=0
+            let id =setInterval(()=>{
+                if(num>count){
+                    clearInterval(id)
+                }
+
+                let x 
+                for (let i = 0; i < 5000000; i++) {
+                    x = Math.floor(Math.random()*i)
+                }
+                console.log(x);
+                num ++
+            },500)
+        }
+    </script> -->
+
+    <script id="workletScript" language="animationworklet">
+        registerAnimator(
+            'my-awesome-animator',
+            class {
+                animate(currentTime, effect) {
+                    // The simplest custom animator that does exactly what regular animations do!
+                    effect.localTime = currentTime;
+                }
+            }
+        );
+    </script>
+
+    <script>
+        async function init() {
+            var eleScript = document.querySelector('#workletScript');
+
+            const blobWorklet = new Blob([eleScript.textContent], {
+                type: 'text/javascript'
+            });
+
+            await CSS.animationWorklet.addModule(
+                URL.createObjectURL(blobWorklet)
+            );
+            console.log('1');
+        }
+
+        init();
+
+        console.log('2');
+
+        let getRandom = () => {
+            return Math.floor(Math.random() * 100);
+        };
+        let boxs = document.getElementsByClassName('box1');
+
+        function myclick() {
+            for (let i = 0; i < boxs.length; i++) {
+                const box = boxs[i];
+                const effect = new KeyframeEffect(
+                    box,
+                    {
+                        left: [`${getRandom()}vw`, `${getRandom()}vw`],
+                        top: [`${getRandom()}vh`, `${getRandom()}vh`]
+                    },
+                    { duration: 5000 }
+                );
+                const animation = new WorkletAnimation(
+                    'my-awesome-animator',
+                    effect
+                );
+                animation.play();
+            }
+
+
+            let count = 5
+            let num=0
+            let id =setInterval(()=>{
+                if(num>count){
+                    clearInterval(id)
+                }
+
+                let x 
+                for (let i = 0; i < 5000000; i++) {
+                    x = Math.floor(Math.random()*i)
+                }
+                console.log(x);
+                num ++
+            },500)
+        }
+    </script>
+
     <div id="d1">
+        <button onclick="myclick()">点击</button>
         <div class="box1" style="background: red"></div>
         <div class="box1" style="background: green"></div>
         <div class="box1" style="background: yellow"></div>
@@ -46,6 +158,255 @@ limitations under the License.
         <div class="box1" style="background: red"></div>
         <div class="box1" style="background: green"></div>
         <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
+        <div class="box1" style="background: red"></div>
+        <div class="box1" style="background: green"></div>
+        <div class="box1" style="background: yellow"></div>
+        <div class="box1" style="background: blue"></div>
         <div class="box1" style="background: blue"></div>
         <div class="box1" style="background: red"></div>
         <div class="box1" style="background: green"></div>
@@ -56,26 +417,59 @@ limitations under the License.
         <div class="box1" style="background: yellow"></div>
         <div class="box1" style="background: blue"></div>
     </div>
-    <script>
-        let getRandom = () => {
-            return Math.floor(Math.random() * 100);
-        };
-        window.addEventListener('scroll', () => {
-            let boxs = document.getElementsByClassName('box1');
 
-            for (let i = 0; i < boxs.length; i++) {
-                const box = boxs[i];
-                const effect = new KeyframeEffect(
-                    box,
-                    {
-                        transform: [`translate(${getRandom()}vw,${getRandom()}vh)`, `translate(${getRandom()}vw,${getRandom()}vh)`],
-                        opacity: [1, 0.5, 1]
-                    },
-                    { duration: 2000 }
-                );
-                const animation = new Animation(effect, document.timeline);
-                animation.play();
+    <!-- <style>
+        .react {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: #f00;
+            animation: react-run 6s linear 0s infinite;
+            /* transform: translateZ(0); */
+            top: 300px;
+        }
+
+        /* @keyframes react-run {
+            0% {
+                transform: translate3d(0, 0, 0);
             }
-        });
-    </script>
+            25% {
+                transform: translate3d(200px, 0, 0);
+            }
+            50% {
+                transform: translate3d(200px, 200px, 0);
+            }
+            75% {
+                transform: translate3d(0, 200px, 0);
+            }
+            100% {
+                transform: translate3d(0, 0, 0);
+            }
+        } */
+
+        @keyframes react-run {
+            0% {
+                left: 0;
+                top: 300px;
+            }
+            25% {
+                left: 200px;
+                top: 300px;
+            }
+            50% {
+                left: 200px;
+                top: 500px;
+            }
+            75% {
+                left: 0;
+                top: 500px;
+            }
+            100% {
+                left: 0;
+                top: 300px;
+            }
+        }
+    </style> -->
+
+    <div class="react"></div>
 </html>
