@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: taro3全平台浅析
-    time: 2021-02-28 17:10:12
-    tag: taro3,小程序全平台
+    - title: taro3全平台浅析
+      time: 2021-02-28 17:10:12
+      tag: taro3,小程序全平台
 ---
 
 # taro3 全平台实现分析
@@ -42,40 +42,40 @@ meta:
 
 <!--base.wxml  -->
 <template name="taro_tmpl">
-  <block wx:for="{{root.cn}}" wx:key="uid">
-    <template is="tmpl_0_container" data="{{i:item,l:''}}" />
-  </block>
+    <block wx:for="{{root.cn}}" wx:key="uid">
+        <template is="tmpl_0_container" data="{{i:item,l:''}}" />
+    </block>
 </template>
 
 <template name="tmpl_0_container">
-  <template is="{{xs.a(0, i.nn, l)}}" data="{{i:i,cid:0,l:xs.f(l,i.nn)}}" />
+    <template is="{{xs.a(0, i.nn, l)}}" data="{{i:i,cid:0,l:xs.f(l,i.nn)}}" />
 </template>
 
 <template name="tmpl_0_view">
-  <view
-    hover-class="{{xs.b(i.hoverClass,'none')}}"
-    hover-stop-propagation="{{xs.b(i.hoverStopPropagation,false)}}"
-    hover-start-time="{{xs.b(i.hoverStartTime,50)}}"
-    hover-stay-time="{{xs.b(i.hoverStayTime,400)}}"
-    animation="{{i.animation}}"
-    bindanimationstart="eh"
-    bindanimationiteration="eh"
-    bindanimationend="eh"
-    bindtransitionend="eh"
-    bindtouchstart="eh"
-    bindtouchmove="eh"
-    bindtouchend="eh"
-    bindtouchcancel="eh"
-    bindlongpress="eh"
-    style="{{i.st}}"
-    class="{{i.cl}}"
-    bindtap="eh"
-    id="{{i.uid}}"
-  >
-    <block wx:for="{{i.cn}}" wx:key="uid" wx:for-index="index_rr_0_">
-      <template is="{{xs.e(cid+1)}}" data="{{i:item,l:l}}" />
-    </block>
-  </view>
+    <view
+        hover-class="{{xs.b(i.hoverClass,'none')}}"
+        hover-stop-propagation="{{xs.b(i.hoverStopPropagation,false)}}"
+        hover-start-time="{{xs.b(i.hoverStartTime,50)}}"
+        hover-stay-time="{{xs.b(i.hoverStayTime,400)}}"
+        animation="{{i.animation}}"
+        bindanimationstart="eh"
+        bindanimationiteration="eh"
+        bindanimationend="eh"
+        bindtransitionend="eh"
+        bindtouchstart="eh"
+        bindtouchmove="eh"
+        bindtouchend="eh"
+        bindtouchcancel="eh"
+        bindlongpress="eh"
+        style="{{i.st}}"
+        class="{{i.cl}}"
+        bindtap="eh"
+        id="{{i.uid}}"
+    >
+        <block wx:for="{{i.cn}}" wx:key="uid" wx:for-index="index_rr_0_">
+            <template is="{{xs.e(cid+1)}}" data="{{i:item,l:l}}" />
+        </block>
+    </view>
 </template>
 
 <!-- 更多模板 -->
@@ -85,36 +85,36 @@ meta:
 
 ```js
 data = {
-  root: {
-    cn: [
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      },
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      },
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      },
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      },
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      }
-    ]
-  }
-}
+    root: {
+        cn: [
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            },
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            },
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            },
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            },
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            }
+        ]
+    }
+};
 ```
 
 ## 性能
@@ -149,38 +149,40 @@ data = {
 
 这个耗时会随着引入的模板数量而递增。而 `taro` 在一个页面会引入大量的基础（按 `dom` 层级来，每一层有多少个元素就会引入多少个模板）。如果页面复杂，`setData` 耗时将很轻易超过几百毫秒。**因为是微信 `templeate` 的问题，所以这个耗时现阶段无法优化。**
 
+> 当然 `data` 的大小也会影响 `setData` 的耗时。`taro3` 在 `data` 中用 `root` 来存储所有数据和页面结构。当页面结构复杂时，自然 `root` 变量也会越大，`setData` 也会更耗时。但更多的是 `template` 模板对性能的影响。
+
 ```js
 data = {
-  root: {
-    cn: [
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      },
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      },
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      },
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      },
-      {
-        nn: 'view',
-        uid: '_n_47',
-        cn: [{ v: '0.23011026009994318', nn: '#text' }]
-      }
-    ]
-  }
-}
+    root: {
+        cn: [
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            },
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            },
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            },
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            },
+            {
+                nn: 'view',
+                uid: '_n_47',
+                cn: [{ v: '0.23011026009994318', nn: '#text' }]
+            }
+        ]
+    }
+};
 ```
 
 用三种方法描述渲染这样的结构：
