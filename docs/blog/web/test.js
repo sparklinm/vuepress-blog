@@ -7,3 +7,6 @@ registerAnimator(
         }
     }
 );
+
+
+/[a-z]/
