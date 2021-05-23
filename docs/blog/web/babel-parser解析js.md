@@ -190,7 +190,7 @@ traverse(ast, {
     if (path.isIdentifier({ name: 'n' })) {
       path.node.name = 'x';
     }
-  }
+  },
 
   // 退出节点
   exit(path){
@@ -223,6 +223,8 @@ path.replaceWith(newNode); //替换为新的节点
 path.remove(); // 删除当前节点
 path.skip(); //跳过子节点
 ```
+
+更多path上相关方法属性见：[Github plugin-handbook](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-babel-traverse)
 
 当使用 path.replaceWith 替换为新节点时，需要使用[@babel/types](https://babeljs.io/docs/en/babel-types#identifier)创建节点。
 
