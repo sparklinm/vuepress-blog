@@ -190,7 +190,7 @@ traverse(ast, {
     if (path.isIdentifier({ name: 'n' })) {
       path.node.name = 'x';
     }
-  }
+  },
 
   // 退出节点
   exit(path){
