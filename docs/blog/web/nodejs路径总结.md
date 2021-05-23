@@ -126,7 +126,7 @@ console.log(path.join('src', 'a.js'))
 // src/a.js
 ```
 
-## path.parse
+### path.parse
 
 `path.parse()` 方法会返回一个对象，其属性表示 `path` 的有效元素。 尾部的目录分隔符会被忽略。
 
