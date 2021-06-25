@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: babel-parser解析js
-    time: 2021-02-18 15:24:39
-    tag: babel,parser
+    - title: babel-parser解析js
+      time: 2021-02-18 15:24:39
+      tag: babel,parser
 ---
 
 # @babel/parser 解析 js
@@ -31,144 +31,144 @@ console.log(ast);
 
 ```json
 {
-  "type": "File",
-  "start": 0,
-  "end": 13,
-  "loc": {
-    "start": {
-      "line": 1,
-      "column": 0
-    },
-    "end": {
-      "line": 1,
-      "column": 13
-    }
-  },
-  "errors": [],
-  "program": {
-    "type": "Program",
+    "type": "File",
     "start": 0,
     "end": 13,
     "loc": {
-      "start": {
-        "line": 1,
-        "column": 0
-      },
-      "end": {
-        "line": 1,
-        "column": 13
-      }
+        "start": {
+            "line": 1,
+            "column": 0
+        },
+        "end": {
+            "line": 1,
+            "column": 13
+        }
     },
-    "sourceType": "module",
-    "interpreter": null,
-    "body": [
-      {
-        "type": "VariableDeclaration",
+    "errors": [],
+    "program": {
+        "type": "Program",
         "start": 0,
         "end": 13,
         "loc": {
-          "start": {
-            "line": 1,
-            "column": 0
-          },
-          "end": {
-            "line": 1,
-            "column": 13
-          }
-        },
-        "declarations": [
-          {
-            "type": "VariableDeclarator",
-            "start": 4,
-            "end": 13,
-            "loc": {
-              "start": {
+            "start": {
                 "line": 1,
-                "column": 4
-              },
-              "end": {
+                "column": 0
+            },
+            "end": {
                 "line": 1,
                 "column": 13
-              }
-            },
-            "id": {
-              "type": "Identifier",
-              "start": 4,
-              "end": 5,
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 4
-                },
-                "end": {
-                  "line": 1,
-                  "column": 5
-                },
-                "identifierName": "b"
-              },
-              "name": "b"
-            },
-            "init": {
-              "type": "BinaryExpression",
-              "start": 8,
-              "end": 13,
-              "loc": {
-                "start": {
-                  "line": 1,
-                  "column": 8
-                },
-                "end": {
-                  "line": 1,
-                  "column": 13
-                }
-              },
-              "left": {
-                "type": "Identifier",
-                "start": 8,
-                "end": 9,
-                "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 8
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 9
-                  },
-                  "identifierName": "a"
-                },
-                "name": "a"
-              },
-              "operator": "+",
-              "right": {
-                "type": "NumericLiteral",
-                "start": 12,
+            }
+        },
+        "sourceType": "module",
+        "interpreter": null,
+        "body": [
+            {
+                "type": "VariableDeclaration",
+                "start": 0,
                 "end": 13,
                 "loc": {
-                  "start": {
-                    "line": 1,
-                    "column": 12
-                  },
-                  "end": {
-                    "line": 1,
-                    "column": 13
-                  }
+                    "start": {
+                        "line": 1,
+                        "column": 0
+                    },
+                    "end": {
+                        "line": 1,
+                        "column": 13
+                    }
                 },
-                "extra": {
-                  "rawValue": 2,
-                  "raw": "2"
-                },
-                "value": 2
-              }
+                "declarations": [
+                    {
+                        "type": "VariableDeclarator",
+                        "start": 4,
+                        "end": 13,
+                        "loc": {
+                            "start": {
+                                "line": 1,
+                                "column": 4
+                            },
+                            "end": {
+                                "line": 1,
+                                "column": 13
+                            }
+                        },
+                        "id": {
+                            "type": "Identifier",
+                            "start": 4,
+                            "end": 5,
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 4
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 5
+                                },
+                                "identifierName": "b"
+                            },
+                            "name": "b"
+                        },
+                        "init": {
+                            "type": "BinaryExpression",
+                            "start": 8,
+                            "end": 13,
+                            "loc": {
+                                "start": {
+                                    "line": 1,
+                                    "column": 8
+                                },
+                                "end": {
+                                    "line": 1,
+                                    "column": 13
+                                }
+                            },
+                            "left": {
+                                "type": "Identifier",
+                                "start": 8,
+                                "end": 9,
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 8
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 9
+                                    },
+                                    "identifierName": "a"
+                                },
+                                "name": "a"
+                            },
+                            "operator": "+",
+                            "right": {
+                                "type": "NumericLiteral",
+                                "start": 12,
+                                "end": 13,
+                                "loc": {
+                                    "start": {
+                                        "line": 1,
+                                        "column": 12
+                                    },
+                                    "end": {
+                                        "line": 1,
+                                        "column": 13
+                                    }
+                                },
+                                "extra": {
+                                    "rawValue": 2,
+                                    "raw": "2"
+                                },
+                                "value": 2
+                            }
+                        }
+                    }
+                ],
+                "kind": "let"
             }
-          }
         ],
-        "kind": "let"
-      }
-    ],
-    "directives": []
-  },
-  "comments": []
+        "directives": []
+    },
+    "comments": []
 }
 ```
 
@@ -184,18 +184,16 @@ console.log(ast);
 
 ```js
 traverse(ast, {
-  // 进入节点
-  enter(path) {
-    // 节点 type 是 Identifier，且含有属性 name: 'n'
-    if (path.isIdentifier({ name: 'n' })) {
-      path.node.name = 'x';
-    }
-  },
+    // 进入节点
+    enter(path) {
+        // 节点 type 是 Identifier，且含有属性 name: 'n'
+        if (path.isIdentifier({ name: 'n' })) {
+            path.node.name = 'x';
+        }
+    },
 
-  // 退出节点
-  exit(path){
-
-  }
+    // 退出节点
+    exit(path) {}
 });
 ```
 
@@ -205,12 +203,12 @@ traverse(ast, {
 import * as t from '@babel/types';
 
 traverse(ast, {
-  enter(path) {
-    // path.isIdentifier 与这里的方法一致
-    if (t.isIdentifier(path.node, { name: 'n' })) {
-      path.node.name = 'x';
+    enter(path) {
+        // path.isIdentifier 与这里的方法一致
+        if (t.isIdentifier(path.node, { name: 'n' })) {
+            path.node.name = 'x';
+        }
     }
-  }
 });
 ```
 
@@ -224,7 +222,7 @@ path.remove(); // 删除当前节点
 path.skip(); //跳过子节点
 ```
 
-更多path上相关方法属性见：[Github plugin-handbook](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-babel-traverse)
+更多 path 上相关方法属性见：[Github plugin-handbook](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-babel-traverse)
 
 当使用 path.replaceWith 替换为新节点时，需要使用[@babel/types](https://babeljs.io/docs/en/babel-types#identifier)创建节点。
 
@@ -237,11 +235,11 @@ import * as t from '@babel/types';
 let member = t.memberExpression(t.identifier('child'), t.identifier('name'));
 
 traverse(ast, {
-  enter(path) {
-    if (t.isIdentifier(path.node, { name: 'n' })) {
-      path.replaceWith(member);
+    enter(path) {
+        if (t.isIdentifier(path.node, { name: 'n' })) {
+            path.replaceWith(member);
+        }
     }
-  }
 });
 ```
 
@@ -249,14 +247,18 @@ traverse(ast, {
 
 ```js
 traverse(ast, {
-  // 对语法树中特定的节点进行操作 参考@babel/types （特定节点类型）
-  // Identifier 特定节点
-  Identifier(path) {
-    let { node } = path;
-    if (node && node.name === 'n') {
-      path.replaceWith(member);
+    // 对语法树中特定的节点进行操作 参考@babel/types （特定节点类型）
+    // Identifier 特定节点
+    Identifier(path) {
+        let { node } = path;
+        if (node && node.name === 'n') {
+            path.replaceWith(member);
+        }
+    },
+    ImportDeclaration: {
+        enter: (path) => {},
+        exit(path) {}
     }
-  }
 });
 ```
 
