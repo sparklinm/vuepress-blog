@@ -2,7 +2,7 @@
 meta:
     - title: 详细分析 Tree Shake 原理
       time: 2021-06-23 15:50:44
-      tag: js
+      tag: js,babel
 ---
 
 # 详细分析 Tree Shake 原理
@@ -157,7 +157,7 @@ sideEffects: ['./b'];
 更多详细有关 [@babel/parser](https://babeljs.io/docs/en/babel-parser) 和 [@babel/traverse](https://babeljs.io/docs/en/babel-traverse) 的用法请阅读官方文档和另外两篇文章：
 
 1. [babel-parser 解析 js](./babel-parser解析js)
-2. [babel/traverse 常用方法整理](./babel/traverse常用方法整理)
+2. [babel/traverse 常用方法整理](./babel-traverse常用方法整理)
 
 ```js
 const traverse = require('@babel/traverse').default;
@@ -174,7 +174,7 @@ let ast = parse(
 );
 
 traverse(ast, {
-    enter: (path) => {}
+    enter: path => {}
 });
 ```
 
@@ -226,6 +226,8 @@ binding = {
   referencePaths: [path, path, path], // 引用 paths
 
   constant: false,
+
+  // 如果是对 binding 的直接赋值语句，将会被放入到这里，而不是放 referencePaths
   constantViolations: [path]
 }
 ```
@@ -299,13 +301,13 @@ export function fn1() {}
 let x = 1,
     y = 3;
 export { x as x1, y };
-export  {x as default}
+export { x as default };
 
 export { a as aa, b, c } from './a';
 export * as all from './a';
-export { default } from './a'
-export { a as default } from './a'
-export * as default from './a'
+export { default } from './a';
+export { a as default } from './a';
+export * as default from './a';
 ```
 
 除了直接导出一个声明：`export function fn1() {}`，其他 `ExportNamedDeclaration` 都会有 `specifiers`。
@@ -388,10 +390,10 @@ interface ExportDefaultDeclaration <: ModuleDeclaration {
 示例：
 
 ```js
-let p1 = 1
-export default p1
-export default 1
-export default p1 = 2
+let p1 = 1;
+export default p1;
+export default 1;
+export default p1 = 2;
 export default function() {}
 export default function m() {}
 export default { p1, x: 1 };
@@ -406,7 +408,7 @@ export default function m() {}
 
 // 转换为
 function m() {}
-export default m
+export default m;
 ```
 
 存储为：
@@ -485,6 +487,21 @@ export { ma, fn1, class1, v };
 对于函数声明 `binding` 和类声明 `binding`，不会有副作用，如果 `referenced` 为 `false`， 可以直接去除。
 
 对于变量声明 `binding`，可能存在副作用，即使 `referenced` 为 `false`，也不能直接去除。
+
+`binding` 之间可能会互相引用：
+
+```js
+function f1() {}
+
+function f2() {
+    f1();
+}
+```
+
+`f1` 只在 `f2` 函数中被引用，如果 `f2` 函数被删除，`f1` 也应该被删除。有关 `binding` 的操作方法可以查看：
+
+1. [Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
+2. [babel/traverse 常用方法整理](./babel-traverse常用方法整理)
 
 对于 `import` 声明 `binding`，以上面的 `ma` 为例，如果 `ma` 没被 `import`：
 

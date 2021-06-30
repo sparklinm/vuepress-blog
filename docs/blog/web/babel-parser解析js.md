@@ -224,7 +224,7 @@ path.skip(); //跳过子节点
 
 更多 path 上相关方法属性见：[Github plugin-handbook](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#toc-babel-traverse)
 
-当使用 path.replaceWith 替换为新节点时，需要使用[@babel/types](https://babeljs.io/docs/en/babel-types#identifier)创建节点。
+当使用 `path.replaceWith` 替换为新节点时，需要使用[@babel/types](https://babeljs.io/docs/en/babel-types#identifier)创建节点。
 
 例如创建一个对象属性，并用于替换：
 
