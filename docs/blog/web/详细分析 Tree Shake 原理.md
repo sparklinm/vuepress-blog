@@ -507,7 +507,7 @@ function f2() {
 
 1. 去除 `export {ma}`
 2. `ma` 的 `referenced` 为 `false` 去除 `import` 语句
-3. 再沿着 `a` 文件中找到 `ma` 的 `export` 语句，沿途经过的所有 `export` 语句的 `extReferences` 数组都删除本文件（`import` 所在文件）路径
+3. 再沿着 `a` 文件找到 `ma` 的 `export` 语句，沿途经过的所有 `export` 语句的 `extReferences` 数组都删除本文件（`import` 所在文件）路径
 4. 如果 `extReferences` 为空，将新 `export` 语句放入 `noReferencedExports`
 5. 不断遍历 `noReferencedExports`，直到 `noReferencedExports` 为空。
 
@@ -523,7 +523,28 @@ const { minify } = require('terser');
 await minify(code, { module: true }).code;
 ```
 
-这也正是 `webpack` 的 [optimization.usedExports](https://webpack.docschina.org/configuration/optimization/#optimizationusedexports) 的原理：
+这也正是 `webpack` 的 [optimization.usedExports](https://webpack.docschina.org/configuration/optimization/#optimizationusedexports) 的原理。
+
+## 效果
+
+使用 `tree shake` 真的能有效减少打包体积吗？这取决于你项目中有多少未使用的 `es6` 模块。
+
+对于大多数项目而言，代码可以简单归为两类：
+
+1. 本地代码，
+2. 第三方依赖
+
+大多数构建工具都会提供 `es6` 的模块语法，例如 `webpack`，所以本地代码很容易使用 `es6` 模块语法，进而 `tree shake`。但本地代码是自己可控的，冗余的模块都会删除，所以 `tree shake` 对本地代码作用很小。
+
+对于第三方依赖，有些构建工具构建的 `js` 库可以输出为 `es6` 模块，例如：`rollup`，但大多数第三方库是 `commjs` 模块语法，所以 `tree shake` 对于第三方库的作用依然不理想。
+
+当然上诉结论得出的先决条件是：1. 本地代码没有过多冗余。2. 第三方依赖基本都是 `commonjs` 模块语法。
+
+那有办法对 `commonjs` 进行 `tree shake`吗？
+
+上面说过，很难，但依然有办法对 `commonjs` 进行**有条件**的 `tree shake。`
+
+具体分析，请看另一篇文章：[cjs的简单tree-shake](./cjs%20的简单%20tree-shake)
 
 ## 参考文献
 

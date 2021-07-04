@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: VScode
-    time: 2019-6-20 10:20:10
-    tag: 工具使用
+    - title: VScode
+      time: 2019-6-20 10:20:10
+      tag: 工具使用
 ---
 
 # VScode
@@ -104,20 +104,20 @@ vscode 快捷方式图标——右键属性——目标——路径后面加上�
 
 ```json
 {
-  "markdown sample": {
-    "prefix": "markdown",
-    "body": [
-      "---",
-      "meta:",
-      "\t- title: $1",
-      "\t\ttime: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
-      "\t\ttag: $3",
-      "---",
-      "",
-      "# $4"
-    ],
-    "description": "The full sample code - markdown."
-  }
+    "markdown sample": {
+        "prefix": "markdown",
+        "body": [
+            "---",
+            "meta:",
+            "\t- title: $1",
+            "\t\ttime: $CURRENT_YEAR-$CURRENT_MONTH-$CURRENT_DATE $CURRENT_HOUR:$CURRENT_MINUTE:$CURRENT_SECOND",
+            "\t\ttag: $3",
+            "---",
+            "",
+            "# $4"
+        ],
+        "description": "The full sample code - markdown."
+    }
 }
 ```
 
@@ -126,9 +126,9 @@ vscode 快捷方式图标——右键属性——目标——路径后面加上�
 ```md
 ---
 meta:
-  - title:
-    time: 2020-07-02 10:54:04
-    tag:
+    - title:
+      time: 2020-07-02 10:54:04
+      tag:
 ---
 
 #
@@ -154,8 +154,17 @@ meta:
 
 **这样的配置后，在任何地方（不仅限于 `.md` 文件中）输入 `markdown` 都会提示使用模板。**
 
+## 调试 js
+
+在 vscode 中调试 js，可以参考以下两篇文章：
+
+1. [如何在 vscode 里面调试 js 和 node.js](https://juejin.cn/post/6844903744304316429)
+2. [使用 vscode 调试编译后的 js 代码](https://meixg.cn/2018/05/13/vscode-debug/)
+
 ## 参考文献
 
 1. [精选!15 个 web 前端必备的 VSCode 插件](http://baijiahao.baidu.com/s?id=1585469813997965563&wfr=spider&for=pc)
 2. [前端开发 VScode 常用插件](https://segmentfault.com/a/1190000012558414)
 3. [vscode 自定义代码片段](https://blog.csdn.net/ucmir183/article/details/88413369)
+4. [如何在 vscode 里面调试 js 和 node.js](https://juejin.cn/post/6844903744304316429)
+5. [使用 vscode 调试编译后的 js 代码](https://meixg.cn/2018/05/13/vscode-debug/)
