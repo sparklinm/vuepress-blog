@@ -13,6 +13,8 @@ meta:
 
 最近做的小程序可回溯工具需要支持 `taro`, 为了实现可回溯，需要给每一个节点加上 `id`, 也就是**需要编写一个 taro 插件，在编译时动态为每一个节点添加 id**。
 
+<!-- more -->
+
 ## taro3 插件
 
 taro 插件的编写，官方已经给好了[文档](https://taro-docs.jd.com/taro/docs/plugin#%E5%A6%82%E4%BD%95%E7%BC%96%E5%86%99%E4%B8%80%E4%B8%AA%E6%8F%92%E4%BB%B6)。

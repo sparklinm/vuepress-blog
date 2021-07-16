@@ -24,12 +24,10 @@ meta:
 
 ## 死代码消除(DCE)
 
-Dead Code 一般具有以下几个特征
+Dead Code 一般具有以下几个特征：
 
 -   代码不会被执行，不可到达
-
 -   代码执行的结果不会被用到
-
 -   代码只会影响死变量（只写不读）
 
 看一个例子：
@@ -174,7 +172,7 @@ let ast = parse(
 );
 
 traverse(ast, {
-    enter: path => {}
+    enter: (path) => {}
 });
 ```
 
@@ -544,7 +542,7 @@ await minify(code, { module: true }).code;
 
 上面说过，很难，但依然有办法对 `commonjs` 进行**有条件**的 `tree shake。`
 
-具体分析，请看另一篇文章：[cjs的简单tree-shake](./cjs%20的简单%20tree-shake)
+具体分析，请看另一篇文章：[cjs 的简单 tree-shake](./cjs%20的简单%20tree-shake)
 
 ## 参考文献
 
