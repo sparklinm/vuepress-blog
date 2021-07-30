@@ -230,6 +230,50 @@ export default {
 };
 ```
 
+如果是使用 `babel`, 可以不用 [typescript rollup-plugin-typescript2](https://github.com/ezolenko/rollup-plugin-typescript2) 插件，`babel` 可以完成对 `ts` 的打包：
+
+```js
+export default [
+    {
+        plugins: [
+            // 解析 .ts 结尾的文件
+            resolve({ extensions: ['.ts', '.js'] }),
+            commonjs(),
+            babel({
+                exclude: 'node_modules/**', // 只编译我们的源代码
+                runtimeHelpers: true,
+                // 解析 .ts 结尾的文件
+                extensions: ['.ts', '.js']
+            })
+        ]
+    }
+];
+```
+
+同时 `babel` 使用 `@babel/preset-typescript` 预设：
+
+```
+yarn add typescript @babel/preset-typescript -D
+```
+
+```js
+module.exports = {
+    presets: [
+        [
+            '@babel/preset-env',
+            {
+                targets: {
+                    // 目标浏览器版本，该浏览器缺失某新语法，babel才会引入这个新语法
+                    ie: 11
+                }
+            }
+        ]
+        '@babel/preset-typescript'
+    ],
+    ignore: ['node_modules/**']
+};
+```
+
 ## 开发环境和生产环境
 
 ```json
