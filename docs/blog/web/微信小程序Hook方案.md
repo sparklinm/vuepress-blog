@@ -466,6 +466,74 @@ Component({
 
 用页面的 `groupSetData` 包裹整个深度遍历更新流程，这样即使更新时多次 `setData` ，也只会渲染一次。
 
+### setData 数据
+
+**渲染函数** 每次返回组件的 `data`，与旧 `data` 进行浅对比（只对比第一层属性），当发生改变时，`setData` 改变的属性。
+
+这意味着如果 `state` 是一个数组或者对象，每次这个 `state` 改变时，是 `setData` 整个数组或对象。
+
+```js
+defineComponent(({ num }) => {
+    let [array, setArray] = useState(new Array(10).fill(Math.random()));
+
+    useEffect(() => {
+        let newArray = [...array];
+        newArray[5] = 'xxx';
+        setArray(newArray);
+        // 最后 setData 整个数组: setData({array: newArray})
+    }, []);
+
+    return {
+        data: {
+            array
+        }
+    };
+});
+```
+
+**为什么不先深度遍历对象找出差异，然后做增量更新？**
+
+在正常数据量下，深度 `diff` 对象找出差异再 `setData` 相比于直接 `setData` 整个对象没有任何性能上的优势，如果 `diff` 到变更的数据很多，反而性能还会下降。
+
+只有一种情况下深度 `diff` 再增量 `setData` 有明显性能优势，那就是数据量非常大（几千 `kb`）且 `diif` 出来的数据变化比较少。这种情景如果有需要以后再做优化。
+
+### 跳过子组件更新
+
+当父组件传递给子组件的 `props` 发生变化，子组件就会重新执行 **渲染函数**。但这里的 `props` 实现是使用了原生小程序的 `properties`，当父组件传递过来的数据变化时，其实会直接使子组件对应 `data` 中的数据变化。如果 **渲染函数** 并不依赖于 `props` 做一些操作，这时 **渲染函数** 可以不必执行。
+
+```js
+defineComponent(
+    ({ num }) => {
+        let [array, setArray] = useState(new Array(10).fill(Math.random()));
+
+        useEffect(() => {
+            let newArray = [...array];
+            newArray[5] = 'xxx';
+            setArray(newArray);
+            // 最后 setData 整个数组: setData({array: newArray})
+        }, []);
+
+        return {
+            data: {
+                array
+            }
+        };
+    },
+    {
+        properties: {
+            num: {
+                type: Number,
+                value: 0,
+                // num 发生变化，渲染函数不会重新执行
+                effect: false
+            }
+        }
+    }
+);
+```
+
+可以向 `property` 传递一个 `effect: false` 属性，表示该 `property` 的变化不会引起 **渲染函数** 的执行。
+
 ### fiber
 
 `react` 组件树是由 `fiber` 节点构成，在 `react` 中更新分为两步：
