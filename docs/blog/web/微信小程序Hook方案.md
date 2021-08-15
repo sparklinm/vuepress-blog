@@ -103,19 +103,19 @@ if (Object.is(eagerState, currentState)) {
 
 每一次 `setState` 都会立即渲染，但在 `dom` 事件和其他 `hooks` 中，多个 `setState` 只会渲染一次。
 
-`react` 的渲染总是从组件树的根节点开始，采用深度遍历的方式，也就是说即使只改变 `A` 组件状态，`react` 也会从根节点遍历查找需要更新的节点，并放入链表，最后遍历链表更新所有节点。
+`react` 的更新总是从 **组件的根节点** 开始，采用深度遍历的方式，找出所有需要更新的节点（包括子组件），并放入链表，最后遍历链表更新所有节点。
 
-在渲染过程中，深度遍历到组件 `A` 时，执行函数 `A`，当再次调用 `useState` 时，**遍历 `update` 链表来更新 `memoizedState` 和 `baseState`**。
+更新时，执行函数 `A`，当再次调用 `useState` 时，**遍历 `update` 链表来更新 `memoizedState` 和 `baseState`**。
 
 为什么要遍历 `update` 链表来更新，因为当连续多次 `setState` 时，一旦发生状态变化，后续的 `setState` 就不会再去调用 `basicStateReducer` 来对比新旧状态。
 
 ```js
 // 第1次
-setNumber((pre) => pre + 1);
+setNumber(pre => pre + 1);
 // 第2次
-setNumber((pre) => pre + 1);
+setNumber(pre => pre + 1);
 // 第3次
-setNumber((pre) => pre + 1);
+setNumber(pre => pre + 1);
 ```
 
 1. 第 `1` 次 `setNumber` ，调用 `basicStateReducer` 获取最新的值，发生变化，标记组件进入 **渲染状态**，此时不一定会立刻渲染（在 `dom` 事件和其他 `hooks` 中不会立即渲染）
@@ -198,7 +198,7 @@ function render({ num }) {
 }
 
 // 实例化组件
-defineComponent(render, {
+useComponent(render, {
     options: {
         addGlobalClass: true
     },
@@ -208,7 +208,7 @@ defineComponent(render, {
 });
 ```
 
-`defineComponent` 接管了组件的实例化，内部调用了 `Component` 。
+`useComponent` 接管了组件的实例化，内部调用了 `Component` 。
 
 这个渲染函数第一次该在什么地方执行？
 
@@ -294,9 +294,9 @@ onRendered(() => {
 
 ```js
 // onLoad 生命周期触发时执行回调
-useLoad((options) => {});
+useLoad(options => {});
 // onShow 生命周期触发时执行回调
-useShow((options) => {});
+useShow(options => {});
 ```
 
 每次执行这类 `hook` 时，将回调函数存储起来，当对应生命周期触发时，执行这些回调函数。
@@ -344,7 +344,7 @@ function render({ num }) {
     };
 }
 
-// 下面是 defineComponent 所做的事情
+// 下面是 useComponent 所做的事情
 
 const pageOptions = {
     // 存储 useLoad 传入的回调函数
@@ -372,9 +372,9 @@ Component({
         if (pageOptions.onPullDownRefresh.length) {
             const originFn = this.onPullDownRefresh;
             // 实例上动态添加 onPullDownRefresh 函数
-            this.onPullDownRefresh = function (params) {
+            this.onPullDownRefresh = function(params) {
                 originFn && originFn.call(this, params);
-                pageOptions.onPullDownRefresh.forEach((cb) => {
+                pageOptions.onPullDownRefresh.forEach(cb => {
                     cb();
                 });
             };
@@ -391,10 +391,10 @@ Component({
 ```js
 // config 是 Component 构造器的参数
 // 注册前添加 show 选项，直接添加
-config.pageLifetimes.show = (params) => {
+config.pageLifetimes.show = params => {
     const originFn = config.pageLifetimes.show || config.onShow;
     originFn && originFn.call(this, params);
-    bothOptions.show.forEach((cb) => {
+    bothOptions.show.forEach(cb => {
         cb();
     });
 };
@@ -410,9 +410,9 @@ Component(config);
 useRelations({
     './custom-li': {
         type: 'child',
-        linked: function (target) {},
-        linkChanged: function (target) {},
-        unlinked: function (target) {}
+        linked: function(target) {},
+        linkChanged: function(target) {},
+        unlinked: function(target) {}
     }
 });
 
@@ -428,16 +428,16 @@ let relationCbs = {
 };
 ```
 
-向 `defineComponent` 手动传入 `relations` 信息：
+向 `useComponent` 手动传入 `relations` 信息：
 
 ```js
-// defineComponent 传入 relations
-defineComponent(render, {
+// useComponent 传入 relations
+useComponent(render, {
     relations: [['./custom-li', 'child']]
 });
 ```
 
-`defineComponent` 注册组件时，添加对应 `relations` 选项：
+`useComponent` 注册组件时，添加对应 `relations` 选项：
 
 ```js
 // 根据 ['./custom-li', 'child'] 将 relationCbs 中对应关联节点存储的回调函数取出来
@@ -473,7 +473,7 @@ Component({
 这意味着如果 `state` 是一个数组或者对象，每次这个 `state` 改变时，是 `setData` 整个数组或对象。
 
 ```js
-defineComponent(({ num }) => {
+useComponent(({ num }) => {
     let [array, setArray] = useState(new Array(10).fill(Math.random()));
 
     useEffect(() => {
@@ -502,7 +502,7 @@ defineComponent(({ num }) => {
 当父组件传递给子组件的 `props` 发生变化，子组件就会重新执行 **渲染函数**。但这里的 `props` 实现是使用了原生小程序的 `properties`，当父组件传递过来的数据变化时，其实会直接使子组件对应 `data` 中的数据变化。如果 **渲染函数** 并不依赖于 `props` 做一些操作，这时 **渲染函数** 可以不必执行。
 
 ```js
-defineComponent(
+useComponent(
     ({ num }) => {
         let [array, setArray] = useState(new Array(10).fill(Math.random()));
 
@@ -548,5 +548,7 @@ defineComponent(
 ## 参考文献
 
 1. [「react 进阶」一文吃透 react-hooks 原理](https://juejin.cn/post/6944863057000529933)
-1. [Fiber 设计思想](https://juejin.cn/post/6943896410987659277)
-1. [这可能是最通俗的 React Fiber(时间分片) 打开方式](https://juejin.cn/post/6844903975112671239)
+2. [走进 React Fiber 的世界](https://juejin.cn/post/6943896410987659277)
+3. [这可能是最通俗的 React Fiber(时间分片) 打开方式](https://juejin.cn/post/6844903975112671239)
+4. [2021-03-03 React 原理解析之 fiber](https://juejin.cn/post/6944908227213525006)
+5. [从 React 源码分析渲染更新流程](https://juejin.cn/post/6844904200824946696)
