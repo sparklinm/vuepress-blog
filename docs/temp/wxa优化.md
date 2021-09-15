@@ -32,7 +32,7 @@
 
 除此之外，`wxa` 的 `tree shake` 也会尝试处理 `commonjs` 模块，`es6` 模块如果是经过 `webpack` 或者 `rollup` 打包生成的 `cjs` 模块，这里也能处理。
 
-`tree shake` 在现在看来用处有限，原因之一是 `npm` 模块都是 `commonjs` 语法，但随着浏览器对 `es6` 模块支持的普及，未来 `es6` 模块将会成为主导。
+`tree shake` 在现在看来用处有限，原因之一是 `npm` 模块都是 `commonjs` 语法，但随着浏览器对 `es6` 模块支持的普及，未来 `es6` 模块可能会成为主流。
 
 ## hook
 

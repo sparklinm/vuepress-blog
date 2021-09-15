@@ -17,7 +17,7 @@ meta:
 
 在 `js` 中，无用的代码可以分为两种：
 
-1. 单个文件内未使用的代码，例如定义一个变量 `let a = 1`，但从未使用 a 变量；
+1. 单个文件内未使用的代码，例如定义一个变量 `let a = 1`，但从未使用 `a` 变量；
 2. 一个文件内导出了一个模块 `export function a(){}`，这个模块从未被其他文件引入，或是引入后也未被使用。
 
 <!-- more -->
@@ -70,7 +70,7 @@ function a() {
 
 要确定一个模块是否被其他文件使用，需要追踪这个模块的导出、导入以及导入后是否被使用。对于 `ES6` 模块语法，我们能够很清楚的分析出模块是否被导出和导入，因为 `ES6` 模块语法都是在顶级作用域下的明确变量关系的静态导入导出。
 
-在 `ES6` 模块语法之前，大多使用的 `cjs`(`commonJS`)模块语法：
+在 `ES6` 模块语法之前，大多使用的 `cjs` 模块语法：
 
 ```js
 // a.js
@@ -80,7 +80,7 @@ exports.a = 1;
 let { a } = require('./a');
 ```
 
-`cjs` 模块其实就是对 `exports` 对象的操作，在 `exports` 对象上添加函数变量，便是对这个函数变量的导出。要静态分析出一个对象上被添加了哪些属性，基本上是不可能实现的。同时也可以动态 `require`，很难去分析出 `require` 了哪些模块：
+`cjs` 模块其实就是对 `exports` 对象的操作，在 `exports` 对象上添加函数变量，便是对这个函数变量的导出。要静态分析出一个对象上被添加了哪些属性，基本上是无法实现的。同时也可以动态 `require`，很难去分析出 `require` 了哪些模块：
 
 ```js
 // 动态导入
@@ -101,14 +101,14 @@ if (condition) {
 }
 ```
 
-实现模块的 `tree shake` 大致分为以下 3 个步骤：
+实现 `ES6` 模块的 `tree shake` 大致分为以下 3 个步骤：
 
-1. 当 `import` 了一个模块后，但未使用这个模块，去除该 `import` 语法。
+1. 当 `import` 了一个模块后，但未使用这个模块，删除该 `import` 语句。
 2. 在 `1` 之后，收集各个文件的 `import` 和 `export` 语法。
 3. 根据这些 `import` 和 `export` 去标记哪些 `export` 被导入过。
-4. 去除 `3` 之后未被标记的模块（未被导入的模块）。
+4. 删除 `3` 之后未被标记的模块（未被导入的模块）。
 
-## 去除未被使用的 import 语法
+## 删除未被使用的 import 语句
 
 假设入口文件是 `index.js`，其内容如下：
 
@@ -120,10 +120,10 @@ import { mb } from './b';
 console.log(ma);
 ```
 
-因为 `mb` 未被使用，所以去除相应 `import` 语句后如下：
+因为 `mb` 未被使用，所以删除相应 `import` 语句后如下：
 
 ```js
-// 去除后
+// 删除后
 import { a } from './a';
 import './b';
 
@@ -148,7 +148,7 @@ sideEffects: ['./b'];
 
 对于上面的 `import './b'`，如果 `b` 文件目录没在 `sideEffects` 中，可以直接删除该语句。这样最后依赖分析自然不会分析到 `b` 文件，`b` 文件也不会出现在最终打包结果中。
 
-知道了原理，接下来就是使用 `babel` 相关工具来修改 `js` 代码。
+知道了原理，接下来就是使用 `babel` 相关工具来分析和修改 `js` 代码。
 
 使用 [@babel/parser](https://babeljs.io/docs/en/babel-parser) 将 `js` 代码解析为 `ast` 树，[@babel/traverse](https://babeljs.io/docs/en/babel-traverse) 遍历修改 `ast` 树。
 
@@ -176,7 +176,7 @@ traverse(ast, {
 });
 ```
 
-如何分析引入了哪些模块，这些模块是否有使用到？在回答这个问题之前，先来了解 `JS` 的作用域（`scope`）。
+如何分析引入了哪些模块，这些模块引入后是否有被使用到？在回答这个问题之前，先来了解 `JS` 的作用域（`scope`）。
 
 ```js
 // top scope
@@ -230,15 +230,17 @@ binding = {
 }
 ```
 
-更多有关作用域（`path.scope`）的信息查看：[Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
+更多有关作用域（`path.scope`）的信息可以查看：[Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
 
-正如上面所说 `import` 是一个 `binding`，所以只需要遍历顶级作用域的 `binding`，将 `referenced` 为 `false` 的 `import` 节点直接删除即可。
+正如上面所说 `import` 也是一个 `binding`，所以只需要遍历顶级作用域的 `binding`，将 `referenced` 为 `false` 的 `import` `binding` 节点直接删除。
 
 ## 按文件收集 import 和 export
 
+`AST` 语法树将不同类型的语句解析为不同的节点， `import` 和 `export` 语法也不例外，这里需要按文件将 `import`, `export` 节点收集起来，以便在后续分析哪些 `export` 模块被 `import` 过。
+
 ### 收集 import
 
-先看 import 节点的定义：
+先看 `import` 节点的定义：
 
 ```js
 interface ImportDeclaration <: ModuleDeclaration {
@@ -250,7 +252,7 @@ interface ImportDeclaration <: ModuleDeclaration {
 }
 ```
 
-区别不同 `import` 语句通过 `specifiers` 里节点的类型：
+区别不同的 `import` 语句可以通过 `specifiers` 里节点的类型：
 
 ```js
 // specifiers: [ImportDefaultSpecifier]
@@ -263,7 +265,7 @@ import a, { name } from './a';
 import * as all from './a';
 ```
 
-收集 `import` 语法非常简单，只需要遍历 `specifiers`，建立 **文件目录**，**引入模块名** 以及 **节点 path** 之间的关系即可：
+收集 `import` 语法比较简单，只需要遍历 `specifiers`，建立 **文件目录**，**引入模块名** 以及 **节点 path** 之间的关系即可：
 
 ```js
 
@@ -276,9 +278,13 @@ let imports ={
 }
 ```
 
+> `AST` 上有许多节点，而 `path` 是对单个节点的包装。 `path` 上存在有关节点的操作方法，例如：添加、更新、移动和删除节点等。同时也包括一些元数据，例如：父节点、在父节点中的位置、当前所处作用域（ `scope` ）等。
+
 ### 收集 export
 
 `export` 语句较为复杂，分为以下三种类型 `ExportNamedDeclaration`，`ExportDefaultDeclaration`，`ExportAllDeclaration`。
+
+#### ExportNamedDeclaration
 
 `ExportNamedDeclaration` 节点定义如下：
 
@@ -329,26 +335,26 @@ let exports = {
 }
 ```
 
-对于导出一个声明，需要做适当转换：
+对于导出一个声明，需要将声明提取出来：
 
 ```js
 export function fn1() {}
 
-// 转换为
+// 单独声明
 
 function fn1() {}
 export { fn1 };
 ```
 
-再收集对应 `ExportSpecifier`。
+再收集对应 `ExportSpecifier` `path`。
 
-为什么这里要转换？
+**为什么要将声明提取出来？**
 
-如果不转换，当 `fn1` 没有被 `import` 时，也不能去轻易去删除这个 `export` 语句。删除 `export` 语句会连同 `fn1` 函数一起删除，而 `fn1` 函数可能在文件内部被使用。
+如果不提取出来单独声明，当 `fn1` 没有被 `import` 时，也不能轻易去删除这个 `export` 语句。删除 `export` 语句会连同 `fn1` 函数一起删除，而 `fn1` 函数可能在文件内部被使用。
 
-当转换后，如果 `fn1` 没有被导入，可以直接删除 `export { fn1 }` 语句，再借助 `path.scope`，同上面去除未被使用的 `import` 一样，去除未被使用的 `bingding fn1`。
+当提取声明后，如果 `fn1` 没有被导入，可以直接删除 `export { fn1 }` 语句，再借助 `path.scope`（或是 `teser` 等压缩工具），删除未被使用的 `bingding` `fn1`。
 
-> 当插入 `fn1` 节点时，并不会给 `scope` 上添加对应 `binding`，需要使用 `path.scope.crawl()` 去重新收集 `scope` 的 `binding` 信息。
+> 当插入 `fn1` 节点时，并不会给 `scope` 上添加对应 `binding`，需要使用 `path.scope.crawl()` 去重新收集 `scope` 上的 `binding` 信息。
 
 **`bingding` 的创建也会存在副作用**，例如：
 
@@ -360,13 +366,15 @@ let a = (b = 2);
 export { a };
 ```
 
-如果 `a` 变量没被 `import`，去除 `export { a }` 后，不能直接去除 `a` 声明。对于函数和类的声明，是没有副作用的，可以简单直接去除：
+如果 `a` 变量没被 `import`，删除 `export { a }` 后，即使变量 `a` 没有在文件内部使用，也不能直接删除 `a` 声明。对于函数和类的声明，是没有副作用的，未被 import 时，可以直接删除：
 
 ```js
 function fn1() {}
 
 class class1 {}
 ```
+
+#### ExportDefaultDeclaration
 
 `ExportDefaultDeclaration` 定义如下：
 
@@ -385,7 +393,7 @@ interface ExportDefaultDeclaration <: ModuleDeclaration {
 }
 ```
 
-示例：
+示例语句：
 
 ```js
 let p1 = 1;
@@ -397,19 +405,19 @@ export default function m() {}
 export default { p1, x: 1 };
 ```
 
-除了导出一个具名函数和具名类（这些函数和类可能被其他地方使用，不能直接删除 `export` 节点），其他默认导出都可以简单的直接删除 `export default` 节点。
+除了导出一个具名函数和具名类（这些函数和类可能被文件内其他地方使用，不能直接删除 `export` 节点），其他默认导出都可以简单的直接删除 `export default` 节点。
 
 同样将声明提取出来：
 
 ```js
 export default function m() {}
 
-// 转换为
+// 单独声明
 function m() {}
 export default m;
 ```
 
-存储为：
+存储 `path` ：
 
 ```js
 exports = {
@@ -418,6 +426,8 @@ exports = {
   }
 }
 ```
+
+#### ExportAllDeclaration
 
 `ExportAllDeclaration` 定义如下：
 
@@ -436,7 +446,7 @@ interface ExportAllDeclaration <: ModuleDeclaration {
 export * from './a';
 ```
 
-存储为：
+存储 `path`：
 
 ```js
 exports = {
@@ -446,28 +456,28 @@ exports = {
 }
 ```
 
-## 标记和去除 export
+## 标记和删除 export
 
-每一个 `export` 语句添加一个 `extReferences: []` 属性，存储该 `export` 被哪些文件 `import`。
+为每一个 `export` 语句添加一个 `extReferences: []` 属性，存储该 `export` 被 **哪些文件** `import` 过。
 
 ### 分析 import 和 export
 
-遍历文件树，从每个文件的收集的 `import` 开始，到对应依赖去寻找对应的 `export` 语句，如果对应依赖没有相应 `export`，沿着模块导出语句 `export [name] from [src]` 继续向下寻找。 当找到时，沿途经过的所有 `export` 语句的 `extReferences` 属性都添加本文件（`import` 所在文件）路径。
+遍历文件树，从每个文件的收集的 `import` 开始，到对应依赖去寻找对应的 `export` 语句，如果对应依赖没有相应 `export` 语句，沿着 **从其他文件模块导出** 语句 `export [name] from [src]` 继续向下寻找。当找到时，沿途经过的所有 `export` 语句的 `extReferences` 属性都添加本文件（`import` 所在文件）路径。
 
-当所有文件分析完毕后，再次遍历文件树，维护一个数组存储 `noReferencedExports` 存储所有 `extReferences` 为空的 `export` 语句。
+当所有文件分析完毕后，再次遍历文件树，维护一个数组 `noReferencedExports` 存储所有 `extReferences` 为空的 `export` 语句。
 
-这里有以下一些注意点：
+在寻找时，有以下一些注意点和优先级关系：
 
-1. `import *` 和 `export *` 不包括 `default`
-2. `export * from ''` 和 `export 本文件模块` 名字冲突时，`export` 本文件优先级更高
-3. 多个 `export * from ''` 之间模块名冲突，后 `export * from ''` 优先
-4. `export {} from ''`， 从其他文件导出，导出的变量无法在本文件使用
+1. `import *` 和 `export *` 不包括 `default` 。
+2. `export * from ''` 和 `export 本文件模块` 名字冲突时，`export` 本文件优先级更高。
+3. 多个 `export * from ''` 之间模块名冲突，后 `export * from ''` 优先。
+4. `export {} from ''`， 从其他文件导出，导出的变量无法在本文件使用。也就是不用去分析这些变量是否在本文件内使用过，当没被 `import` 时，直接删除语句即可。
 
-### 去除 export 和 相关 binding
+### 删除 export 和相关 binding
 
-遍历 `noReferencedExports`，去除 `export` 节点。
+遍历 `noReferencedExports`，使用` path.remove` 删除 `export` 节点。
 
-使用 `path.scope` 去除相关 `binding`，与 `export` 相关的 `binding` 一般只有 `4` 种：
+借助 `path.scope` 删除相关 `binding`，与 `export` 相关的 `binding` 一般只有 `4` 种：
 
 ```js
 import { ma } from './a';
@@ -477,14 +487,15 @@ function fn1() {}
 class class1 {}
 
 let t = 2;
+// 存在副作用的声明
 let v = (t = 3);
 
 export { ma, fn1, class1, v };
 ```
 
-对于函数声明 `binding` 和类声明 `binding`，不会有副作用，如果 `referenced` 为 `false`， 可以直接去除。
+对于函数声明 `binding` 和类声明 `binding`，不会有副作用，如果 `referenced` 为 `false`， 可以直接删除。
 
-对于变量声明 `binding`，可能存在副作用，即使 `referenced` 为 `false`，也不能直接去除。
+**对于变量声明 `binding`，可能存在副作用，即使 `binding.referenced` 为 `false`，也不能直接删除。**
 
 `binding` 之间可能会互相引用：
 
@@ -496,22 +507,77 @@ function f2() {
 }
 ```
 
-`f1` 只在 `f2` 函数中被引用，如果 `f2` 函数被删除，`f1` 也应该被删除。有关 `binding` 的操作方法可以查看：
+`f1` 只在 `f2` 函数中被引用，如果 `f2` 函数被删除，`f1` 也应该被删除。
+
+有关 `binding` 的操作方法可以查看：
 
 1. [Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
 2. [babel/traverse 常用方法整理](./babel-traverse常用方法整理)
 
 对于 `import` 声明 `binding`，以上面的 `ma` 为例，如果 `ma` 没被 `import`：
 
-1. 去除 `export {ma}`
-2. `ma` 的 `referenced` 为 `false` 去除 `import` 语句
-3. 再沿着 `a` 文件找到 `ma` 的 `export` 语句，沿途经过的所有 `export` 语句的 `extReferences` 数组都删除本文件（`import` 所在文件）路径
-4. 如果 `extReferences` 为空，将新 `export` 语句放入 `noReferencedExports`
-5. 不断遍历 `noReferencedExports`，直到 `noReferencedExports` 为空。
+1. 删除 `export {ma}`。
+2. `ma` 的 `referenced` 为 `false` 删除 `ma` 的导入。（并不是直接删除整个语句，只是删除 `ma` 的导入： `import './a'`）
+3. 再沿着 `a` 文件找到 `ma` 的 `export` 语句，沿途经过的所有 `export` 语句的 `extReferences` 数组都删除本文件（`import` 所在文件）路径。
+4. 如果 `extReferences` 为空，将对应 `export` 语句放入 `noReferencedExports`。
+5. 不断遍历 `noReferencedExports`，重复上述步骤，直到 `noReferencedExports` 为空。
+
+## 导入导出链条
+
+在上面有说：“到对应依赖去寻找对应的 `export` 语句，如果对应依赖没有相应 `export` 语句，沿着 **从其他文件模块导出** 语句 `export [name] from [src]` 继续向下寻找，直到找到一条 **本文件模块导出** 语句”。
+
+这里其实是构建一条 **导入导出链**。
+
+```js
+// main.js
+import { ma } from './a';
+
+// a.js
+export { mc as ma } from './c';
+
+// c.js
+export let mc = 1;
+```
+
+上面代码构建的链条为：
+
+```js
+import { ma } from './a' -> export {mc as ma} from './c' -> export let mc = 1;
+
+// 根据上面收集 import, export 语句的规则
+// 实际的链条为：
+// main.js 中 ma ImportSpecifier path -> a.js ma ExportSpecifier path -> c.js 中 mc ExportSpecifier path
+```
+
+**怎么才算找到：**
+
+1. 链条的最后一个节点不是 **从其他文件模块导出**（类似于：`export [name] from [src]`）。
+2. 该链不是一条循环链表。
+
+循环链表意味着这条链永远找不到 **本文件模块导出** 语句。
+
+在链表中，只有存在相同的节点才会构成循环链表，那在这样一条 **导入导出链** 中，怎样才算两个节点相同？
+
+```js
+// main.js
+import { ma } from './a';
+import { mb } from './a';
+
+// a.js
+export * from './c';
+
+// c.js
+export let ma = 1;
+export let mb = 2;
+```
+
+对于上面 `export * from './c'` ，有两条链都会经过这条语句，但分别到 `c` 文件内寻找的模块不同（一条寻找 `ma` 模块，一条寻找 `mb` 模块）。
+
+所以可以得到结论：当语句是 **从其他文件模块导出** 时，只有 **语句相同** 且 **通过该语句到对应文件内找的模块相同**，才算链表中相同的节点。
 
 ## 使用 terser
 
-变量声明 `binding`，可能存在副作用，自己实现去除这样的 `binding` 并不是一件容易的事情。
+变量声明 `binding`，可能存在副作用，自己实现删除这样的 `binding` 并不是一件容易的事情。
 
 实际上，我们不需要自己去删除 `binding`，只需要删除 `export` 语句就可以了。剩下的事情属于文件内部的 `DCE`，借助 [terser](https://github.com/terser/terser) 即可：
 
@@ -550,3 +616,5 @@ await minify(code, { module: true }).code;
 2. [Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
 3. [Webpack Tree Shaking](https://webpack.docschina.org/guides/tree-shaking/)
 4. [terser](https://github.com/terser/terser)
+5. [AST 文档](https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md) 
+6. [AST Explorer](https://astexplorer.net) 

@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: taro插件添加唯一id
-    time: 2021-02-18 14:24:39
-    tag: taro,html,parser,babel
+    - title: taro插件添加唯一id
+      time: 2021-02-18 14:24:39
+      tag: taro,html,parser,babel,微信小程序
 ---
 
 ::: v-pre
@@ -21,20 +21,20 @@ taro 插件的编写，官方已经给好了[文档](https://taro-docs.jd.com/ta
 
 编译过程会触发以下几个钩子：
 
-- `ctx.onBuildStart(() => viod)`，编译开始，接收一个回调函数
-- `ctx.modifyWebpackChain(args: { chain: any }) => void)`，编译中修改 webpack 配置，在这个钩子中，你可以对 webpackChain 作出想要的调整，等同于配置 webpackChain
-- `ctx.modifyBuildAssets(args: { assets: any }) => void)`，修改编译后的结果
-- `ctx.modifyBuildTempFileContent(args: { tempFiles: any }) => void)`，修改编译过程中的中间文件，例如修改 app 或页面的 config 配置
-- `ctx.onBuildFinish(() => viod)`，编译结束，接收一个回调函数
+-   `ctx.onBuildStart(() => viod)`，编译开始，接收一个回调函数
+-   `ctx.modifyWebpackChain(args: { chain: any }) => void)`，编译中修改 webpack 配置，在这个钩子中，你可以对 webpackChain 作出想要的调整，等同于配置 webpackChain
+-   `ctx.modifyBuildAssets(args: { assets: any }) => void)`，修改编译后的结果
+-   `ctx.modifyBuildTempFileContent(args: { tempFiles: any }) => void)`，修改编译过程中的中间文件，例如修改 app 或页面的 config 配置
+-   `ctx.onBuildFinish(() => viod)`，编译结束，接收一个回调函数
 
 `ctx.modifyBuildTempFileContent` 可以修改编译过程中的中间文件，试了一下：
 
 ```js
-module.exports = ctx => {
-  ctx.modifyBuildTempFileContent(({ tempFiles }) => {
-    console.log(tempFilest)
-  })
-}
+module.exports = (ctx) => {
+    ctx.modifyBuildTempFileContent(({ tempFiles }) => {
+        console.log(tempFilest);
+    });
+};
 ```
 
 却发现这个钩子根本不会触发。查了下资料，才发现 **modifyBuildTempFileContent 已经在 taro3 移除掉了**。
@@ -42,63 +42,63 @@ module.exports = ctx => {
 既然如此，只有试试 modifyBuildAssets 钩子了：
 
 ```js
-module.exports = ctx => {
-  ctx.modifyBuildAssets(({ assets }) => {
-    console.log(assets)
-    // 输出一个数组
-    // 可以获得文件路径和文件内容
+module.exports = (ctx) => {
+    ctx.modifyBuildAssets(({ assets }) => {
+        console.log(assets);
+        // 输出一个数组
+        // 可以获得文件路径和文件内容
 
-    Object.keys(assets).forEach(src => {
-      if (src.endsWith('.wxml')) {
-        console.log('转换的文件', src)
+        Object.keys(assets).forEach((src) => {
+            if (src.endsWith('.wxml')) {
+                console.log('转换的文件', src);
 
-        // source() 函数可以获得文件内容
-        // 原生组件为 buffer 对象，需要 toString
-        const source = wxml[src].source().toString()
+                // source() 函数可以获得文件内容
+                // 原生组件为 buffer 对象，需要 toString
+                const source = wxml[src].source().toString();
 
-        // parserXML 添加id
-        const domStr = parserXML(source)
+                // parserXML 添加id
+                const domStr = parserXML(source);
 
-        // 覆写source函数
-        wxml[src].source = function() {
-          return domStr
-        }
-      }
-    })
-  })
-}
+                // 覆写source函数
+                wxml[src].source = function () {
+                    return domStr;
+                };
+            }
+        });
+    });
+};
 ```
 
 因为要添加 `id`，就要涉及到将 `dom` 解析为 `ast` 树，这里选择了 `htmlparser2`，简单封装一下：
 
 ```js
-let { Parser, DomHandler } = require('htmlparser2')
+let { Parser, DomHandler } = require('htmlparser2');
 
 function parserDomStr(domStr) {
-  if (!domStr) {
-    return
-  }
-
-  const handler = new DomHandler(
-    (err, dom) => {
-      if (err) {
-        console.error(`XML错误:${domStr}`)
-      }
-    },
-    {
-      normalizeWhitespace: false // default:false
+    if (!domStr) {
+        return;
     }
-  )
 
-  const parser = new Parser(handler, {
-    xmlMode: true // forgiving html parser
-  })
+    const handler = new DomHandler(
+        (err, dom) => {
+            if (err) {
+                console.error(`XML错误:${domStr}`);
+            }
+        },
+        {
+            normalizeWhitespace: false // default:false
+        }
+    );
 
-  parser.write(domStr)
+    const parser = new Parser(handler, {
+        xmlMode: true // forgiving html parser
+    });
 
-  parser.end()
+    parser.write(domStr);
 
-  return handler.dom
+    parser.end();
+
+    return handler.dom;
 }
 ```
 
@@ -106,41 +106,39 @@ function parserDomStr(domStr) {
 
 ```js
 function rewrite(dom) {
-  dom.forEach(v => {
-    if (v.attribs) {
-      // 如果原先不存在id，则注入ID
-      if (!v.attribs.id) {
-        v.attribs.id = `rr-hijack-${v.name}-${Math.floor(
-          Math.random() * 100000
-        )}`
-      }
-    }
+    dom.forEach((v) => {
+        if (v.attribs) {
+            // 如果原先不存在id，则注入ID
+            if (!v.attribs.id) {
+                v.attribs.id = `rr-hijack-${v.name}-${Math.floor(Math.random() * 100000)}`;
+            }
+        }
 
-    if (v.children) {
-      rewrite(v.children)
-    }
-  })
+        if (v.children) {
+            rewrite(v.children);
+        }
+    });
 }
 ```
 
 修改 `ast` 树后，重新序列化为 `dom` 字符串：
 
 ```js
-let domSerializer = require('dom-serializer')
+let domSerializer = require('dom-serializer');
 
 function parserXML(domStr) {
-  if (typeof domStr !== 'string') {
-    throw new Error('arguments error')
-  }
+    if (typeof domStr !== 'string') {
+        throw new Error('arguments error');
+    }
 
-  let dom = parserDomStr(domStr)
+    let dom = parserDomStr(domStr);
 
-  rewrite(dom)
+    rewrite(dom);
 
-  return domSerializer(dom, {
-    xmlMode: true,
-    decodeEntities: false
-  })
+    return domSerializer(dom, {
+        xmlMode: true,
+        decodeEntities: false
+    });
 }
 ```
 
@@ -155,10 +153,10 @@ function parserXML(domStr) {
     ```jsx
     // 编译前
     export default class {
-      render() {
-        //ec-canvas 是一个原生小程序组件
-        return <View>主页</View>
-      }
+        render() {
+            //ec-canvas 是一个原生小程序组件
+            return <View>主页</View>;
+        }
     }
     ```
 
@@ -171,40 +169,40 @@ function parserXML(domStr) {
 
     <!--base.wxml  -->
     <template name="taro_tmpl">
-      <block wx:for="{{root.cn}}" wx:key="uid">
-        <template is="tmpl_0_container" data="{{i:item,l:''}}" />
-      </block>
+        <block wx:for="{{root.cn}}" wx:key="uid">
+            <template is="tmpl_0_container" data="{{i:item,l:''}}" />
+        </block>
     </template>
 
     <template name="tmpl_0_container">
-      <template is="{{xs.a(0, i.nn, l)}}" data="{{i:i,cid:0,l:xs.f(l,i.nn)}}" />
+        <template is="{{xs.a(0, i.nn, l)}}" data="{{i:i,cid:0,l:xs.f(l,i.nn)}}" />
     </template>
 
     <template name="tmpl_0_view">
-      <view
-        hover-class="{{xs.b(i.hoverClass,'none')}}"
-        hover-stop-propagation="{{xs.b(i.hoverStopPropagation,false)}}"
-        hover-start-time="{{xs.b(i.hoverStartTime,50)}}"
-        hover-stay-time="{{xs.b(i.hoverStayTime,400)}}"
-        animation="{{i.animation}}"
-        bindanimationstart="eh"
-        bindanimationiteration="eh"
-        bindanimationend="eh"
-        bindtransitionend="eh"
-        bindtouchstart="eh"
-        bindtouchmove="eh"
-        bindtouchend="eh"
-        bindtouchcancel="eh"
-        bindlongpress="eh"
-        style="{{i.st}}"
-        class="{{i.cl}}"
-        bindtap="eh"
-        id="{{i.uid}}"
-      >
-        <block wx:for="{{i.cn}}" wx:key="uid" wx:for-index="index_rr_0_">
-          <template is="{{xs.e(cid+1)}}" data="{{i:item,l:l}}" />
-        </block>
-      </view>
+        <view
+            hover-class="{{xs.b(i.hoverClass,'none')}}"
+            hover-stop-propagation="{{xs.b(i.hoverStopPropagation,false)}}"
+            hover-start-time="{{xs.b(i.hoverStartTime,50)}}"
+            hover-stay-time="{{xs.b(i.hoverStayTime,400)}}"
+            animation="{{i.animation}}"
+            bindanimationstart="eh"
+            bindanimationiteration="eh"
+            bindanimationend="eh"
+            bindtransitionend="eh"
+            bindtouchstart="eh"
+            bindtouchmove="eh"
+            bindtouchend="eh"
+            bindtouchcancel="eh"
+            bindlongpress="eh"
+            style="{{i.st}}"
+            class="{{i.cl}}"
+            bindtap="eh"
+            id="{{i.uid}}"
+        >
+            <block wx:for="{{i.cn}}" wx:key="uid" wx:for-index="index_rr_0_">
+                <template is="{{xs.e(cid+1)}}" data="{{i:item,l:l}}" />
+            </block>
+        </view>
     </template>
 
     <!-- 更多模板 -->
@@ -215,18 +213,14 @@ function parserXML(domStr) {
     ```jsx
     // 编译前
     export default class {
-      render() {
-        //ec-canvas 是一个原生小程序组件
-        return (
-          <View className="echarts">
-            <ec-canvas
-              id="mychart-dom-area"
-              canvas-id="mychart-area"
-              ec={this.state.ec}
-            ></ec-canvas>
-          </View>
-        )
-      }
+        render() {
+            //ec-canvas 是一个原生小程序组件
+            return (
+                <View className='echarts'>
+                    <ec-canvas id='mychart-dom-area' canvas-id='mychart-area' ec={this.state.ec}></ec-canvas>
+                </View>
+            );
+        }
     }
     ```
 
@@ -238,11 +232,11 @@ function parserXML(domStr) {
 
     <!-- base.wxml -->
     <template name="tmpl_0_ec-canvas">
-      <ec-canvas id="{{i.id}}" ec="{{i.ec}}" id="{{i.uid}}">
-        <block wx:for="{{i.cn}}" wx:key="uid">
-          <template is="tmpl_1_container" data="{{i:item,l:l}}" />
-        </block>
-      </ec-canvas>
+        <ec-canvas id="{{i.id}}" ec="{{i.ec}}" id="{{i.uid}}">
+            <block wx:for="{{i.cn}}" wx:key="uid">
+                <template is="tmpl_1_container" data="{{i:item,l:l}}" />
+            </block>
+        </ec-canvas>
     </template>
     ```
 
@@ -252,7 +246,7 @@ function parserXML(domStr) {
     <!-- 原生小程序页面 -->
     <!-- 编译前和编译后一致 native.wxml -->
     <view class="native" bindtap="viewTap">
-      <text>{{text}}{{x}}</text>
+        <text>{{text}}{{x}}</text>
     </view>
 
     <com-panel />
@@ -285,61 +279,61 @@ function parserXML(domStr) {
 ```js
 // 快捷操作attribs
 class HandleAttribs {
-  constructor(attribs) {
-    this.attribs = attribs || []
-  }
-
-  get(key) {
-    let value
-    this.attribs.some(item => {
-      if (item[key]) {
-        value = item[key]
-      }
-      return item[key]
-    })
-
-    return value
-  }
-
-  delete(key) {
-    const index = this.attribs.findIndex(item => item[key])
-
-    if (index > -1) {
-      this.attribs.splice(index, 1)
+    constructor(attribs) {
+        this.attribs = attribs || [];
     }
-  }
 
-  push(obj) {
-    this.attribs.push(obj)
-  }
+    get(key) {
+        let value;
+        this.attribs.some((item) => {
+            if (item[key]) {
+                value = item[key];
+            }
+            return item[key];
+        });
 
-  set(key, value) {
-    this.attribs.push({
-      [key]: value
-    })
-  }
+        return value;
+    }
+
+    delete(key) {
+        const index = this.attribs.findIndex((item) => item[key]);
+
+        if (index > -1) {
+            this.attribs.splice(index, 1);
+        }
+    }
+
+    push(obj) {
+        this.attribs.push(obj);
+    }
+
+    set(key, value) {
+        this.attribs.push({
+            [key]: value
+        });
+    }
 }
 
 function rewrite(dom) {
-  dom.forEach(v => {
-    const attribs = v.attribs
-    if (attribs) {
-      const attrs = new HandleAttribs(attribs)
+    dom.forEach((v) => {
+        const attribs = v.attribs;
+        if (attribs) {
+            const attrs = new HandleAttribs(attribs);
 
-      // 为每个节点注入ID
-      if (!attrs.get('id')) {
-        const obj = {
-          id: `wxa-hijack-${v.name}-${Math.floor(Math.random() * 100000)}`
+            // 为每个节点注入ID
+            if (!attrs.get('id')) {
+                const obj = {
+                    id: `wxa-hijack-${v.name}-${Math.floor(Math.random() * 100000)}`
+                };
+
+                attrs.push(obj);
+            }
         }
 
-        attrs.push(obj)
-      }
-    }
-
-    if (v.children) {
-      rewrite(v.children)
-    }
-  })
+        if (v.children) {
+            rewrite(v.children);
+        }
+    });
 }
 ```
 
@@ -353,12 +347,11 @@ function rewrite(dom) {
 
 ```html
 <view wx:for="{{forms}}" wx:for-index="index1">
-  <view wx:for="{{item.children}}" wx:for-index="index2">
-    <view wx:for="{{item.children}}" wx:for-index="index3">
-      <com-input id="{{`_rr_id_${index1}-${index2}-${index2}`}}" wx:key="*this">
-      </com-input>
+    <view wx:for="{{item.children}}" wx:for-index="index2">
+        <view wx:for="{{item.children}}" wx:for-index="index3">
+            <com-input id="{{`_rr_id_${index1}-${index2}-${index2}`}}" wx:key="*this"> </com-input>
+        </view>
     </view>
-  </view>
 </view>
 ```
 
@@ -436,90 +429,87 @@ function rewrite(dom) {
 ```html
 <!-- 修改前 -->
 <view wx:for="{{forms}}" wx:for-index="index1">
-  <view wx:for="{{item.children}}">
-    {{index}}
-    <view wx:for="{{item.children}}" wx:for-index="index3">
-      <com-input wx:key="*this"> </com-input>
+    <view wx:for="{{item.children}}">
+        {{index}}
+        <view wx:for="{{item.children}}" wx:for-index="index3">
+            <com-input wx:key="*this"> </com-input>
+        </view>
     </view>
-  </view>
 </view>
 
 <!-- 修改后 -->
 <view wx:for="{{forms}}" wx:for-index="index1">
-  <view wx:for="{{item.children}}" wx:for-index="index2">
-    {{index2}}
-    <view wx:for="{{item.children}}" wx:for-index="index3">
-      <com-input wx:key="*this" id="{{`_rr_id_${index1}-${index2}-${index2}`}}">
-      </com-input>
+    <view wx:for="{{item.children}}" wx:for-index="index2">
+        {{index2}}
+        <view wx:for="{{item.children}}" wx:for-index="index3">
+            <com-input wx:key="*this" id="{{`_rr_id_${index1}-${index2}-${index2}`}}"> </com-input>
+        </view>
     </view>
-  </view>
 </view>
 ```
 
 `{{}}` 中的语法本质上是一串 js 代码，可以使用[@babel/parser](https://babeljs.io/docs/en/babel-parser)来将 `js` 代码解析为 `ast` 树，遍历 `ast` 树修改指定节点。具体查看[babel-parser 解析 js](./babel-parser解析js.md)。
 
 ```js
-const { parse } = require('@babel/parser')
-const generate = require('@babel/generator').default
-const traverse = require('@babel/traverse').default
+const { parse } = require('@babel/parser');
+const generate = require('@babel/generator').default;
+const traverse = require('@babel/traverse').default;
 
 // 解析获得 `{{}}` 中的表达式
 // 匹配第一个不在引号之间的{{和第一个不在引号之间的}}
 // 它们之间的内容就是表达式中的内容
 function getExpression(content) {
-  let isSingleQuotes = false
-  let isDoubleQuotes = false
-  let isTemplateStr = false
-  const singleQuotes = "'"
-  const doubleQuotes = '"'
-  const templateStr = '`'
+    let isSingleQuotes = false;
+    let isDoubleQuotes = false;
+    let isTemplateStr = false;
+    const singleQuotes = "'";
+    const doubleQuotes = '"';
+    const templateStr = '`';
 
-  const canStart = open =>
-    open === '{{' && !isSingleQuotes && !isDoubleQuotes && !isTemplateStr
-  const canEnd = close =>
-    close === '}}' && !isSingleQuotes && !isDoubleQuotes && !isTemplateStr
+    const canStart = (open) => open === '{{' && !isSingleQuotes && !isDoubleQuotes && !isTemplateStr;
+    const canEnd = (close) => close === '}}' && !isSingleQuotes && !isDoubleQuotes && !isTemplateStr;
 
-  const isQuotes = function(s) {
-    return [singleQuotes, doubleQuotes, templateStr].includes(s)
-  }
+    const isQuotes = function (s) {
+        return [singleQuotes, doubleQuotes, templateStr].includes(s);
+    };
 
-  const expressions = []
-  let current = ''
-  let isExpression = false
+    const expressions = [];
+    let current = '';
+    let isExpression = false;
 
-  for (let i = 0; i < content.length; i++) {
-    const c = content[i]
-    const n = content[i + 1]
+    for (let i = 0; i < content.length; i++) {
+        const c = content[i];
+        const n = content[i + 1];
 
-    if (c === '\\' && isQuotes(n)) {
-      i++
-      if (isExpression) {
-        current += c + n
-      }
-      continue
-    } else if (c === singleQuotes) {
-      isSingleQuotes = !isSingleQuotes
-    } else if (c === doubleQuotes) {
-      isDoubleQuotes = !isDoubleQuotes
-    } else if (c === templateStr) {
-      isTemplateStr = !isTemplateStr
-    } else if (canStart(c + n)) {
-      isExpression = true
-      i++
-      continue
-    } else if (canEnd(c + n)) {
-      expressions.push(current)
-      current = ''
-      isExpression = false
-      i++
+        if (c === '\\' && isQuotes(n)) {
+            i++;
+            if (isExpression) {
+                current += c + n;
+            }
+            continue;
+        } else if (c === singleQuotes) {
+            isSingleQuotes = !isSingleQuotes;
+        } else if (c === doubleQuotes) {
+            isDoubleQuotes = !isDoubleQuotes;
+        } else if (c === templateStr) {
+            isTemplateStr = !isTemplateStr;
+        } else if (canStart(c + n)) {
+            isExpression = true;
+            i++;
+            continue;
+        } else if (canEnd(c + n)) {
+            expressions.push(current);
+            current = '';
+            isExpression = false;
+            i++;
+        }
+
+        if (isExpression) {
+            current += c;
+        }
     }
 
-    if (isExpression) {
-      current += c
-    }
-  }
-
-  return expressions
+    return expressions;
 }
 
 /**
@@ -529,75 +519,80 @@ function getExpression(content) {
  * @param {array} oIndexs 原先嵌套wx:for的index集合
  */
 function replaceExpression(expression, nIndexs, oIndexs) {
-  if (!nIndexs || !nIndexs.length) {
-    return
-  }
+    if (!nIndexs || !nIndexs.length) {
+        return;
+    }
 
-  // ast树
-  const ast = parse(expression)
+    // ast树
+    const ast = parse(expression);
 
-  try {
-    traverse(ast, {
-      enter(path) {
-        // 是对象属性时跳过该节点
-        if (path.isMemberExpression() && !path.node.computed) {
-          path.skip()
-        }
+    try {
+        traverse(ast, {
+            enter(path) {
+                // 是对象属性时跳过该节点
+                if (path.isMemberExpression() && !path.node.computed) {
+                    path.skip();
+                }
 
-        const lowerIndexs = []
-        for (let i = nIndexs.length - 1; i >= 0; i--) {
-          const nIndex = nIndexs[i]
-          const oIndex = oIndexs[i]
-          if (nIndex !== oIndex && !lowerIndexs.includes(nIndex)) {
-            // 类型是identifier，且变量名是[oIndex]
-            if (path.isIdentifier({ name: oIndex })) {
-              path.node.name = nIndex
+                const lowerIndexs = [];
+                for (let i = nIndexs.length - 1; i >= 0; i--) {
+                    const nIndex = nIndexs[i];
+                    const oIndex = oIndexs[i];
+                    if (nIndex !== oIndex && !lowerIndexs.includes(nIndex)) {
+                        // 类型是identifier，且变量名是[oIndex]
+                        if (path.isIdentifier({ name: oIndex })) {
+                            path.node.name = nIndex;
+                        }
+                    }
+                    lowerIndexs.push(nIndex);
+                }
             }
-          }
-          lowerIndexs.push(nIndex)
-        }
-      }
-    })
-  } catch (error) {
-    console.error(`表达式${expression}解析出错`)
-  }
+        });
+    } catch (error) {
+        console.error(`表达式${expression}解析出错`);
+    }
 
-  return generate(ast).code.slice(0, -1)
+    // 输出时，不能有空行
+    // 否则小程序将解析失败
+    return generate(ast, { compact: true }).code.slice(0, -1);
 }
 
 function handleExpression(text, nIndexs, oIndexs) {
-  if (!text || !nIndexs || !nIndexs.length) {
-    return text
-  }
-  const expressions = getExpression(text)
+    if (!text || !nIndexs || !nIndexs.length) {
+        return text;
+    }
+    const expressions = getExpression(text);
 
-  if (!expressions.length) {
-    return text
-  }
+    if (!expressions.length) {
+        return text;
+    }
 
-  expressions.forEach(expression => {
-    const exp = replaceExpression(expression, nIndexs, oIndexs)
-    text = text.replace(expression, exp)
-  })
+    expressions.forEach((expression) => {
+        const exp = replaceExpression(expression, nIndexs, oIndexs);
 
-  return text
+        // exp 中不要带 $
+        // 在 replace 函数中，替代字符串中的 $ 有特殊含义
+        text = text.replace(expression, exp);
+    });
+
+    return text;
 }
 
 module.exports = {
-  handleExpression
-}
+    handleExpression
+};
 ```
 
 修改 `rewrite` 函数，对所有属性和文本内容都进行表达式处理：
 
 ```js
-attribs.forEach(attr => {
-  const key = Object.keys(attr)[0]
-  attr[key] = handleExpression(attr[key], indexs, oIndexs)
-})
+attribs.forEach((attr) => {
+    const key = Object.keys(attr)[0];
+    attr[key] = handleExpression(attr[key], indexs, oIndexs);
+});
 
 if (v.type === 'text') {
-  v.data = handleExpression(v.data, indexs, oIndexs)
+    v.data = handleExpression(v.data, indexs, oIndexs);
 }
 ```
 
@@ -607,19 +602,19 @@ if (v.type === 'text') {
 
 ```html
 <template name="tpl_0">
-  <view>
-    <block wx:for="{{data}}" for-index="index1">
-      <view wx:for="{{data2}}" for-index="index2">
-        <template is="tpl_1" data="{{i:item}}" />
-      </view>
-    </block>
-  </view>
+    <view>
+        <block wx:for="{{data}}" for-index="index1">
+            <view wx:for="{{data2}}" for-index="index2">
+                <template is="tpl_1" data="{{i:item}}" />
+            </view>
+        </block>
+    </view>
 </template>
 
 <template name="tpl_1">
-  <block wx:for="{{i}}" for-index="index0">
-    <text id=""> </text>
-  </block>
+    <block wx:for="{{i}}" for-index="index0">
+        <text id=""> </text>
+    </block>
 </template>
 ```
 
@@ -629,20 +624,17 @@ if (v.type === 'text') {
 
 1. 遇到 `template` 时，往 `data` 中放入一个与上层所有 `wx:for` 的 `index` 有关的值，例如上面的：
 
-   ```html
-   <template
-     is="tpl_1"
-     data="{{i : item, _rr_index_ : index1 + '-' + 'index2'}}"
-   />
-   ```
+    ```html
+    <template is="tpl_1" data="{{i : item, _rr_index_ : index1 + '-' + 'index2'}}" />
+    ```
 
 2. 如果一个组件处于 template，那它的 id 取决于 _rr_index_ 和它上层的循环
 
-   ```html
-   <block wx:for="{{i}}" for-index="index0">
-     <text id="{{_rr_index_ + '-' + 'index0'}}"> </text>
-   </block>
-   ```
+    ```html
+    <block wx:for="{{i}}" for-index="index0">
+        <text id="{{_rr_index_ + '-' + 'index0'}}"> </text>
+    </block>
+    ```
 
 > `data="{{i : item}}"` 用 babel 解析为 ast 树会报错，可以在外面加一个`{}`，拼接成一个对象`{{{i : item}}}`
 
