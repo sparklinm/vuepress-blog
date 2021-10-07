@@ -228,12 +228,12 @@ export default {
     },
     // 路由路径变化
     routePathChange () {
-      const pathRe = /\/[^\/]+\//
+      const pathRe = /\/[^/]+\//
       const currentPath = this.$route.path.match(pathRe)
         ? this.$route.path.match(pathRe)[0]
         : ''
 
-      if (currentPath == '/blog/') {
+      if (currentPath === '/blog/') {
         this.showTopImg = false
         this.showArticleList = false
       } else {
