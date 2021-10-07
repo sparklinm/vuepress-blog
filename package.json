@@ -7,11 +7,12 @@
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "conventional-changelog": " conventional-changelog -p angular -i CHANGELOG.md -s"
     }
   },
   "lint-staged": {
-    "*.{js,vue}": "eslint --fix"
+    "docs/**/*.{js,vue}": "eslint --fix"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.2.0",
@@ -20,6 +21,7 @@
     "@vuepress/plugin-medium-zoom": "^1.5.2",
     "@vuepress/plugin-register-components": "^1.5.2",
     "babel-eslint": "^10.1.0",
+    "conventional-changelog-cli": "^2.1.1",
     "eslint": "^7.3.1",
     "eslint-plugin-html": "^6.0.2",
     "eslint-plugin-vue": "^6.2.2",
