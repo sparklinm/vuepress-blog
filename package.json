@@ -2,13 +2,13 @@
   "scripts": {
     "dev": "vuepress dev docs --temp .temp --no-cache",
     "build": "vuepress build docs",
-    "lint": "eslint --fix --ext .js,.vue docs/"
+    "lint": "eslint --fix --ext .js,.vue docs/",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
   },
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "conventional-changelog": " conventional-changelog -p angular -i CHANGELOG.md -s"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
   "lint-staged": {
