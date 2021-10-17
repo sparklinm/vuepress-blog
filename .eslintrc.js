@@ -20,7 +20,7 @@ module.exports = {
     'strict': 0,
     'indent': [
       'error',
-      2,
+      4,
       {
         'SwitchCase': 1,
         'MemberExpression': 1,
