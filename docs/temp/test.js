@@ -265,3 +265,33 @@ class AxiosRace {
 let axiosRace = new AxiosRace({ blockAfter: true });
 
 console.log(axiosRace);
+
+function throttleThree(func, wait) {
+    var timer, context, args, result;
+    var previous = 0;
+
+    var later = function () {
+        previous = +new Date();
+        timeout = null;
+        func.apply(context, args);
+    }
+
+    var throttled = function () {
+        var now = +new Date();
+        var remaining = wait - (now - previous);
+        context = this;
+        args = arguments;
+        if (remaining <= 0 || remaining > wait) {
+            if (timer) {
+                clearTimeout(timer);
+                timer = null;
+            }
+            previous = now;
+            func.apply(context, args);
+        } else if (!timer) {
+            timer = setTimeout(later, remaining);
+        }
+    }
+
+    return throttled;
+}
