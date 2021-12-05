@@ -88,7 +88,7 @@ html2canvas(document.body).then(function(canvas) {
 
 ## 下载图片
 
-下载图片一般是通过 `a` 标签来实现。设置`a`标签的`download`和`href`属性。
+下载图片一般是通过 `a` 标签来实现。设置 `a` 标签的 `download` 和 `href` 属性。
 
 ```js
 let canvas = document.getElementById("canvas");
@@ -237,11 +237,11 @@ if (window.navigator.msSaveBlob) {
 
 `a` 标签的 `download` 属性兼容性并不是很好。`IE` 浏览器不支持（可用`window.navigator.msSaveBlob`），在移动端，`ios` 都不支持，某些浏览器也不支持。
 
-在安卓机下，可以通过 `a.href =data Url` 来下载，但使用 `blob` 对象创建的 `url`，却无法识别。
+在安卓机下，可以通过 `a.href = data Url` 来下载，但使用 `blob` 对象创建的 `url`，却无法识别。
 
 综合来看，移动端在前端实现下载功能并不可靠：
 
-1. pc 端，a 标签 download 下载。
+1. `pc` 端， `a` 标签 `download` 下载。
 2. 移动端，图片长按保存下载。
 
 ## 参考资料：

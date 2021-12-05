@@ -13,6 +13,8 @@ meta:
 
 `sourceMap` 是解决这个问题的方法， `sourceMap` 表现在生成文件和源文件之间的映射，通过 `sourceMap` 可以将生成文件的每一行每一列一一对应到源文件中去。
 
+<!-- more -->
+
 ## sourceMap
 
 一份 `sourceMap` 的格式如下：

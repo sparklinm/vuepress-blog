@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: vue 项目配置
-    time: 2020-07-27 10:15:37
-    tag: vue
+    - title: vue 项目配置
+      time: 2020-07-27 10:15:37
+      tag: vue
 ---
 
 # vue 项目配置
@@ -39,41 +39,38 @@ vue add style-resources-loader -D
 
 ```js
 // vue.config.js
-const path = require('path')
+const path = require('path');
 module.exports = {
-  pluginOptions: {
-    'style-resources-loader': {
-      preProcessor: 'stylus',
-      patterns: [path.resolve(__dirname, './src/styles/mixin.styl')]
+    pluginOptions: {
+        'style-resources-loader': {
+            preProcessor: 'stylus',
+            patterns: [path.resolve(__dirname, './src/styles/mixin.styl')]
+        }
     }
-  }
-}
+};
 ```
 
 或者使用插件 [style-resources-loader](https://github.com/yenshih/style-resources-loader)。
 
 ```js
-const path = require('path')
+const path = require('path');
 
 module.exports = {
-  chainWebpack: (config) => {
-    const types = ['vue-modules', 'vue', 'normal-modules', 'normal']
-    types.forEach((type) =>
-      addStyleResource(config.module.rule('stylus').oneOf(type))
-    )
-  }
-}
+    chainWebpack: (config) => {
+        const types = ['vue-modules', 'vue', 'normal-modules', 'normal'];
+        types.forEach((type) => addStyleResource(config.module.rule('stylus').oneOf(type)));
+    }
+};
 
 function addStyleResource(rule) {
-  rule
-    .use('style-resource')
-    .loader('style-resources-loader')
-    .options({
-      patterns: [
-        path.resolve(__dirname, './src/styles/mixin.styl'),
-        path.resolve(__dirname, './src/styles/color.styl')
-      ]
-    })
+    rule.use('style-resource')
+        .loader('style-resources-loader')
+        .options({
+            patterns: [
+                path.resolve(__dirname, './src/styles/mixin.styl'),
+                path.resolve(__dirname, './src/styles/color.styl')
+            ]
+        });
 }
 ```
 
@@ -93,17 +90,17 @@ yarn add postcss-pxtorem -D
 
 ```js
 module.exports = {
-  plugins: {
-    autoprefixer: {
-      browsers: ['Android >= 4.0', 'iOS >= 7']
-    },
-    'postcss-pxtorem': {
-      // 设计稿根font-size大小,50px=1rem 换算
-      rootValue: 50,
-      propList: ['padding*', 'margin*', 'width', 'height', 'transform*']
+    plugins: {
+        'autoprefixer': {
+            browsers: ['Android >= 4.0', 'iOS >= 7']
+        },
+        'postcss-pxtorem': {
+            // 设计稿根font-size大小,50px=1rem 换算
+            rootValue: 50,
+            propList: ['padding*', 'margin*', 'width', 'height', 'transform*']
+        }
     }
-  }
-}
+};
 ```
 
 ## vue
@@ -117,28 +114,28 @@ module.exports = {
 ```vue
 <!-- src/plugins/message/Message.vue-->
 <template>
-  <transition name="plu-tips">
-    <div v-if="show" class="plu-tips-wrap" :style="style">
-      <div class="plu-tips">
-        <div class="box-background" />
-        <div class="text">提示：{{ message }}</div>
-      </div>
-    </div>
-  </transition>
+    <transition name="plu-tips">
+        <div v-if="show" class="plu-tips-wrap" :style="style">
+            <div class="plu-tips">
+                <div class="box-background" />
+                <div class="text">提示：{{ message }}</div>
+            </div>
+        </div>
+    </transition>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      message: '',
-      show: false,
-      style: {}
-    }
-  },
-  mounted() {},
-  methods: {}
-}
+    data() {
+        return {
+            message: '',
+            show: false,
+            style: {}
+        };
+    },
+    mounted() {},
+    methods: {}
+};
 </script>
 
 <style lang="less"></style>
@@ -147,46 +144,46 @@ export default {
 ```js
 // src/plugins/message/index.js
 
-import Message from './Message.vue'
+import Message from './Message.vue';
 
 function creatMessagePlugin(Vue, options) {
-  Vue.prototype.$message = function(message, options = {}) {
-    const Component = Vue.extend(Message)
-    const instance = new Component()
+    Vue.prototype.$message = function(message, options = {}) {
+        const Component = Vue.extend(Message);
+        const instance = new Component();
 
-    instance.$mount(document.createElement('div'))
-    document.body.appendChild(instance.$el)
-    instance.message = message
-    const obj = Object.assign(
-      {
-        style: {}
-      },
-      options
-    )
+        instance.$mount(document.createElement('div'));
+        document.body.appendChild(instance.$el);
+        instance.message = message;
+        const obj = Object.assign(
+            {
+                style: {}
+            },
+            options
+        );
 
-    Object.assign(instance, obj)
-    instance.show = true
-    setTimeout(() => {
-      instance.show = false
-      instance.$el.remove()
-    }, 3000)
-  }
+        Object.assign(instance, obj);
+        instance.show = true;
+        setTimeout(() => {
+            instance.show = false;
+            instance.$el.remove();
+        }, 3000);
+    };
 }
 
-export default creatMessagePlugin
+export default creatMessagePlugin;
 
 // src/plugins/index.js
 // 统一添加
 
-import creatMessagePlugin from './message'
+import creatMessagePlugin from './message';
 
 let plugins = {
-  install(Vue, options) {
-    creatMessagePlugin(Vue, options)
-  }
-}
+    install(Vue, options) {
+        creatMessagePlugin(Vue, options);
+    }
+};
 
-Vue.use(plugins)
+Vue.use(plugins);
 ```
 
 ### 全局混入
@@ -209,12 +206,12 @@ Vue.use(plugins)
 ```js
 // 注册一个全局自定义指令 `v-focus`
 Vue.directive('focus', {
-  // 当被绑定的元素插入到 DOM 中时……
-  inserted: function(el) {
-    // 聚焦元素
-    el.focus()
-  }
-})
+    // 当被绑定的元素插入到 DOM 中时……
+    inserted: function(el) {
+        // 聚焦元素
+        el.focus();
+    }
+});
 ```
 
 ### 全局过滤器
@@ -223,10 +220,10 @@ Vue.directive('focus', {
 
 ```js
 Vue.filter('capitalize', function(value) {
-  if (!value) return ''
-  value = value.toString()
-  return value.charAt(0).toUpperCase() + value.slice(1)
-})
+    if (!value) return '';
+    value = value.toString();
+    return value.charAt(0).toUpperCase() + value.slice(1);
+});
 ```
 
 ### 全局过渡
@@ -235,25 +232,25 @@ Vue.filter('capitalize', function(value) {
 
 ```js
 Vue.component('fade-transition', {
-  functional: true,
-  render: function(createElement, context) {
-    var data = {
-      props: {
-        name: 'fade-transition',
-        mode: 'out-in'
-      },
-      on: {
-        beforeEnter: function(el) {
-          // ...
-        },
-        afterEnter: function(el) {
-          // ...
-        }
-      }
+    functional: true,
+    render: function(createElement, context) {
+        var data = {
+            props: {
+                name: 'fade-transition',
+                mode: 'out-in'
+            },
+            on: {
+                beforeEnter: function(el) {
+                    // ...
+                },
+                afterEnter: function(el) {
+                    // ...
+                }
+            }
+        };
+        return createElement('transition', data, context.children);
     }
-    return createElement('transition', data, context.children)
-  }
-})
+});
 ```
 
 或者使用 `.vue` 文件：
@@ -261,15 +258,15 @@ Vue.component('fade-transition', {
 ```vue
 <!-- fade-transition.vue -->
 <template>
-  <transition> </transition>
+    <transition> </transition>
 </template>
 ```
 
 ```js
 // index.js
 
-import FadeTransition from './fade-transition.vue'
-Vue.component('fade-transition', FadeTransition)
+import FadeTransition from './fade-transition.vue';
+Vue.component('fade-transition', FadeTransition);
 ```
 
 ### 自动化注册
@@ -277,43 +274,43 @@ Vue.component('fade-transition', FadeTransition)
 对于全局组件，如果使用了 `webpack`，可以采用匹配目录文件的方式自动化注册。
 
 ```js
-import upperFirst from 'lodash/upperFirst'
-import camelCase from 'lodash/camelCase'
+import upperFirst from 'lodash/upperFirst';
+import camelCase from 'lodash/camelCase';
 
 const requireComponent = require.context(
-  // 其组件目录的相对路径
-  './components/base',
-  // 是否查询其子目录
-  false,
-  // 匹配基础组件文件名的正则表达式
-  /Base[A-Z]\w+\.(vue|js)$/
-)
+    // 其组件目录的相对路径
+    './components/base',
+    // 是否查询其子目录
+    false,
+    // 匹配基础组件文件名的正则表达式
+    /Base[A-Z]\w+\.(vue|js)$/
+);
 
 requireComponent.keys().forEach((fileName) => {
-  // 获取组件配置
-  const componentConfig = requireComponent(fileName)
+    // 获取组件配置
+    const componentConfig = requireComponent(fileName);
 
-  // 获取组件的 PascalCase 命名
-  // 组件如果是 xx-aa 的命名方式会转换成 XxAa 注册
-  const componentName = upperFirst(
-    camelCase(
-      // 获取和目录深度无关的文件名
-      fileName
-        .split('/')
-        .pop()
-        .replace(/\.\w+$/, '')
-    )
-  )
+    // 获取组件的 PascalCase 命名
+    // 组件如果是 xx-aa 的命名方式会转换成 XxAa 注册
+    const componentName = upperFirst(
+        camelCase(
+            // 获取和目录深度无关的文件名
+            fileName
+                .split('/')
+                .pop()
+                .replace(/\.\w+$/, '')
+        )
+    );
 
-  // 全局注册组件
-  Vue.component(
-    componentName,
-    // 如果这个组件选项是通过 `export default` 导出的，
-    // 那么就会优先使用 `.default`，
-    // 否则回退到使用模块的根。
-    componentConfig.default || componentConfig
-  )
-})
+    // 全局注册组件
+    Vue.component(
+        componentName,
+        // 如果这个组件选项是通过 `export default` 导出的，
+        // 那么就会优先使用 `.default`，
+        // 否则回退到使用模块的根。
+        componentConfig.default || componentConfig
+    );
+});
 ```
 
 ### vuex 模块化
@@ -331,28 +328,28 @@ store
 ```js
 // user.js
 export default {
-  namespaced: true,
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {}
-}
+    namespaced: true,
+    state: {},
+    getters: {},
+    mutations: {},
+    actions: {}
+};
 
 // index.js
 
-import Vue from 'vue'
-import Vuex from 'vuex'
-import user from './modules/user'
-import settings from './modules/settings'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import user from './modules/user';
+import settings from './modules/settings';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  modules: {
-    user,
-    settings
-  }
-})
+    modules: {
+        user,
+        settings
+    }
+});
 ```
 
 具体查看文档：[vuex 模块化](https://vuex.vuejs.org/zh/guide/modules.html)。
@@ -367,17 +364,17 @@ export default new Vuex.Store({
 
 ```js
 module.exports = {
-  plugins: [
-    new webpack.ProvidePlugin({
-      Velocity: 'velocity-animate',
-      // 引入某个函数
-      _cloneDeep: ['lodash', 'cloneDeep'],
-      _isEmpty: ['lodash', 'isEmpty'],
-      // 但lodash应该这样单个引入才能treeshake
-      _isEmpty: 'lodash/isEmpty'
-    })
-  ]
-}
+    plugins: [
+        new webpack.ProvidePlugin({
+            Velocity: 'velocity-animate',
+            // 引入某个函数
+            _cloneDeep: ['lodash', 'cloneDeep'],
+            _isEmpty: ['lodash', 'isEmpty'],
+            // 但lodash应该这样单个引入才能treeshake
+            _isEmpty: 'lodash/isEmpty'
+        })
+    ]
+};
 ```
 
 在 `.vue` 或者其他 js 文件中，直接使用引入的方法即可，不需要用 `import` 导入。
@@ -387,21 +384,20 @@ module.exports = {
 ## 添加打包分析
 
 ```js
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
-  chainWebpack: (config) => {
-    // 打包分析
-    if (process.env.NODE_ENV === 'production') {
-      config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
-        {
-          analyzerMode: 'static'
+    chainWebpack: (config) => {
+        // 打包分析
+        if (process.env.NODE_ENV === 'production') {
+            config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
+                {
+                    analyzerMode: 'static'
+                }
+            ]);
         }
-      ])
     }
-  }
-}
+};
 ```
 
 ## 更多相关配置
@@ -422,20 +418,20 @@ lang
 
 ```js
 // main.js
-import VueI18n from 'vue-i18n'
-Vue.use(VueI18n)
+import VueI18n from 'vue-i18n';
+Vue.use(VueI18n);
 const i18n = new VueI18n({
-  locale: 'zh-CN', // 语言标识
-  messages: {
-    'zh-CN': require('./lang/zh-CN'),
-    'en-US': require('./lang/en-US')
-  }
-})
+    locale: 'zh-CN', // 语言标识
+    messages: {
+        'zh-CN': require('./lang/zh-CN'),
+        'en-US': require('./lang/en-US')
+    }
+});
 
 new Vue({
-  i18n,
-  render: (h) => h(App)
-}).$mount('#app')
+    i18n,
+    render: (h) => h(App)
+}).$mount('#app');
 ```
 
 ## axios
@@ -450,26 +446,26 @@ new Vue({
 // vue.config.js
 
 module.exports = {
-  //...
-  devServer: {
-    proxy: {
-      '/api': {
-        // 不能直接写ip地址，需要http开头
-        target: 'http://www.baidu.com/',
-        // 如果跨域需要设置为true
-        changeOrigin: true,
-        // 设置支持https协议的代理
-        secure: false,
-        pathRewrite: {
-          '^/api': ''
+    //...
+    devServer: {
+        proxy: {
+            '/api': {
+                // 不能直接写ip地址，需要http开头
+                target: 'http://www.baidu.com/',
+                // 如果跨域需要设置为true
+                changeOrigin: true,
+                // 设置支持https协议的代理
+                secure: false,
+                pathRewrite: {
+                    '^/api': ''
+                }
+            },
+            '/api2': {
+                // .....
+            }
         }
-      },
-      '/api2': {
-        // .....
-      }
     }
-  }
-}
+};
 ```
 
 这里会将 `/api/users` 代理为 `http://www.baidu.com/user`。
@@ -489,10 +485,10 @@ module.exports = {
 ### 开发生产环境接口
 
 ```js
-import axios from 'axios'
-const isPro = process.env.NODE_ENV === 'production'
+import axios from 'axios';
+const isPro = process.env.NODE_ENV === 'production';
 
-axios.defaults.baseURL = isPro ? 'http://your.domain.com' : '/api'
+axios.defaults.baseURL = isPro ? 'http://your.domain.com' : '/api';
 ```
 
 ## 打包
@@ -504,73 +500,75 @@ axios.defaults.baseURL = isPro ? 'http://your.domain.com' : '/api'
 ```js
 // vue.config.js
 module.exports = {
-  publicPath: './'
-}
+    publicPath: './'
+};
 ```
 
 这样打出来的可以部署在任何路径下。
 
-如果是直接点开打包后的 `index.html` 文件，即使设置的是 `publicPath: './'`，那么从绝对路径导入资源依然会找不到。需要将打包后的文件放入一个 web 服务器中。
+如果是直接点开打包后的 `index.html` 文件，即使设置的是 `publicPath: './'`，那么从绝对路径导入资源依然会找不到。需要将打包后的文件放入一个 `web` 服务器中。
 
 开发环境生产环境部署到不同路径下：
 
 ```js
 // vue.config.js
 module.exports = {
-  publicPath:
-    process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/'
-}
+    publicPath: process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/'
+};
 ```
 
-其他请看文档：[Vue CLI publicPath](https://cli.vuejs.org/zh/config/#publicpath)。
+更多有关静态资源引入问题查看：
+
+1. [Vue 静态资源引入](./实时记录一些小问题.md#静态资源引入)
+2. [Vue CLI publicPath](https://cli.vuejs.org/zh/config/#publicpath)。
 
 ### 打包体积优化
 
 1. 删除 source map 文件
 2. [compression-webpack-plugin](https://github.com/webpack-contrib/compression-webpack-plugin)
 
-   开启 gzip 压缩。开启后，打包会额外生成相应文件的 `.gz` 文件。
+    开启 gzip 压缩。开启后，打包会额外生成相应文件的 `.gz` 文件。
 
 3. [TerserPlugin](https://github.com/webpack-contrib/terser-webpack-plugin)
    压缩 js 文件。
 
 ```js
 // vue.config.js
-const CompressionPlugin = require('compression-webpack-plugin')
-const TerserPlugin = require('terser-webpack-plugin')
+const CompressionPlugin = require('compression-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-  productionSourceMap: false,
-  chainWebpack: (config) => {
-    if (process.env.NODE_ENV === 'production') {
-      config.plugin('compressionPlugin').use(
-        new CompressionPlugin({
-          // 匹配文件名
-          test: /\.js$|\.html$|.\css/,
-          // 对超过10k的数据压缩
-          threshold: 1000,
-          // 不删除源文件
-          deleteOriginalAssets: false
-        })
-      )
+    productionSourceMap: false,
+    chainWebpack: (config) => {
+        if (process.env.NODE_ENV === 'production') {
+            config.plugin('compressionPlugin').use(
+                new CompressionPlugin({
+                    // 匹配文件名
+                    test: /\.js$|\.html$|.\css/,
+                    // 对超过10k的数据压缩
+                    threshold: 1000,
+                    // 不删除源文件
+                    deleteOriginalAssets: false
+                })
+            );
 
-      // 可使用 optimization.minimizer 进行配置
-      config.plugin('terser').use(
-        new TerserPlugin({
-          terserOptions: {
-            compress: {
-              drop_debugger: true
-            },
-            warnings: false
-          },
-          sourceMap: false,
-          // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
-          parallel: true
-        })
-      )
+            // 可使用 optimization.minimizer 进行配置
+            config.plugin('terser').use(
+                new TerserPlugin({
+                    terserOptions: {
+                        compress: {
+                            drop_debugger: true
+                        },
+                        warnings: false
+                    },
+                    sourceMap: false,
+                    // 使用多进程并行运行来提高构建速度。默认并发运行数：os.cpus().length - 1。
+                    parallel: true
+                })
+            );
+        }
     }
-  }
-}
+};
 ```
 
 `webpack` 会默认使用 `TerserPlugin` 压缩，即`config.optimization.minimize=true`，但也可以更改 `TerserPlugin` 的默认配置：
@@ -583,11 +581,11 @@ module.exports = {
 
 ```js
 config.module
-  .rule('images')
-  .use('image-webpack-loader')
-  .loader('image-webpack-loader')
-  .options({})
-  .end()
+    .rule('images')
+    .use('image-webpack-loader')
+    .loader('image-webpack-loader')
+    .options({})
+    .end();
 ```
 
 用 cnpm 安装。
@@ -600,10 +598,10 @@ config.module
 
 ```js
 const canUseWebp = () =>
-  document
-    .createElement('canvas')
-    .toDataURL('image/webp', 0.5)
-    .indexOf('data:image/webp') === 0
+    document
+        .createElement('canvas')
+        .toDataURL('image/webp', 0.5)
+        .indexOf('data:image/webp') === 0;
 ```
 
 https://www.cnblogs.com/ypppt/p/13093313.html
@@ -615,24 +613,22 @@ https://www.cnblogs.com/ypppt/p/13093313.html
 ```js
 // 分包对于单页面作用不大
 config.optimization.splitChunks({
-  chunks: 'all',
-  maxInitialRequests: Infinity,
-  minSize: 200000, // 依赖包超过300000bit将被单独打包
-  automaticNameDelimiter: '-',
-  cacheGroups: {
-    vendor: {
-      test: /[\\/]node_modules[\\/]/,
-      name(module) {
-        const packageName = module.context.match(
-          /[\\/]node_modules[\\/](.*?)([\\/]|$)/
-        )[1]
+    chunks: 'all',
+    maxInitialRequests: Infinity,
+    minSize: 200000, // 依赖包超过300000bit将被单独打包
+    automaticNameDelimiter: '-',
+    cacheGroups: {
+        vendor: {
+            test: /[\\/]node_modules[\\/]/,
+            name(module) {
+                const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
 
-        return `chunk.${packageName.replace('@', '')}`
-      },
-      priority: 10
+                return `chunk.${packageName.replace('@', '')}`;
+            },
+            priority: 10
+        }
     }
-  }
-})
+});
 ```
 
 拆包对于单页面来说优化并不大。
@@ -652,23 +648,19 @@ yarn add mini-css-extract-plugin -D
 ```
 
 ```js
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  plugins: [new MiniCssExtractPlugin()],
-  module: {
-    rules: [
-      {
-        test: /\.(sa|sc|c)ss$/,
-        use: [
-          process.env.NODE_ENV === 'development'
-            ? 'style-loader'
-            : MiniCssExtractPlugin.loader
+    plugins: [new MiniCssExtractPlugin()],
+    module: {
+        rules: [
+            {
+                test: /\.(sa|sc|c)ss$/,
+                use: [process.env.NODE_ENV === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader]
+            }
         ]
-      }
-    ]
-  }
-}
+    }
+};
 ```
 
 > MiniCssExtractPlugin 推荐只用于生产环境，因为该插件在开发环境下会导致 HMR 功能缺失，所以日常开发中，还是用 style-loader。
@@ -680,15 +672,15 @@ vue-cli 已经自动开启，[css.extract](https://cli.vuejs.org/zh/config/#css-
 [css-minimizer-webpack-plugin](https://webpack.js.org/plugins/css-minimizer-webpack-plugin/) 可用于压缩 css。
 
 ```js
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
-  optimization: {
-    minimize: true,
-    // 只在生产环境有效
-    minimizer: [new CssMinimizerPlugin(), '...']
-  }
-}
+    optimization: {
+        minimize: true,
+        // 只在生产环境有效
+        minimizer: [new CssMinimizerPlugin(), '...']
+    }
+};
 ```
 
 vue-cli 中好像已经有 css 压缩了。
@@ -703,18 +695,18 @@ yarn add purifycss-webpack purify-css -D
 ```
 
 ```js
-const PurifyCSSPlugin = require('purifycss-webpack')
-const glob = require('glob')
+const PurifyCSSPlugin = require('purifycss-webpack');
+const glob = require('glob');
 module.exports = {
-  plugins: [
-    new ExtractTextPlugin('[name].[contenthash].css'),
-    // Make sure this is after ExtractTextPlugin!
-    new PurifyCSSPlugin({
-      // Give paths to parse for rules. These should be absolute!
-      paths: glob.sync(path.join(__dirname, 'public/*.html'))
-    })
-  ]
-}
+    plugins: [
+        new ExtractTextPlugin('[name].[contenthash].css'),
+        // Make sure this is after ExtractTextPlugin!
+        new PurifyCSSPlugin({
+            // Give paths to parse for rules. These should be absolute!
+            paths: glob.sync(path.join(__dirname, 'public/*.html'))
+        })
+    ]
+};
 ```
 
 ### tree-shaking
@@ -727,16 +719,16 @@ tree-shaking 只支持 es6 模块语法，而 `babel-loader` 会把 es6 模块�
 
 ```js
 module.exports = {
-  presets: [
-    [
-      '@babel/preset-env',
-      {
-        modules: false,
-        useBuiltIns: 'usage'
-      }
+    presets: [
+        [
+            '@babel/preset-env',
+            {
+                modules: false,
+                useBuiltIns: 'usage'
+            }
+        ]
     ]
-  ]
-}
+};
 ```
 
 最新版本（8.x）的 `babel-loader` 中，已经自动帮我们关闭了对 es6 模块的转换。
@@ -760,8 +752,8 @@ webpack 允许动态加载某个库，使用 import 语法：
 
 ```js
 import('./test').then((module) => {
-  let test = module.default
-})
+    let test = module.default;
+});
 ```
 
 将其放入某个点击事件中，只会在点击时才动态插入 `script` 标签下载脚本并加载。
@@ -779,11 +771,11 @@ handleClick() {
 
 ```js
 window.addEventListener('load', () => {
-  import('./test').then((module) => {
-    let test = module.default
-    // do more
-  })
-})
+    import('./test').then((module) => {
+        let test = module.default;
+        // do more
+    });
+});
 ```
 
 或是在特定路由下加载脚本：
@@ -811,17 +803,17 @@ PWA 的简单教程可以查看：
 2. manifest.json 中的 icons 设置的图标实际大小必须宽高 `1:1`。
    图片实际大小可以与 sizes 不一致，但大小比例必须是 `1:1`。
 
-   ```json
-   {
-     "icons": [
-       {
-         "src": "./logo.png",
-         "sizes": "144x144 192x192 512x512",
-         "type": "image/png"
-       }
-     ]
-   }
-   ```
+    ```json
+    {
+        "icons": [
+            {
+                "src": "./logo.png",
+                "sizes": "144x144 192x192 512x512",
+                "type": "image/png"
+            }
+        ]
+    }
+    ```
 
 vue 可以通过 [vue/cli-plugin-pwa](https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-pwa) 插件配置 pwa。
 
@@ -832,30 +824,30 @@ vue add cli-plugin-pwa -D
 ```js
 // vue.config.js
 module.exports = {
-  pwa: {
-    name: 'My App',
-    themeColor: '#4DBA87',
-    msTileColor: '#000000',
-    appleMobileWebAppCapable: 'yes',
-    appleMobileWebAppStatusBarStyle: 'black',
-    iconPaths: {
-      favicon32: 'logo.png',
-      favicon16: 'logo.png',
-      appleTouchIcon: 'logo.png',
-      maskIcon: 'logo.png',
-      msTileImage: 'logo.png'
-    },
-    manifestOptions: {
-      icons: [
-        {
-          src: './product.png',
-          type: 'image/png',
-          sizes: '144x144 192x192 512x512'
+    pwa: {
+        name: 'My App',
+        themeColor: '#4DBA87',
+        msTileColor: '#000000',
+        appleMobileWebAppCapable: 'yes',
+        appleMobileWebAppStatusBarStyle: 'black',
+        iconPaths: {
+            favicon32: 'logo.png',
+            favicon16: 'logo.png',
+            appleTouchIcon: 'logo.png',
+            maskIcon: 'logo.png',
+            msTileImage: 'logo.png'
+        },
+        manifestOptions: {
+            icons: [
+                {
+                    src: './product.png',
+                    type: 'image/png',
+                    sizes: '144x144 192x192 512x512'
+                }
+            ]
         }
-      ]
     }
-  }
-}
+};
 ```
 
 开启 pwa 后， `favicon.ico` 只有在 `iconPaths` 中配置才会生效，`favicon.ico` 图标放入到 `public` 文件下。
