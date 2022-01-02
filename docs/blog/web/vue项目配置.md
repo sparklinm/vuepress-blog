@@ -530,6 +530,7 @@ module.exports = {
     开启 gzip 压缩。开启后，打包会额外生成相应文件的 `.gz` 文件。
 
 3. [TerserPlugin](https://github.com/webpack-contrib/terser-webpack-plugin)
+
    压缩 js 文件。
 
 ```js

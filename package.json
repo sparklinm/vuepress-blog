@@ -14,6 +14,7 @@
   "lint-staged": {
     "docs/**/*.{js,vue}": "eslint --fix"
   },
+  "license": "MIT",
   "devDependencies": {
     "@commitlint/cli": "^13.2.0",
     "@commitlint/config-conventional": "^13.2.0",
