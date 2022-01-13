@@ -161,6 +161,22 @@ meta:
 1. [如何在 vscode 里面调试 js 和 node.js](https://juejin.cn/post/6844903744304316429)
 2. [使用 vscode 调试编译后的 js 代码](https://meixg.cn/2018/05/13/vscode-debug/)
 
+### 问题：端口被占用
+
+`linux` 系统：
+
+```bash
+lsof -i :9229
+kill -9 <process id using  the port>
+```
+
+`windows` 系统：
+
+```bash
+netstat -ano|findstr "PID :9229"
+taskkill -pid <pid> -t -f
+```
+
 ## 参考文献
 
 1. [精选!15 个 web 前端必备的 VSCode 插件](http://baijiahao.baidu.com/s?id=1585469813997965563&wfr=spider&for=pc)

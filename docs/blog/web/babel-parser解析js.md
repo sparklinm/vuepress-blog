@@ -22,8 +22,8 @@ meta:
 [@babel/parser](https://babeljs.io/docs/en/babel-parser)用于将 js 代码解析为 ast 树。
 
 ```js
-const { parse } = require('@babel/parser');
-const ast = parse('let b = a + 2');
+const { parse } = require("@babel/parser");
+const ast = parse("let b = a + 2");
 console.log(ast);
 ```
 
@@ -187,8 +187,8 @@ traverse(ast, {
     // 进入节点
     enter(path) {
         // 节点 type 是 Identifier，且含有属性 name: 'n'
-        if (path.isIdentifier({ name: 'n' })) {
-            path.node.name = 'x';
+        if (path.isIdentifier({ name: "n" })) {
+            path.node.name = "x";
         }
     },
 
@@ -197,24 +197,24 @@ traverse(ast, {
 });
 ```
 
-[@babel/types](https://babeljs.io/docs/en/babel-types#identifier)可以用于**创建对应类型的节点**，**判断节点类型**。
+[@babel/types](https://babeljs.io/docs/en/babel-types#identifier) 可以用于**创建对应类型的节点**，**判断节点类型**。
 
 ```js
-import * as t from '@babel/types';
+import * as t from "@babel/types";
 
 traverse(ast, {
     enter(path) {
         // path.isIdentifier 与这里的方法一致
-        if (t.isIdentifier(path.node, { name: 'n' })) {
-            path.node.name = 'x';
+        if (t.isIdentifier(path.node, { name: "n" })) {
+            path.node.name = "x";
         }
     }
 });
 ```
 
-path 上的判断节点类型的方法与[@babel/types](https://babeljs.io/docs/en/babel-types#identifier)上的一致。
+`path` 上的判断节点类型的方法与 [@babel/types](https://babeljs.io/docs/en/babel-types#identifier) 上的一致。
 
-path 上除了类型断言，还有对当前节点进行操作的方法，例如：
+`path` 上除了类型断言，还有对当前节点进行操作的方法，例如：
 
 ```js
 path.replaceWith(newNode); //替换为新的节点
@@ -229,21 +229,21 @@ path.skip(); //跳过子节点
 例如创建一个对象属性，并用于替换：
 
 ```js
-import * as t from '@babel/types';
+import * as t from "@babel/types";
 
 // child.name
-let member = t.memberExpression(t.identifier('child'), t.identifier('name'));
+let member = t.memberExpression(t.identifier("child"), t.identifier("name"));
 
 traverse(ast, {
     enter(path) {
-        if (t.isIdentifier(path.node, { name: 'n' })) {
+        if (t.isIdentifier(path.node, { name: "n" })) {
             path.replaceWith(member);
         }
     }
 });
 ```
 
-遍历时除了使用 enter 和 exit，还可以对特定节点进行操作：
+遍历时除了使用 `enter` 和 `exit` ，还可以对特定节点进行操作：
 
 ```js
 traverse(ast, {
@@ -251,7 +251,7 @@ traverse(ast, {
     // Identifier 特定节点
     Identifier(path) {
         let { node } = path;
-        if (node && node.name === 'n') {
+        if (node && node.name === "n") {
             path.replaceWith(member);
         }
     },
@@ -263,3 +263,53 @@ traverse(ast, {
 ```
 
 具体有哪些类型可以查看[@babel/types](https://babeljs.io/docs/en/babel-types#identifier)。
+
+## @babel/types
+
+正如上面描述，[@babel/types](https://babeljs.io/docs/en/babel-types#identifier) 可以用来创建 `ast` 节点，断言节点。
+
+```js
+// 创建节点
+t.identifier("child");
+// 断言节点
+t.isIdentifier(path.node, { name: "n" });
+```
+
+`@babel/types` 也可以根据变量来快速创建节点：
+
+```js
+let obj = {
+    x: 1
+};
+t.valueToNode(obj);
+```
+
+## @babel/template
+
+`@babel/types` 可以用来创建 `ast` 节点，但一般只用于创建单个节点，并且使用起来并不是很简便。
+
+[@babel/template](https://www.babeljs.cn/docs/babel-template) 可以提过直观的代码字符串，创造多个节点。
+
+```bash
+npm install --save-dev @babel/template
+```
+
+```js
+import template from "@babel/template";
+import generate from "@babel/generator";
+import * as t from "@babel/types";
+
+// 创建一个目标，%%source%% 为占位符
+const buildRequire = template(`
+  var %%importName%% = require(%%source%%);
+`);
+
+// 使用模板，传入占位符
+const ast = buildRequire({
+    // 必须是一个 ast 节点。
+    importName: t.identifier("myModule"),
+    source: t.stringLiteral("my-module")
+});
+
+console.log(generate(ast).code);
+```

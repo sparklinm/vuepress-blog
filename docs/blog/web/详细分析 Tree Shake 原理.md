@@ -155,7 +155,7 @@ sideEffects: ['./b'];
 更多详细有关 [@babel/parser](https://babeljs.io/docs/en/babel-parser) 和 [@babel/traverse](https://babeljs.io/docs/en/babel-traverse) 的用法请阅读官方文档和另外两篇文章：
 
 1. [babel-parser 解析 js](./babel-parser解析js)
-2. [babel/traverse 常用方法整理](./babel-traverse常用方法整理)
+2. [babel 常用节点操作方法整理](./babel%20常用节点操作方法整理)
 
 ```js
 const traverse = require('@babel/traverse').default;
@@ -512,7 +512,8 @@ function f2() {
 有关 `binding` 的操作方法可以查看：
 
 1. [Babel 插件手册](https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md)
-2. [babel/traverse 常用方法整理](./babel-traverse常用方法整理)
+2. [babel 常用节点操作方法整理](./babel%20常用节点操作方法整理)
+
 
 对于 `import` 声明 `binding`，以上面的 `ma` 为例，如果 `ma` 没被 `import`：
 

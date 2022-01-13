@@ -171,6 +171,8 @@ consumer.sourceContentFor('foo.js');
 // foo.js 内容
 ```
 
+> 需要注意的是：如果提供了 `sourceRoot` ， `consumer.sources` 中的路径会拼接 `map.sourceRoot` 和 `map.sources` 。
+
 #### eachMapping
 
 遍历 `mappings` ，获取转换前后的信息。
@@ -319,31 +321,57 @@ var json = convert
 假设有 `oldMap` 和 `newMap` ，那么能从 `newMap` 中获取到当前生成文件与上一步生成文件之间的行列对应关系，再通过 `oldMap` 得到与源文件的行列对应关系。
 
 ```js
-let oldMapConsumer = await new SourceMapConsumer(oldMap);
-let newMapConsumer = await new SourceMapConsumer(newMap);
-let mergedMapGenerator = new SourceMapGenerator();
+export async function mergeSourceMap(oldMap, newMap) {
+    if (!oldMap) return newMap;
+    if (!newMap) return oldMap;
 
-newMapConsumer.eachMapping(function(m) {
-    if (m.originalLine == null) return;
-    let origPosInOldMap = oldMapConsumer.originalPositionFor({
-        line: m.originalLine,
-        column: m.originalColumn
+    let oldMapConsumer = await new SourceMapConsumer(oldMap);
+    let newMapConsumer = await new SourceMapConsumer(newMap);
+    let mergedMapGenerator = new SourceMapGenerator();
+
+    newMapConsumer.eachMapping(function(m) {
+        // pass when `originalLine` is null.
+        // It occurs in case that the node does not have origin in original code.
+        if (m.originalLine == null) return;
+
+        let origPosInOldMap = oldMapConsumer.originalPositionFor({
+            line: m.originalLine,
+            column: m.originalColumn
+        });
+
+        if (origPosInOldMap.source == null) return;
+
+        mergedMapGenerator.addMapping({
+            original: {
+                line: origPosInOldMap.line,
+                column: origPosInOldMap.column
+            },
+            generated: {
+                line: m.generatedLine,
+                column: m.generatedColumn
+            },
+            source: origPosInOldMap.source,
+            name: origPosInOldMap.name
+        });
     });
-    if (origPosInOldMap.source == null) return;
-    mergedMapGenerator.addMapping({
-        original: {
-            line: origPosInOldMap.line,
-            column: origPosInOldMap.column
-        },
-        generated: {
-            line: m.generatedLine,
-            column: m.generatedColumn
-        },
-        source: origPosInOldMap.source,
-        name: origPosInOldMap.name
+
+    oldMapConsumer.sources.forEach(function(sourceFile) {
+        let sourceContent = oldMapConsumer.sourceContentFor(sourceFile);
+        if (sourceContent != null) {
+            mergedMapGenerator.setSourceContent(sourceFile, sourceContent);
+        }
     });
-});
+
+    oldMapConsumer.destroy();
+    newMapConsumer.destroy();
+
+    return JSON.parse(mergedMapGenerator.toString());
+}
 ```
+
+前面有提到过，如果提供了 `sourceRoot` ， `consumer.sources` 中的路径会拼接 `map.sourceRoot` 和 `map.sources` 。
+
+上面遍历了 `oldMapConsumer.sources` 并将对应 `source` 和 `souceContent` 赋值给了合并后的 `mergedMap` ，这时就不应该再将 `oldMap.sourceRoot` 赋值给 `mergedMap.sourceRoot` 了，因为 `oldMapConsumer.sources` 中的路径已经是 `oldMap.sourceRoot` 和 `oldMap.sources` 拼接过后的路径了。
 
 [source-map](https://github.com/mozilla/source-map) 库提供合并 `sourceMap` 的方法 :
 
@@ -390,7 +418,7 @@ const output = generate(
 
 ### babel transform
 
-在 [babel.transform](https://www.babeljs.cn/docs/babel-core) 转码时，可以提供一个 [inputSourceMap](https://www.babeljs.cn/docs/options#inputsourcemap) 选项，当输出 `sourceMap` 时会将 `inputSourceMap` 和 `babel` 转码产生的 `sourceMap` 合并。
+在 [babel.transform](https://www.babeljs.cn/docs/babel-core) 转码时，可以提供一个 [inputSourceMap](https://www.babeljs.cn/docs/options#inputsourcemap) 选项（默认情况下会根据文件末尾的 `//# sourceMappingURL=...` 去取对应的 `sourceMap` 对象），当输出 `sourceMap` 时会将 `inputSourceMap` 和 `babel` 转码产生的 `sourceMap` 合并。
 
 ```js
 import { transform } from '@babel/core';
@@ -399,9 +427,36 @@ transform(code, { inputSourceMap: rawSourceMapJsonData, sourceMaps: true }, func
 });
 ```
 
-`inputSourceMap` , 只会在 `transform` 输出 `sourceMap` 时有效。
+`inputSourceMap` , 只会在调用 `transform` 时输出 `sourceMap` 有效。
 
 如果想复用 `transform` 产生的 `ast` ，然后对这个 `ast` 做一些修改，最后由 `@babel/generator` 输出 `code` 和 `sourceMap` ，那还是需要手动合并两次 `inputSourceMap` 和 `@babel/generator` 生成的 `sourceMap` 。
+
+### @babel/generator 如何生成 sourceMap
+
+`@babel/generator` 可根据 `ast` 树生成 `sourceMap` ，那么这个过程的原理是什么呢？
+
+在一份代码被解析成 `ast` 时，每个 `node` 的 `loc` 会保存该语句的行列信息。
+
+接下来无论这个节点如何被修改， `loc` 中的信息都不会改变。
+
+```js
+let a = b;
+// 修改后
+let a = function m() {};
+```
+
+上面将节点 `b` 替换为一个新创建的函数节点 `m` ，那么函数节点 `m` 的 `loc` 信息就是节点 `b` 的 `loc` 信息。
+
+```js
+function m() {}
+let a = b;
+// 修改后
+let a = function m() {};
+```
+
+但如果函数节点 `m` 并不是新创建而是原先已有的，那 `m` 的 `loc` 信息依旧是原先的 `loc` 信息。
+
+然后 `generator` 生成时，会根据配置得到一份生成的代码，这时每个节点的位置信息会被改变。基于解析时的最初位置信息和生成时最终位置信息，可生成对应的 `sourceMap` 。
 
 ## 参考文章
 
