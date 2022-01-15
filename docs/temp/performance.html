@@ -11,13 +11,12 @@
         <link rel="stylesheet" href="" />
         <script src="./performance.js"></script>
 
-
         <script>
-          // setTimeout(() => {
-          //     Promise.reject('sss');
-          // }, 100);
+            // setTimeout(() => {
+            //     Promise.reject('sss');
+            // }, 100);
 
-          console.log(xx);
+            console.log(xx);
         </script>
         <style>
             body {
@@ -45,11 +44,37 @@
                     top: 500px;
                 }
             }
+
+
+            .aa {
+                display: inline-block;
+                width: 100px;
+                height: 100px;
+                background: red;
+            }
+
+
+            .main {
+                display: none;
+                animation: v 1s 5s;
+            }
+
+            @keyframes v {
+                0% {
+                    display: none;
+                }
+
+                100% {
+                    display: block;
+                }
+            }
         </style>
     </head>
 
-    <body class="browserscripting" id="jsref" >
-        <div id="wrapper" onmousedown="click1()">
+    <body class="browserscripting" id="jsref">
+
+        <div class="aa"></div>
+        <div id="wrapper" onmousedown="click1()" class="main">
             <div id="header">
                 <a id="logo" href="/index.html" title="w3school 在线教程" style="float: left">w3school 在线教程</a>
                 <div id="header_gg">
@@ -64,7 +89,7 @@
                 </div>
             </div>
 
-            <div id="navfirst" >
+            <div id="navfirst">
                 <ul id="menu">
                     <li id="h"><a href="/h.asp" title="HTML 系列教程">HTML 系列教程</a></li>
                     <li id="b"><a href="/b.asp" title="浏览器脚本教程">浏览器脚本</a></li>
@@ -78,15 +103,12 @@
                 <p elementtiming="menus">sssssssssssss</p>
             </div>
 
-            <img  data-v-36749b0d="" src="https://img-bss.csdn.net/1634886380349.jpg" alt="" style="width: 100%" />
+            <img data-v-36749b0d="" src="https://img-bss.csdn.net/1634886380349.jpg" alt="" style="width: 100%" />
             <!-- maincontent end -->
+            <p class="ddd" elementtiming="ttt">tttttt</p>
         </div>
         <!-- wrapper end -->
-        <p class="ddd" elementtiming="ttt">tttttt</div>
     </body>
 
-    
-    <script>
-
-    </script>
+    <script></script>
 </html>
