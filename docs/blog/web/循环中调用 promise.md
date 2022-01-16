@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: 循环中调用 promise
-    time: 2019-12-21 10:08:46
-    tag: js
+    - title: 循环中调用 promise
+      time: 2019-12-21 10:08:46
+      tag: js
 ---
 
 # 循环中调用 Promise
@@ -29,51 +29,67 @@ meta:
 ```js
 // pending状态
 new Promise((reolve, reject) => {
-  // 转换为 fulfilled 状态
-  resolve()
-  // 转换为 rejected 状态
-  reject()
-})
+    // 转换为 fulfilled 状态
+    resolve();
+    // 转换为 rejected 状态
+    reject();
+});
 ```
 
-也就是当为 `fulfilled` 状态时，可以执行 `then` 函数啊；当为 `rejected` 状态时可以执行 `catch` 函数。
+也就是当为 `fulfilled` 状态时，可以执行 `then` 函数；当为 `rejected` 状态时可以执行 `catch` 函数。
 
 除此之外，Promise 还有以下特性：
 
-1. then() 中会返回一个 promise 对象，因此可以 promise.then().then()这样链式调用。
-2. 中断 promise 链，可以通过在其中一个 then()抛出一个异常或者返回 Promise.reject，那么就会直接跳到下一个 catch 处捕获。
-3. `Promise.prototype.then(onFulfilled, onRejected)`，若 `onFulfilled` 或 `onRejected` 是一个函数，当函数返回一个新 promise 对象时，原 promise 对象的状态将跟新对象保持一致。
-4. 如果 promise 链中的某个 then 捕获了错误，那么后续的 catch 将不会有作用，并且后续的 then 还是会被调用，如下：
+1. `then()` 中会返回一个 `promise` 对象，因此可以 `promise.then().then()` 这样链式调用。
+2. 中断 promise 链，可以通过在其中一个 `then()` 抛出一个异常或者返回 Promise.reject，那么就会直接跳到下一个 `catch` 处捕获。
+3. `Promise.prototype.then(onFulfilled, onRejected)`，若 `onFulfilled` 或 `onRejected` 是一个函数，当函数返回一个新 `promise` 对象时，原 `promise` 对象的状态将跟新对象保持一致。
+4. 如果 `promise` 链中的某个 `then` 捕获了错误，那么后续的 `catch` 将不会有作用，并且后续的 `then` 还是会被调用，如下：
 
-   ```js
-   Promise.resolve()
-     .then(() => {
-       console.log('[onFulfilled_1]')
-       throw 'throw on onFulfilled_1'
-     })
-     .then(
-       () => {
-         console.log('[onFulfilled_2]')
-       },
-       (err) => {
-         // 捕获错误
-         console.log('[onRejected_2]', err)
-         // 返回一个pending状态的promise中断这样的promise
-         // return new Promise(()=>{})
-       }
-     )
-     .then(() => {
-       // 该函数将被调用
-       console.log('[onFulfilled_3]')
-     })
-     .catch((err) => {
-       // 不会捕获
-       console.log('[catch]', err)
-     })
-     .then(() => {
-       console.log('[onFulfilled_4]')
-     })
-   ```
+    ```js
+    Promise.resolve()
+        .then(() => {
+            console.log('[onFulfilled_1]');
+            throw 'throw on onFulfilled_1';
+        })
+        .then(
+            () => {
+                console.log('[onFulfilled_2]');
+            },
+            err => {
+                // 捕获错误
+                console.log('[onRejected_2]', err);
+                // 返回一个pending状态的promise中断这样的promise
+                // return new Promise(()=>{})
+            }
+        )
+        .then(() => {
+            // 该函数将被调用
+            console.log('[onFulfilled_3]');
+        })
+        .catch(err => {
+            // 不会捕获
+            console.log('[catch]', err);
+        })
+        .then(() => {
+            console.log('[onFulfilled_4]');
+        });
+    ```
+
+5. `finally` 函数所得到的 `promise` 状态与原 `promise` 一致，但如果 `finally` 函数返回了一个 `promise`，那调用 `finally` 函数所得到的 `promise` 状态还是和 `finally` 函数内部返回了的 `promise` 一致：
+
+    ```js
+    // (fulfilled的结果为undefined)
+    Promise.reject(3).then(
+        () => {},
+        () => {}
+    );
+    // rejected 的结果为 3
+    Promise.reject(3).finally(() => {});
+    // rejected 的结果为 1
+    Promise.resolve(2).finally(() => {
+        return Promise.reject(1);
+    });
+    ```
 
 根据规则 3，可以在 `then` 或 `catch` **返回一个 `pending` 状态的 promise 来中断 promise 链**。
 
