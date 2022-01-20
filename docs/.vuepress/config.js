@@ -2,8 +2,8 @@ const Mode = require('frontmatter-markdown-loader/mode');
 
 module.exports = {
     cache: false,
-    title: 'Spark',
-    description: 'Just playing around',
+    title: 'sparklinm\'s 前端博客',
+    description: '前端个人博客，记录开发中的问题',
     dest: 'public',
     head: [
         // [
@@ -12,6 +12,13 @@ module.exports = {
         //         src: 'https://cdn.jsdelivr.net/gh/sparklinm/js-library/d/bundle.umd.js'
         //     }
         // ],
+        [
+            'link',
+            {
+                rel: 'icon',
+                href: '/logo.png'
+            }
+        ],
         [
             'link',
             {
