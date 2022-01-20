@@ -223,7 +223,7 @@ lerna success Bootstrapped 3 packages
 }
 ```
 
-### yarn <add|remove> <package> -W
+### `yarn <add|remove> <package> -W`
 
 将依赖安装在 `workspaces` 的根目录
 
@@ -232,7 +232,7 @@ lerna success Bootstrapped 3 packages
 yarn add eslint -D -W
 ```
 
-### yarn workspace <workspace_name> <command>
+### `yarn workspace <workspace_name> <command>`
 
 在指定的 workspace 下执行命令 。
 
@@ -244,7 +244,7 @@ yarn workspace module-1 add lodash
 yarn `workspace` module-1 run start
 ```
 
-### yarn workspaces run <command>
+### `yarn workspaces run <command>`
 
 在每个 `workspace` 中运行命令
 

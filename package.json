@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "dev": "vuepress dev docs --temp .temp --no-cache",
+    "dev": "vuepress dev docs",
     "build": "vuepress build docs",
     "lint": "eslint --fix --ext .js,.vue docs/",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s"
@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@sparklinm/util": "^0.0.5",
-    "katex": "^0.12.0",
+    "katex": "^0.15.2",
     "markdown-it-container": "^3.0.0",
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-sub": "^1.0.0",

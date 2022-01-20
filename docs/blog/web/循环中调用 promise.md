@@ -42,7 +42,7 @@ new Promise((reolve, reject) => {
 
 1. `then()` 中会返回一个 `promise` 对象，因此可以 `promise.then().then()` 这样链式调用。
 2. 中断 promise 链，可以通过在其中一个 `then()` 抛出一个异常或者返回 Promise.reject，那么就会直接跳到下一个 `catch` 处捕获。
-3. `Promise.prototype.then(onFulfilled, onRejected)`，若 `onFulfilled` 或 `onRejected` 是一个函数，当函数返回一个新 `promise` 对象时，原 `promise` 对象的状态将跟新对象保持一致。
+3. `Promise.prototype.then(onFulfilled, onRejected)` 会返回一个新的 `promise` ，若 `onFulfilled` 或 `onRejected` 是一个函数，当函数内返回一个新 `promise` 对象时， `then` 返回的 `promise` 对象的状态将跟新对象保持一致。也就是说 **then 得到的 promise 对象始终跟随回调函数的返回**。
 4. 如果 `promise` 链中的某个 `then` 捕获了错误，那么后续的 `catch` 将不会有作用，并且后续的 `then` 还是会被调用，如下：
 
     ```js
@@ -55,7 +55,7 @@ new Promise((reolve, reject) => {
             () => {
                 console.log('[onFulfilled_2]');
             },
-            err => {
+            (err) => {
                 // 捕获错误
                 console.log('[onRejected_2]', err);
                 // 返回一个pending状态的promise中断这样的promise
@@ -66,7 +66,7 @@ new Promise((reolve, reject) => {
             // 该函数将被调用
             console.log('[onFulfilled_3]');
         })
-        .catch(err => {
+        .catch((err) => {
             // 不会捕获
             console.log('[catch]', err);
         })
@@ -75,7 +75,7 @@ new Promise((reolve, reject) => {
         });
     ```
 
-5. `finally` 函数所得到的 `promise` 状态与原 `promise` 一致，但如果 `finally` 函数返回了一个 `promise`，那调用 `finally` 函数所得到的 `promise` 状态还是和 `finally` 函数内部返回了的 `promise` 一致：
+5. `finally` 得到的 `promise` 状态与原 `promise` 一致，但如果 `finally` 的回调函数中 `throw` （或返回 `rejected` 的 `promise` ），那 `finally` 得到的 `promise` 也会以同样的值拒绝：
 
     ```js
     // (fulfilled的结果为undefined)
@@ -83,9 +83,9 @@ new Promise((reolve, reject) => {
         () => {},
         () => {}
     );
-    // rejected 的结果为 3
+    // rejected 的结果为 3，与原 promise 一致
     Promise.reject(3).finally(() => {});
-    // rejected 的结果为 1
+    // rejected 的结果为 1，与回调中 rejected promise 一致
     Promise.resolve(2).finally(() => {
         return Promise.reject(1);
     });

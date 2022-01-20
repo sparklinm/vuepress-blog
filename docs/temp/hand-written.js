@@ -1,22 +1,22 @@
 class MyPromise {
     status = 'pending';
     resolvedCbs = [];
-    rejectCbs = [];
+    rejectedCbs = [];
     value = undefined;
     constructor(cb) {
-        let resolve = value => {
+        let resolve = (value) => {
             this.status = 'resolved';
             this.value = value;
-            this.resolvedCbs.forEach(resolvedCb => {
+            this.resolvedCbs.forEach((resolvedCb) => {
                 resolvedCb();
             });
         };
 
-        let reject = value => {
+        let reject = (value) => {
             this.status = 'rejected';
             this.value = value;
-            this.rejectCbs.forEach(rejectCb => {
-                rejectCb();
+            this.rejectedCbs.forEach((rejectedCb) => {
+                rejectedCb();
             });
         };
 
@@ -27,13 +27,13 @@ class MyPromise {
         }
     }
 
-    pushResolvedCb(promise, cb, nextResolve, nextReject) {
+    getResolvedCb(promise, cb, nextResolve, nextReject) {
         let resolvedCb = () => {
             setTimeout(() => {
                 if (cb) {
                     try {
                         let res = cb(this.value);
-                        resolvePromise(promise, res, nextResolve, nextReject)
+                        resolvePromise(promise, res, nextResolve, nextReject);
                     } catch (error) {
                         nextReject(error);
                     }
@@ -43,17 +43,17 @@ class MyPromise {
             }, 0);
         };
 
-        this.resolvedCbs.push(resolvedCb);
+        return resolvedCb;
     }
 
-    pushRejectCb(promise, cb, nextResolve, nextReject) {
-        let rejectCb = () => {
+    getRejectedCb(promise, cb, nextResolve, nextReject) {
+        let rejectedCb = () => {
             setTimeout(() => {
                 if (cb) {
                     try {
                         let res = cb(this.value);
 
-                        resolvePromise(promise, res, nextResolve, nextReject)
+                        resolvePromise(promise, res, nextResolve, nextReject);
                     } catch (error) {
                         nextReject(error);
                     }
@@ -63,26 +63,30 @@ class MyPromise {
             }, 0);
         };
 
-        this.rejectCbs.push(rejectCb);
+        return rejectedCb;
     }
 
     then(cb1, cb2) {
-        let newPromise = new MyPromise((resolve, reject) => {
-            this.pushResolvedCb(promise, cb1, resolve, reject);
-            this.pushRejectCb(promise, cb2, resolve, reject);
+        let nextResolve = null;
+        let nextReject = null;
+        let nextPromise = new MyPromise((resolve, reject) => {
+            nextResolve = resolve;
+            nextReject = reject;
         });
-        
+
+        let resolvedCb = this.getResolvedCb(nextPromise, cb1, nextResolve, nextReject);
+        let rejectedCb = this.getRejectedCb(nextPromise, cb2, nextResolve, nextReject);
+
         if (this.status === 'resolved') {
-            this.resolvedCbs.forEach(resolvedCb => {
-                resolvedCb();
-            });
+            resolvedCb();
         } else if (this.status === 'rejected') {
-            this.rejectCbs.forEach(rejectCb => {
-                rejectCb();
-            });
+            rejectedCb();
+        } else if (this.status === 'pending') {
+            this.resolvedCbs.push(resolvedCb);
+            this.rejectedCbs.push(rejectedCb);
         }
 
-        return newPromise;
+        return nextPromise;
     }
 
     catch(cb) {
@@ -95,16 +99,13 @@ function resolvePromise(promise, res, nextResolve, nextReject) {
     if (promise === res) {
         return nextReject(new TypeError('Chaining cycle detected for promise #<Promise>'));
     }
-    // 判断x是不是 MyPromise 实例对象
+    // 判断 res 是不是 MyPromise 实例对象
     if (res instanceof MyPromise) {
-        // 执行 x，调用 then 方法，目的是将其状态变为 fulfilled 或者 rejected
-        // x.then(value => resolve(value), reason => reject(reason))
-        // 简化之后
+        // 需要在回调返回的 promise 状态改变时执行 then 函数得到的新 promise 对应的 resolve 或者 reject
         res.then(nextResolve, nextReject);
     } else {
         // 普通值
-        // 普通值
-        nextResolve(x);
+        nextResolve(res);
     }
 }
 
@@ -113,30 +114,30 @@ new MyPromise((resolve, reject) => {
         resolve(1);
     }, 100);
 })
-    .then(value => {
+    .then((value) => {
         console.log(value);
         return 2;
     })
-    .then(value => {
+    .then((value) => {
         console.log(value);
         return new MyPromise((resolve, reject) => {
             resolve(3);
         });
     })
-    .then(value => {
+    .then((value) => {
         console.log(value);
         return new MyPromise((resolve, reject) => {
             reject(4);
         });
     })
-    .then(value => {
+    .then((value) => {
         console.log(value);
         return 5;
     })
-    .catch(value => {
+    .catch((value) => {
         console.log(value);
     })
-    .catch(value => {
+    .catch((value) => {
         console.log(value);
     });
 
@@ -145,13 +146,13 @@ function myPromiseAll(promises) {
         let res = [];
 
         function run(p, index) {
-            p.then(value => {
+            p.then((value) => {
                 res[index] = value;
 
                 if (res.length === promises.length) {
                     resolve(res);
                 }
-            }).catch(error => {
+            }).catch((error) => {
                 reject(error);
             });
         }
@@ -162,23 +163,24 @@ function myPromiseAll(promises) {
     });
 }
 
-Promise.prototype.finally = function(callback) {
-    // 返回调用的then方法
-    // 只要回调成功 就返回this的状态 如果回调执行失败 则直接返回
+Promise.prototype.finally = function(cb) {
     return this.then(
-        value => {
-            console.log(111);
-            callback();
-            return value;
+        function(value) {
+            // 这是由于 cb() 可能返回一个 promise
+            // 如果 cb() 的 promise 为 rejected，那 finally 得到的 promise 也同样是 rejected
+            // 如果是 resolved 那和原 promise 一致
+            return Promise.resolve(cb()).then(function() {
+                return value;
+            });
         },
-        reason => {
-            console.log(222);
-            callback();
-            throw reason;
+        function(err) {
+            return Promise.resolve(cb()).then(function() {
+                throw err;
+            });
         }
     );
 };
 
-Promise.resolve(2).finally(() => {
-    return Promise.reject(1);
-});
+// Promise.resolve(2).finally(() => {
+//     return Promise.reject(1);
+// });
