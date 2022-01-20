@@ -2,7 +2,7 @@ const Mode = require('frontmatter-markdown-loader/mode');
 
 module.exports = {
     cache: false,
-    title: 'sparklinm\'s 前端博客',
+    title: 'Blogs',
     description: '前端个人博客，记录开发中的问题',
     dest: 'public',
     head: [
