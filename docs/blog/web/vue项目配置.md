@@ -91,7 +91,7 @@ yarn add postcss-pxtorem -D
 ```js
 module.exports = {
     plugins: {
-        'autoprefixer': {
+        autoprefixer: {
             browsers: ['Android >= 4.0', 'iOS >= 7']
         },
         'postcss-pxtorem': {
@@ -531,7 +531,7 @@ module.exports = {
 
 3. [TerserPlugin](https://github.com/webpack-contrib/terser-webpack-plugin)
 
-   压缩 js 文件。
+    压缩 js 文件。
 
 ```js
 // vue.config.js
@@ -710,6 +710,10 @@ module.exports = {
 };
 ```
 
+---
+
+`purifycss` 不再维护，可以使用 [purgecss](https://github.com/FullHuman/purgecss) 代替。
+
 ### tree-shaking
 
 tree-shaking 功能会在**生产环境（打包时）**自动启用。
@@ -737,7 +741,7 @@ module.exports = {
 所以要想正常使用 tree-shaking 功能：
 
 1. 生产环境。
-2. 关闭`babel-loader` 模块转换。
+2. 关闭 `babel-loader` 模块转换。
 
 更多或者开发环境想开启，查看：[【告别普通打包】webpack 打包结果优化特性：Tree Sharking 和 sideEffects](https://blog.csdn.net/weixin_43334673/article/details/107811487#14__babelloader__179)。
 

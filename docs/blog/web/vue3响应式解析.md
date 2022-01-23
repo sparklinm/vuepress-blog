@@ -78,7 +78,7 @@ effect(getter, {
 
 自定义了一个调度器 `scheduler`，当 `count` 变化时，执行 `scheduler`，将 `_dirty` 设置为 true，表示下次访问时，表示下次访问时，重新执行 `get` 函数。
 
-## watcheffect
+## watchEffect
 
 ```js
 const count = ref(0);
@@ -86,7 +86,7 @@ const count = ref(0);
 watchEffect(() => console.log(count.value));
 ```
 
-`watcheffect` 的实现：使用回调创建一个 `effect`。设置一个调度器函数 `scheduler` :
+`watchEffect` 的实现：使用回调创建一个 `effect`。设置一个调度器函数 `scheduler` :
 
 ```js
 scheduler = () => {

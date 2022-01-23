@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: Vue原理浅析
-    time: 2020-10-27 09:31:51
-    tag: Vue
+    - title: Vue原理浅析
+      time: 2020-10-27 09:31:51
+      tag: Vue
 ---
 
 # Vue 原理浅析
@@ -21,38 +21,38 @@ meta:
 
 ```js
 function defineReactive(data, key, val) {
-  // 递归遍历所有子属性
-  observe(val)
-  Object.defineProperty(data, key, {
-    enumerable: true,
-    configurable: true,
-    get: function() {
-      // more
-      return val
-    },
-    set: function(newVal) {
-      // more
-      val = newVal
-    }
-  })
+    // 递归遍历所有子属性
+    observe(val);
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            // more
+            return val;
+        },
+        set: function(newVal) {
+            // more
+            val = newVal;
+        }
+    });
 }
 
 function observe(data) {
-  if (!data || typeof data !== 'object') {
-    return
-  }
-  Object.keys(data).forEach(function(key) {
-    defineReactive(data, key, data[key])
-  })
+    if (!data || typeof data !== 'object') {
+        return;
+    }
+    Object.keys(data).forEach(function(key) {
+        defineReactive(data, key, data[key]);
+    });
 }
 
 var data = {
-  book1: {
-    name: ''
-  },
-  book2: ''
-}
-observe(data)
+    book1: {
+        name: ''
+    },
+    book2: ''
+};
+observe(data);
 ```
 
 这样当获取/改变 `data` 的属性（或是子属性）时，便会触发相应的 `get/set` 回调。
@@ -71,71 +71,71 @@ observe(data)
 
 ```js
 function defineReactive(data, key, val) {
-  // 递归遍历所有子属性
-  const dep = new Dep()
+    // 递归遍历所有子属性
+    const dep = new Dep();
 
-  observe(val)
-  Object.defineProperty(data, key, {
-    enumerable: true,
-    configurable: true,
-    get: function() {
-      if (Dep.target) {
-        // 订阅器中添加Dep.target
-        dep.depend()
-      }
-      return val
-    },
-    set: function(newVal) {
-      val = newVal
-      // 通知订阅器
-      dep.notify()
-    }
-  })
+    observe(val);
+    Object.defineProperty(data, key, {
+        enumerable: true,
+        configurable: true,
+        get: function() {
+            if (Dep.target) {
+                // 订阅器中添加Dep.target
+                dep.depend();
+            }
+            return val;
+        },
+        set: function(newVal) {
+            val = newVal;
+            // 通知订阅器
+            dep.notify();
+        }
+    });
 }
 
 // 订阅器
 class Dep {
-  id
-  constructor() {
-    this.id = uid++
-    // 所有订阅者
-    this.subs = []
-  }
-
-  // 添加订阅者
-  addSub(sub) {
-    this.subs.push(sub)
-  }
-
-  // 将 target 存储的订阅者添加进入当前 dep
-  depend() {
-    if (Dep.target) {
-      Dep.target.addDep(this)
+    id;
+    constructor() {
+        this.id = uid++;
+        // 所有订阅者
+        this.subs = [];
     }
-  }
 
-  notify() {
-    const subs = this.subs
-
-    for (let i = 0, l = subs.length; i < l; i++) {
-      // 订阅者的更新方法
-      subs[i].update()
+    // 添加订阅者
+    addSub(sub) {
+        this.subs.push(sub);
     }
-  }
+
+    // 将 target 存储的订阅者添加进入当前 dep
+    depend() {
+        if (Dep.target) {
+            Dep.target.addDep(this);
+        }
+    }
+
+    notify() {
+        const subs = this.subs;
+
+        for (let i = 0, l = subs.length; i < l; i++) {
+            // 订阅者的更新方法
+            subs[i].update();
+        }
+    }
 }
 
-Dep.target = null
-const targetStack = []
+Dep.target = null;
+const targetStack = [];
 
 // 设置 Dep.target
 function pushTarget(target) {
-  targetStack.push(target)
-  Dep.target = target
+    targetStack.push(target);
+    Dep.target = target;
 }
 
 function popTarget() {
-  targetStack.pop()
-  Dep.target = targetStack[targetStack.length - 1]
+    targetStack.pop();
+    Dep.target = targetStack[targetStack.length - 1];
 }
 ```
 
@@ -145,80 +145,80 @@ function popTarget() {
 
 ```js
 function parsePath(path) {
-  const segments = path.split('.')
+    const segments = path.split('.');
 
-  return function(obj) {
-    for (let i = 0; i < segments.length; i++) {
-      if (!obj) return
-      obj = obj[segments[i]]
-    }
-    return obj
-  }
+    return function(obj) {
+        for (let i = 0; i < segments.length; i++) {
+            if (!obj) return;
+            obj = obj[segments[i]];
+        }
+        return obj;
+    };
 }
 
 class Watcher {
-  constructor(vm, exp, cb) {
-    this.vm = vm
-    this.cb = cb
-    // 添加了当前 Watcher 的 Dep 数组
-    this.deps = new Set()
-    this.getter = parsePath(exp)
-    this.value = this.get()
-  }
-
-  get() {
-    pushTarget(this)
-    let value
-    const vm = this.vm
-
-    try {
-      // 触发数据的 get，将当前 Watcher 添加到对应 Dep
-      value = this.getter.call(vm, vm)
-    } catch (e) {
-      if (this.user) {
-        console.error(e, vm, `getter for watcher "${this.expression}"`)
-      } else {
-        throw e
-      }
-    } finally {
-      popTarget()
+    constructor(vm, exp, cb) {
+        this.vm = vm;
+        this.cb = cb;
+        // 添加了当前 Watcher 的 Dep 数组
+        this.deps = new Set();
+        this.getter = parsePath(exp);
+        this.value = this.get();
     }
-    return value
-  }
 
-  addDep(dep) {
-    // 检查是否已经添加了
-    if (!this.deps.has(dep)) {
-      this.deps.add(dep)
-      dep.addSub(this)
+    get() {
+        pushTarget(this);
+        let value;
+        const vm = this.vm;
+
+        try {
+            // 触发数据的 get，将当前 Watcher 添加到对应 Dep
+            value = this.getter.call(vm, vm);
+        } catch (e) {
+            if (this.user) {
+                console.error(e, vm, `getter for watcher "${this.expression}"`);
+            } else {
+                throw e;
+            }
+        } finally {
+            popTarget();
+        }
+        return value;
     }
-  }
 
-  update() {
-    const oldValue = this.value
-    const value = this.get()
-
-    if (value !== oldValue) {
-      this.value = value
-      if (this.cb) {
-        this.cb.call(this.vm, value, oldValue)
-      }
+    addDep(dep) {
+        // 检查是否已经添加了
+        if (!this.deps.has(dep)) {
+            this.deps.add(dep);
+            dep.addSub(this);
+        }
     }
-  }
+
+    update() {
+        const oldValue = this.value;
+        const value = this.get();
+
+        if (value !== oldValue) {
+            this.value = value;
+            if (this.cb) {
+                this.cb.call(this.vm, value, oldValue);
+            }
+        }
+    }
 }
 
 var data = {
-  book1: {
-    name: ''
-  },
-  book2: ''
-}
-observe(data)
+    book1: {
+        name: ''
+    },
+    book2: ''
+};
+observe(data);
 new Watcher(data, 'book1.name', () => {
-  console.log('update view')
-})
+    console.log('update view');
+});
 
-data.book1.name = '书名'
+data.book1.name = '书名';
 // update view
 ```
 
@@ -228,23 +228,23 @@ data.book1.name = '书名'
 
 ```js
 const data = {
-  book1: {
-    name: '书名1'
-  },
-  book2: ''
-}
+    book1: {
+        name: '书名1'
+    },
+    book2: ''
+};
 
-observe(data)
+observe(data);
 
 function watch(exp, fn) {
-  return new Watcher(data, exp, cb)
+    return new Watcher(data, exp, cb);
 }
 
 watch('book1.name', () => {
-  console.log('change')
-})
+    console.log('change');
+});
 
-data.book1.name = '书名2'
+data.book1.name = '书名2';
 // change
 ```
 
@@ -254,24 +254,21 @@ data.book1.name = '书名2'
 
 ```js
 export default {
-  computed: {
-    text() {
-      return this.name + this.id
+    computed: {
+        text() {
+            return this.name + this.id;
+        }
     }
-  }
-}
+};
 ```
 
 1. 在组件实例上定义一个 **text 属性**。
-2. 当访问 **text 属性**时，会调用 `computed` 中 **text 函数**，将函数的返回值赋值给 **text 属性**。
-3. 如果 **text 函数**依赖值未发生改变时，再次访问 **text 属性**，那么不会执行 **text 函数**，而是直接返回上一次的结果。
+2. 当访问 **text 属性** 时，会调用 `computed` 中 **text 函数**，将函数的返回值赋值给 **text 属性**。
+3. 如果 **text 函数** 依赖值未发生改变时，再次访问 **text 属性**，那么不会执行 **text 函数**，而是直接返回上一次的结果。
 
-首先，需要创建一个 `Watcher`，将 **text 函数** 传入 `Watcher`。并将这个 `Watcher` 添加到所有依赖数据的 `Dep` 中。
+首先，需要创建一个 `Watcher`，将 **text 函数** 传入 `Watcher`。如果 **text 属性** 不被访问，**text 函数** 永远不被执行。
 
-如何将这个 `Watcher` 添加到所有依赖的 `Dep` 中？
-
-1. 设置 `Dep.target`
-2. 执行一次**text 函数**，就能将这个 `Watcher` 添加到所有依赖的 `Dep`。
+当第一次访问 **text 属性** 时，会设置 `Dep.target` ，执行 **text 函数** ，并将这个 `Watcher` 添加到所有依赖数据的 `Dep` 中。
 
 然后，在依赖项改变时，并不是去直接执行**text 函数**。而是给这个 `Watcher` 设置一个标志，表示依赖项已经改变。
 
@@ -279,91 +276,91 @@ export default {
 
 ```js
 class Watcher {
-  constructor(vm, expOrFn, cb, options) {
-    if (options) {
-      this.lazy = !!options.lazy
+    constructor(vm, expOrFn, cb, options) {
+        if (options) {
+            this.lazy = !!options.lazy;
+        }
+
+        // 用于 computed，表示依赖性是否改变
+        this.dirty = this.lazy;
+        this.vm = vm;
+        this.cb = cb;
+        // 添加了当前订阅者的 Dep 数组
+        this.deps = new Set();
+
+        if (typeof expOrFn === 'function') {
+            this.getter = expOrFn;
+        } else {
+            this.getter = parsePath(expOrFn);
+        }
+        this.value = this.lazy ? undefined : this.get();
     }
 
-    // 用于 computed，表示依赖性是否改变
-    this.dirty = this.lazy
-    this.vm = vm
-    this.cb = cb
-    // 添加了当前订阅者的 Dep 数组
-    this.deps = new Set()
+    // ... 其他的方法同上面
 
-    if (typeof expOrFn === 'function') {
-      this.getter = expOrFn
-    } else {
-      this.getter = parsePath(expOrFn)
+    evaluate() {
+        this.value = this.get();
+        this.dirty = false;
     }
-    this.value = this.lazy ? undefined : this.get()
-  }
 
-  // ... 其他的方法同上面
-
-  evaluate() {
-    this.value = this.get()
-    this.dirty = false
-  }
-
-  // Dep 通知 Watcher 更新
-  update() {
-    if (this.lazy) {
-      // 依赖项已经改变
-      this.dirty = true
-    } else {
-      this.run()
+    // Dep 通知 Watcher 更新
+    update() {
+        if (this.lazy) {
+            // 依赖项已经改变
+            this.dirty = true;
+        } else {
+            this.run();
+        }
     }
-  }
 
-  run() {
-    const oldValue = this.value
-    const value = this.get()
+    run() {
+        const oldValue = this.value;
+        const value = this.get();
 
-    if (value !== oldValue) {
-      this.value = value
-      if (this.cb) {
-        this.cb.call(this.vm, value, oldValue)
-      }
+        if (value !== oldValue) {
+            this.value = value;
+            if (this.cb) {
+                this.cb.call(this.vm, value, oldValue);
+            }
+        }
     }
-  }
 }
 
 function computed(fn) {
-  const watcher = new Watcher(data, fn, () => {}, {
-    lazy: true
-  })
+    const watcher = new Watcher(data, fn, () => {}, {
+        lazy: true
+    });
 
-  return function() {
-    if (watcher) {
-      // 依赖项改变时，重新获取
-      if (watcher.dirty) {
-        watcher.evaluate()
-      }
-      return watcher.value
-    }
-  }
+    return function() {
+        if (watcher) {
+            // 依赖项改变时，重新获取
+            if (watcher.dirty) {
+                watcher.evaluate();
+            }
+            return watcher.value;
+        }
+    };
 }
 
 const data = {
-  book1: {
-    name: '书名1'
-  },
-  book2: '第二本书'
-}
+    book1: {
+        name: '书名1'
+    },
+    book2: '第二本书'
+};
 
-observe(data)
+observe(data);
 
 const name = computed(() => {
-  console.log('run computed')
+    console.log('run computed');
 
-  return data.book1.name + '，' + data.book2
-})
+    return data.book1.name + '，' + data.book2;
+});
 
-console.log(name())
-console.log(name())
-data.book1.name = '书名2'
-console.log(name())
+console.log(name());
+console.log(name());
+data.book1.name = '书名2';
+console.log(name());
 
 // run computed
 // 书名1，第二本书
