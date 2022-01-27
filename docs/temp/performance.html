@@ -45,14 +45,12 @@
                 }
             }
 
-
             .aa {
                 display: inline-block;
                 width: 100px;
                 height: 100px;
                 background: red;
             }
-
 
             .main {
                 display: none;
@@ -72,8 +70,67 @@
     </head>
 
     <body class="browserscripting" id="jsref">
+        <div class="parent">
+            <div class="child-container">
+                <span class="child">第一行文字</span><br />
+                <span class="child">第二行文字</span><br />
+                <span class="child">第三行文字</span>
+            </div>
+        </div>
+
+        <style>
+            .parent {
+                display: inline-block;
+                width: 300px;
+                background: rgb(251, 233, 152);
+                height: 500px;
+                margin-bottom: 100px;
+                /* line-height: 500px; */
+            }
+            .parent::after {
+                content: '';
+                display: inline-block;
+                height: 100%;
+                vertical-align: middle;
+            }
+            .child-container {
+                display: inline-block;
+                line-height: normal;
+                vertical-align: middle;
+            }
+            .child {
+                background: white;
+            }
+        </style>
+
+        <div class="parent1">
+            <div class="child-container1">
+                <span class="child1">第一行文字</span><br />
+                <span class="child1">第二行文字</span><br />
+                <span class="child1">第三行文字</span>
+            </div>
+        </div>
+
+        <style>
+            .parent1 {
+                display: inline-block;
+                width: 300px;
+                background: rgb(251, 233, 152);
+                height: 500px;
+                margin-bottom: 100px;
+                line-height: 500px;
+            }
+            .child-container1 {
+                display: inline-block;
+                line-height: normal;
+                vertical-align: middle;
+            }
+            .child1 {
+                background: white;
+            }
+        </style>
         <div style="background: burlywood;"><div class="aa"></div></div>
-        
+
         <div id="wrapper" onmousedown="click1()" class="main">
             <div id="header">
                 <a id="logo" href="/index.html" title="w3school 在线教程" style="float: left">w3school 在线教程</a>

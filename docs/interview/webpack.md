@@ -19,6 +19,12 @@
 
 初始化参数 -> 监听构建生命周期，注册插件，在构建的各个阶段执行插件 -> 从入口文件分析依赖，构建依赖关系图 -> 根据 loader 编译文件 -> 根据分包配置输出 chunk
 
+## module, chunk, bundle
+
+1. bundle：是由 webpack 打包出来的⽂件
+2. chunk：代码块，⼀个 chunk 由多个模块组合⽽成，⽤于代码的合并和分割
+3. module：是开发中的单个模块，在 webpack 的世界，⼀切皆模块，⼀个模块对应⼀个⽂件，webpack 会从配置的 entry 中递归开始找出所有依赖的模块
+
 ## 用过的 loader
 
 1. scss-loader：将 SCSS/SASS 代码转换成 CSS
@@ -66,9 +72,13 @@
 2. cdn 引入。externals，SplitChunksPlugin
 3. 善用 treeshaking。es6，css 提取和去除无用 css；按需引入组件库，函数库；
 4. 图片压缩。webP，picture 指定多个源，支持 webp 就显示 webP 不支持选择其他格式；检查浏览器是否支持 webP
-5. 动态导入。import 动态导入语法；webpack 5 externalsType 运行时导入
+5. 动态导入。
+    1. import 动态导入语法，动态导入的模块将单独打包成一个 chunk，运行时动态通过 script 加载；
+    2. webpack 5 externalsType 运行时导入，使用这个时无需主动在 html 中插入 script 引入 cdn 库。配合路由懒加载使用，当一个路由被加载时，期内的 external 被创建成一个 script 标签，即这个 external 库只在该路由下才被下载。
+6. 浏览器缓存。配置输出文件名和 contenthash 有关，即只有文件变化才会改变输出 chunk 名，充分利用浏览器缓存
 
-[webpack 做过哪些优化，开发效率方面、打包策略方面等等](https://github.com/lgwebdream/FE-Interview/issues/25)
+7. [webpack 做过哪些优化，开发效率方面、打包策略方面等等](https://github.com/lgwebdream/FE-Interview/issues/25)
+8. [学习 Webpack5 之路（优化篇）](https://jelly.jd.com/article/61179aa26bea510187770aa3)
 
 ## 构建优化
 
@@ -150,8 +160,19 @@
 
 ## 热更新
 
-HMR 的核心就是客户端从服务端拉去更新后的文件，准确的说是 chunk diff (chunk 需要更新的部分)，实际上 WDS 与浏览器之间维护了一个 Websocket，当本地资源发生变化时，WDS 会向浏览器推送更新，并带上构建时的 hash，让客户端与上一次资源进行对比。客户端对比出差异后会向 WDS 发起 Ajax 请求来获取更改内容(文件列表、hash)，这样客户端就可以再借助这些信息继续向 WDS 发起 jsonp 请求获取该 chunk 的增量更新。
+在开发环境下，webpack 打包会启动一个 node server，和浏览器前端通过 websocket 链接，当文件变化 webpack 打包完毕后，会将打包 hash 通过 websocket 传给浏览器前端。
 
-当文件变化时，webpack 监听到文件变化重新打包，webpack-dev-server
+之后前端会检查是否开启热更新，如果开启，会根据 **上一次的打包 hash** 请求本次更新的 chunk 列表（多个模块会被打包成一个 chunk），如果有，则会根据 chunk 列表通过 JSONP 的方式去获取增量更新的模块。这里使用 JSONP 是因为 JSONP 获取后可以直接执行，server 端返回的是调用 window 上热更新函数的代码，获取完毕后执行热更新。
 
-<!-- todo 待补充 -->
+对于开发人员来说，我们的代码被分成一个个文件模块，那 webpack 打包后如何描述这种模块关系，webapack 将这些模块存储到了一个对象中，所以对于热更新来说，就是将变化的模块重新执行。
+
+1. webpack 监听文件变化（通过 webpack-dev-middleware 库）
+2. webpack-dev-server/server 通过 websocket 将打包 hash 传给浏览器
+3. webpack-dev-server/client 接收到打包 hash ，并判断是否开启热更新，未开启就直接 reload 页面，开启了则通知 HotModuleReplacementPlugin 模块进行热更新
+4. HotModuleReplacementPlugin
+    1. 根据上一次的打包 hash 获取本次需要更新的 chunk 列表
+    2. 根据 chunk 列表通过 JSONP 的方式去获取增量更新的模块，server 端返回的是调用 window 上热更新函数的代码，所以用 JSONP 获取完后直接执行。
+5. 热更新替换，webpack 执行相关模块的代码。
+
+1) [轻松理解 webpack 热更新原理](https://juejin.cn/post/6844904008432222215)
+1) [看完这篇，面试再也不怕被问 Webpack 热更新](https://juejin.cn/post/6844903953092591630)

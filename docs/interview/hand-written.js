@@ -3,8 +3,8 @@ class MyPromise {
     resolvedCbs = [];
     rejectedCbs = [];
     value = undefined;
-    constructor(cb) {
-        let resolve = (value) => {
+    constructor (cb) {
+        const resolve = (value) => {
             this.status = 'resolved';
             this.value = value;
             this.resolvedCbs.forEach((resolvedCb) => {
@@ -12,7 +12,7 @@ class MyPromise {
             });
         };
 
-        let reject = (value) => {
+        const reject = (value) => {
             this.status = 'rejected';
             this.value = value;
             this.rejectedCbs.forEach((rejectedCb) => {
@@ -27,55 +27,62 @@ class MyPromise {
         }
     }
 
-    getResolvedCb(promise, cb, nextResolve, nextReject) {
-        let resolvedCb = () => {
+    getResolvedCb (promise, cb, nextResolve, nextReject) {
+        const resolvedCb = () => {
             setTimeout(() => {
-                if (cb) {
-                    try {
-                        let res = cb(this.value);
-                        resolvePromise(promise, res, nextResolve, nextReject);
-                    } catch (error) {
-                        nextReject(error);
-                    }
-                } else {
-                    nextResolve(this.value);
+                try {
+                    const res = cb(this.value);
+
+                    resolvePromise(promise, res, nextResolve, nextReject);
+                } catch (error) {
+                    nextReject(error);
                 }
+
             }, 0);
         };
 
         return resolvedCb;
     }
 
-    getRejectedCb(promise, cb, nextResolve, nextReject) {
-        let rejectedCb = () => {
+    getRejectedCb (promise, cb, nextResolve, nextReject) {
+        const rejectedCb = () => {
             setTimeout(() => {
-                if (cb) {
-                    try {
-                        let res = cb(this.value);
+                try {
+                    const res = cb(this.value);
 
-                        resolvePromise(promise, res, nextResolve, nextReject);
-                    } catch (error) {
-                        nextReject(error);
-                    }
-                } else {
-                    nextReject(this.value);
+                    resolvePromise(promise, res, nextResolve, nextReject);
+                } catch (error) {
+                    nextReject(error);
                 }
+
             }, 0);
         };
 
         return rejectedCb;
     }
 
-    then(cb1, cb2) {
+    then (cb1, cb2) {
         let nextResolve = null;
         let nextReject = null;
-        let nextPromise = new MyPromise((resolve, reject) => {
+        const nextPromise = new MyPromise((resolve, reject) => {
             nextResolve = resolve;
             nextReject = reject;
         });
 
-        let resolvedCb = this.getResolvedCb(nextPromise, cb1, nextResolve, nextReject);
-        let rejectedCb = this.getRejectedCb(nextPromise, cb2, nextResolve, nextReject);
+        if (!cb1) {
+            cb1 = () => {
+                return;
+            };
+        }
+
+        if (!cb2) {
+            cb2 = () => {
+                throw new Error();
+            };
+        }
+
+        const resolvedCb = this.getResolvedCb(nextPromise, cb1, nextResolve, nextReject);
+        const rejectedCb = this.getRejectedCb(nextPromise, cb2, nextResolve, nextReject);
 
         if (this.status === 'resolved') {
             resolvedCb();
@@ -89,12 +96,12 @@ class MyPromise {
         return nextPromise;
     }
 
-    catch(cb) {
+    catch (cb) {
         return this.then(null, cb);
     }
 }
 
-function resolvePromise(promise, res, nextResolve, nextReject) {
+function resolvePromise (promise, res, nextResolve, nextReject) {
     // 如果相等了，说明return的是自己，抛出类型错误并返回
     if (promise === res) {
         return nextReject(new TypeError('Chaining cycle detected for promise #<Promise>'));
@@ -141,11 +148,11 @@ new MyPromise((resolve, reject) => {
         console.log(value);
     });
 
-function myPromiseAll(promises) {
+function myPromiseAll (promises) {
     return new Promise((resolve, reject) => {
-        let res = [];
+        const res = [];
 
-        function run(p, index) {
+        function run (p, index) {
             p.then((value) => {
                 res[index] = value;
 
@@ -163,18 +170,18 @@ function myPromiseAll(promises) {
     });
 }
 
-Promise.prototype.finally = function(cb) {
+Promise.prototype.finally = function (cb) {
     return this.then(
-        function(value) {
+        function (value) {
             // 这是由于 cb() 可能返回一个 promise
             // 如果 cb() 的 promise 为 rejected，那 finally 得到的 promise 也同样是 rejected
             // 如果是 resolved 那和原 promise 一致
-            return Promise.resolve(cb()).then(function() {
+            return Promise.resolve(cb()).then(function () {
                 return value;
             });
         },
-        function(err) {
-            return Promise.resolve(cb()).then(function() {
+        function (err) {
+            return Promise.resolve(cb()).then(function () {
                 throw err;
             });
         }

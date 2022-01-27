@@ -4,11 +4,7 @@
 
 ### css 伪类与伪元素区别
 
--   伪类和伪元素都是⽤来表示⽂档树以外的"元素"。
--   伪类和伪元素分别⽤单冒号:和双冒号::来表示。
--   伪类和伪元素的区别，关键点在于如果没有伪元素(或伪类)，是否需要添加元素才能达到效果，如果是则是伪元素，反之则是伪类。
--   伪类其实就是基于普通 DOM 元素⽽产⽣的不同状态，他是 DOM 元素的某⼀特征。
--   伪元素能够创建在 DOM 树中不存在的抽象对象，⽽且这些抽象对象是能够访问到的。
+伪类和伪元素分别⽤单冒号:和双冒号::来表示。
 
 伪类表示抽象的类，它描述 dom 的特征，比如元素 :hover，元素的位置:first-child。
 
@@ -19,6 +15,34 @@ var color = window.getComputedStyle(document.querySelector('.element'), ':before
 ```
 
 ### 垂直水平居中
+
+1. text-align + padding
+2. text-align + line-height （单行文字，且 font-size 和父节点 font-size 的一样）
+   首先，line-height 并不能使元素垂直居中，当设置 line-height 后元素垂直居中的原理是行框的上下间距同时变大。因为是元素 baseline 和行框 baseline 对齐，所以在元素高度和行框差不多时，就是近似垂直居中，而一旦元素高度过高，变难以垂直居中。解决方法看下面：
+3. text-align + 伪元素: height: 100% + vertical-align
+4. text-align + line-height + vertical-align （非单行文字或是其他非文字行内元素）
+5. absolute + margin （已知高度）
+6. absolute + transform
+7. flex
+8. absolute + margin auto
+
+    ```css
+    .parent {
+        position: relative;
+        width: 300px;
+        height: 300px;
+    }
+    .child {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100px;
+        height: 100px;
+    }
+    ```
 
 ### em
 
@@ -55,6 +79,7 @@ box-sizing: border-box 是IE盒子模型
     border-width: 100px;
     border-style: solid;
     border-color: transparent transparent #0099cc transparent;
+    border-radius: 50%;
 }
 ```
 
@@ -92,11 +117,16 @@ box-sizing: border-box 是IE盒子模型
 
 ### 三栏布局
 
+1. 左右浮动，中间 BFC
+2. 左右浮动，中间 margin 与左右栏分离
+3. 中间在前宽度 100% ，3 个 div 浮动，父元素使用 padding/margin 给左右两边留出空间，左右子元素使用负 margin-left 移动至上一行，再通过决定定位移动到父元素留出的空间中 （圣杯布局）
+4. 思路同上，为左右两边留出的空间方式不同，中间元素新增一个父容器。父容器宽度 100% 且浮动，中间元素通过 margin 留出左右空间。
+
 ### inline-block 中间间隙
 
-行框的排列会受到中间空白（回车空格）等的影响，因为空格也属于字符,这些空白也会被应用样式，占据空间，所以会有间隔。
+行框的排列会受到中间空白（回车空格）等的影响，因为空格也属于字符，这些空白也会被应用样式，占据空间，所以会有间隔。
 
-父元素 font-size:0。
+父元素 font-size: 0。
 
 ### CSS3 新特性
 
