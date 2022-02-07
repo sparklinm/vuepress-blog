@@ -37,7 +37,6 @@ class MyPromise {
                 } catch (error) {
                     nextReject(error);
                 }
-
             }, 0);
         };
 
@@ -54,7 +53,6 @@ class MyPromise {
                 } catch (error) {
                     nextReject(error);
                 }
-
             }, 0);
         };
 
@@ -188,6 +186,4 @@ Promise.prototype.finally = function (cb) {
     );
 };
 
-// Promise.resolve(2).finally(() => {
-//     return Promise.reject(1);
-// });
+
