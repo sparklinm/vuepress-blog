@@ -379,6 +379,100 @@ typeof 和 `!` 同优先级，从右到左，执行！typeof name 返回 false�
 
 ## 继承
 
+**原型链继承：**
+
+将父类的实例作为子类的原型
+
+```js
+Child.prototype = new Parent();
+```
+
+优点：
+
+1. 继承了父类的模板，又继承了父类的原型对象
+
+缺点：
+
+1. 来自原型对象的所有属性被所有实例共享
+
+**构造函数继承：**
+
+在子类的构造函数内部以当前 this 调用父类构造函数，等于是复制父类的实例属性给子类。
+
+```js
+function Child() {
+    // 调用 SuperType 构造函数
+    // 在子类构造函数中，向父类构造函数传参
+    Parent.call(this, 'Parent');
+    // 为了保证子父类的构造函数不会重写子类的属性，需要在调用父类构造函数后，定义子类的属性
+    this.subName = 'Child';
+}
+```
+
+优点：
+
+1. 可以多继承
+2. 创建子类实例时，可以向父类传递参数
+
+缺点：
+
+1. 实例并不是父类的实例，**只是子类的实例**
+2. 只能继承父类的实例属性和方法，**不能继承原型属性/方法**
+3. 无法实现函数复用，每个子类都有父类实例函数的副本，影响性能
+
+**组合继承：**
+
+组合继承就是将原型链继承与构造函数继承组合在一起。
+
+```js
+function Child() {
+    // 调用 SuperType 构造函数
+    // 在子类构造函数中，向父类构造函数传参
+    Parent.call(this, 'Parent');
+    // 为了保证子父类的构造函数不会重写子类的属性，需要在调用父类构造函数后，定义子类的属性
+    this.subName = 'Child';
+}
+
+Child.prototype = new Parent(); // 重写原型对象，代之以一个新类型的实例
+Child.prototype.constructor = Child; // 组合继承需要修复构造函数指向
+```
+
+优点：
+
+1. 可以继承实例属性/方法，也可以继承原型属性/方法，
+2. 不存在引用属性共享问题，
+3. 可传参
+
+缺点：
+
+1. 调用了两次父类构造函数，生成了两份实例（子类实例将子类原型上的那份屏蔽了）
+
+**寄生组合继承：**
+
+借用 **构造函数** 继承 属性 ，通过 **寄生** 来继承方法
+
+```js
+function Child() {
+    // 调用 SuperType 构造函数
+    // 在子类构造函数中，向父类构造函数传参
+    Parent.call(this, 'Parent');
+    // 为了保证子父类的构造函数不会重写子类的属性，需要在调用父类构造函数后，定义子类的属性
+    this.subName = 'Child';
+}
+
+// 原型式继承，只需要继承父类原型上的方法，无需实例化父类
+Child.prototype = Object.create(Parent.prototype);
+
+// 修复构造函数指向
+Child.prototype.constructor = Child;
+```
+
+优点：
+
+1. 只调用一次 `SuperType` 构造函数，只创建一份父类属性
+2. 原型链保持不变
+3. 能够正常使用 `instanceof` 与 `isPrototypeOf`
+
 ## 类数组
 
 数组是一个特殊对象,与常规对象的区别：
@@ -417,7 +511,7 @@ typeof 和 `!` 同优先级，从右到左，执行！typeof name 返回 false�
 
 `in`: prop in obj，判断属性是否属于对象，原型链上的属性和不可枚举属性也返回 `true`。
 
-### Object.getPrototypeOf
+### Object.getPrototypeOf / Object.setPrototypeOf
 
 Object.getPrototypeOf 是获取指定对象的原型。
 
@@ -599,6 +693,8 @@ WeakMap 本质上没有使用任何东西去存储 key 和 value。它只是在 
 
 ## js 垃圾回收
 
+V8 把堆内存分成了两部分进行处理——新生代内存和老生代内存。顾名思义，新生代就是临时分配的内存，存活时间短， 老生代是常驻内存，存活的时间长。V8 的堆内存，也就是两个内存之和。
+
 新生代，Scavenge 算法：
 
 1. 将新生代内存空间一分为二。
@@ -606,7 +702,7 @@ WeakMap 本质上没有使用任何东西去存储 key 和 value。它只是在 
 3. 当进行垃圾回收时，V8 将 From 部分的对象检查一遍，如果是**存活对象那么复制到 To 内存**中(在 To 内存中按照顺序从头放置的)，如果是非存活对象直接回收即可。
 4. 当所有的 From 中的存活对象按照顺序进入到 To 内存之后，From 和 To 两者的角色对调，From 现在被闲置，To 为正在使用，如此循环。
 
-分为 2 块，不断复制的原因：解决垃圾回收而导致的内存碎片化问题。
+分为 2 块，不断复制的原因：解决**垃圾回收而导致的内存碎片化**问题。
 
 老生代：
 
@@ -615,13 +711,70 @@ WeakMap 本质上没有使用任何东西去存储 key 和 value。它只是在 
 1. 已经经历过一次 Scavenge 回收。
 2. To（闲置）空间的内存占用超过 25%。
 
-老生代采用标记清除法：
+老生代采用标记清除法（老生代占用内存空间大，不能一分为二的方法）：
 
 首先会遍历堆中的所有对象，对它们**做上标记**，然后对于代码环境中**使用的变量以及被强引用的变量取消标记**，剩下的就是要删除的变量了，在随后的清除阶段对其进行空间的回收。
 
 https://juejin.im/post/6844904004007247880#heading-3
 
 ## 手写
+
+### Promise
+
+Promise
+
+Promise.finally
+
+Promise.resolve
+
+Promise.reject
+
+Promise.all
+
+Promise.any
+
+Promise.allSettled
+
+Promise.race
+
+### new
+
+```js
+function createObject(Con) {
+    // 创建新对象obj
+    // var obj = {};也可以
+    var obj = Object.create(null);
+
+    // 将obj.__proto__ -> 构造函数原型
+    // (不推荐)obj.__proto__ = Con.prototype
+    Object.setPrototypeOf(obj, Con.prototype);
+
+    // 执行构造函数，并接受构造函数返回值
+    const ret = Con.apply(obj, [].slice.call(arguments, 1));
+
+    // 若构造函数返回值为对象，直接返回该对象
+    // 否则返回obj
+    return typeof ret === 'object' ? ret : obj;
+}
+```
+
+### bind 实现
+
+```js
+function bind(fn, context) {
+    if (typeof fn !== 'function') {
+        throw new Error('argument(s) error');
+    }
+
+    const params = [].slice.call(arguments, 2);
+
+    return function() {
+        fn.call(context, ...params);
+    };
+}
+```
+
+### 深拷贝
 
 ### 数组转树
 
@@ -705,14 +858,14 @@ function throttle(fn, timeout = 20, fisrtExe = true) {
     }
     let timer = null;
 
-    return function() {
+    return function(...args) {
         if (fisrtExe) {
-            fn(arguments);
+            fn.apply(this, args);
             fisrtExe = false;
         }
         if (!timer) {
             timer = setTimeout(() => {
-                fn(arguments);
+                fn.apply(this, args);
                 clearTimeout(timer);
             }, timeout);
         }
@@ -725,33 +878,98 @@ function debounce(fn, timeout = 20, fisrtExe = true) {
     }
     let timer = null;
 
-    return function() {
+    return function(...args) {
         if (fisrtExe) {
-            fn(arguments);
+            fn.apply(this, args);
             fisrtExe = false;
         }
         clearTimeout(timer);
         timer = setTimeout(() => {
-            fn(arguments);
+            fn.apply(this, args);
             clearTimeout(timer);
         }, timeout);
     };
 }
 ```
 
-### bind 实现
+### 柯里化
+
+柯里化常见的应用有：参数复用、延迟计算。
 
 ```js
-function bind(fn, context) {
-    if (typeof fn !== 'function') {
-        throw new Error('argument(s) error');
+function curry(fn, ...args) {
+    let that = this;
+
+    return function(...innerArgs) {
+        let finalArgs = args.concat(innerArgs);
+        if (finalArgs.length < fn.length) {
+            //fn.length 为函数的参数个数
+            return curry.call(that, fn, ...finalArgs);
+        } else {
+            return fn.apply(that, finalArgs);
+        }
+    };
+}
+```
+
+### 组合函数
+
+组合函数类似于管道，多个函数的执行时，上一个函数的返回值会自动传入到第二个参数继续执行。
+
+```js
+function compose(...fns) {
+    var start = 0;
+    return function(...innerArgs) {
+        let i = start;
+        let result = fns[start].apply(this, innerArgs);
+        while (++i < fns.length) result = fns[i].call(this, result);
+        return result;
+    };
+}
+```
+
+函数可能有多个参数，例如 `f(a,b,c)` 和 `g(e,f)` ，要将`f(a,b,c)`的值作为一个参数传递给 `g`。
+
+这时就需要柯里化和组合函数一起使用：
+
+```js
+function compose(...fns) {
+    let cfns = fns.map((fn) => curry(fns[i]));
+
+    let composeCurryFn = (...curryFns) => {
+        return function(...args) {
+            let i = 0;
+            let result = null;
+            while (i < curryFns.length) {
+                let curryFn = curryFns[i];
+                result = curryFn.apply(this, args);
+                if (typeof resulit === 'function') {
+                    return composeCurryFn.call(this, result, ...curryFns.slice(i + 1));
+                }
+                args = [result];
+                i++;
+            }
+            return result;
+        };
+    };
+
+    return composeCurryFn(...cfns);
+}
+```
+
+### 随机定长字符
+
+```js
+function randomStr(length = 10) {
+    const array = [];
+    const asciiStart = 33;
+    const asciiEnd = 126;
+
+    for (let i = 0; i < length; i++) {
+        array[i] = Math.floor(Math.random() * (asciiEnd - asciiStart + 1) + asciiStart);
     }
 
-    const params = [].slice.call(arguments, 2);
-
-    return function() {
-        fn.call(context, ...params);
-    };
+    return String.fromCharCode(...array);
 }
 ```
 
@@ -999,6 +1217,17 @@ var a = 1;
 // VM1059:4 Uncaught TypeError: Assignment to constant variable.
 ```
 
+### 函数长度
+
+```js
+function fn(a, b = 1) {}
+
+fn.length;
+// 1
+```
+
+函数长度为无默认值参数个数。
+
 ## 非典型算法题
 
 ### 洗牌算法
@@ -1020,3 +1249,11 @@ C 0 1 1
 D 1 0 1
 
 每一行代表老鼠喝了哪些水。如果 D 死亡代表第一瓶水有毒，C 死亡代表第二瓶水，CD 死亡代表第三瓶水，以此类推。
+
+### 随机不重复
+
+洗牌，抽牌
+
+### 100 层扔鸡蛋
+
+一百层楼，有两个玻璃瓶，在其中的一层楼层及以下的楼层中往下扔玻璃瓶不会碎，找到这个楼层

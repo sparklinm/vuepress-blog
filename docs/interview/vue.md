@@ -1,7 +1,3 @@
-# vue 面试
-
-1. [最全的 Vue 面试题+详解答案](https://juejin.cn/post/6961222829979697165)
-
 ## 生命周期顺序
 
 **加载渲染过程**
@@ -11,10 +7,6 @@
 **子组件更新过程**
 
 父 beforeUpdate->子 beforeUpdate->子 updated->父 updated
-
-**父组件更新过程**
-
-父 beforeUpdate->父 updated
 
 **销毁过程**
 
@@ -218,3 +210,7 @@ mounted(){
 // 子组件触发 mounted 钩子函数 ...
 // 父组件监听到 mounted 钩子函数 ...
 ```
+
+## 参考
+
+1. [最全的 Vue 面试题+详解答案](https://juejin.cn/post/6961222829979697165)

@@ -150,9 +150,11 @@
 
 1. 压缩代码开启并行压缩。例如 terser-webpack-plugin 开启 parallel 参数
 2. 缩小打包作用域。
+
     1. exclude/include (确定 loader 规则范围)
     2. noParse 对完全不需要解析的库进行忽略(不去解析但仍会打包到 bundle 中，注意被忽略掉的文件里不应该包含 import、require、define 等模块化语句)，
     3. IgnorePlugin (完全排除模块)
+
 3. 缓存构建结果
 
     1. babel-loader，terser-webpack-plugin 开启缓存
