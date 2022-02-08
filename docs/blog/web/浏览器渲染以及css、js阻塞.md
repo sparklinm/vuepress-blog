@@ -1,8 +1,8 @@
 ---
 meta:
-  - title: 浏览器渲染以及 css、js 阻塞
-    time: 2019-07-31 7:42:53
-    tag: html
+    - title: 浏览器渲染以及 css、js 阻塞
+      time: 2019-07-31 7:42:53
+      tag: html
 ---
 
 # 浏览器渲染以及 css、js 阻塞
@@ -32,7 +32,7 @@ meta:
 css 阻塞规则：
 
 1. css 加载不会阻塞 DOM 树的解析，但会阻塞 DOM 树的渲染
-2. css 加载会阻塞后面 js 语句的执行
+2. css 加载会阻塞后面 js 语句的执行。因为 js 会可能获取操作元素样式，故等待前面 css 加载完成后再加载。
 3. css 和 dom 解析是两个并行的过程
 
 ## js 阻塞
@@ -67,9 +67,9 @@ defer 表示延迟脚本，当页面解析完毕后，defer 脚本会按照它�
 
 1. 普通 js 脚步应该放在 body 下面，因为放在 body 上方会等到 js 下载和解析完毕后才会解析 dom，同时也无法操作 dom。
 2. defer 脚步之间存在依赖，且需要操作 dom，例如：
-   - 评论框；
-   - 代码语法高亮；
-   - polyfill.js。
+    - 评论框；
+    - 代码语法高亮；
+    - polyfill.js。
 3. async 不存在依赖，且不操作 dom。
 
 ### js 执行时的阻塞
@@ -120,10 +120,10 @@ js 执行对浏览器渲染的影响依据下面的规则：
 如果`touchmove`实现的是拖动事件，那回调丢失会导致拖动的距离并不等于你手指划过的距离。
 
 1. 如果拖动元素是根据开始时的位置（touchstart）改变
-   - 只有末尾回调丢失会影响，这时可以在 end 事件中修正。当节流间隔过长时，拖动过程中元素会不流畅的闪烁移动。
+    - 只有末尾回调丢失会影响，这时可以在 end 事件中修正。当节流间隔过长时，拖动过程中元素会不流畅的闪烁移动。
 2. 如果拖动元素是根据上一次的位置来改变
-   - 那中间和末尾回调丢失都会影响拖动的距离。中间回调的丢失体现为拖动不灵敏。
-   - 可以保存丢失的中间回调划过的距离，在下一次执行拖动时一起绘制。此时的情况同 1。
+    - 那中间和末尾回调丢失都会影响拖动的距离。中间回调的丢失体现为拖动不灵敏。
+    - 可以保存丢失的中间回调划过的距离，在下一次执行拖动时一起绘制。此时的情况同 1。
 
 在这种情况下，要小心使用节流函数。
 
@@ -137,11 +137,11 @@ js 执行对浏览器渲染的影响依据下面的规则：
 
 js 的加载是否阻塞 dom 解析要依据 script 的属性
 
-- defer 和 async 脚步加载不会阻塞 dom 解析，即遇到 script 标签时不会去阻塞 dom 解析
-- defer 脚步下载完不会执行，需要等到 dom 解析完毕后，`DOMContentLoaded` 事件调用前执行  
-  （ps[高程]：延迟脚本并不一定会按照顺序执行，也不一定会在 `DOMContentLoaded` 事件触发前执行，因此最好只包含一个延迟脚本）
-- async 脚步下载完毕后会在合适的时机执行，可能在 `DOMContentLoaded` 事件之前或之后执行，但一定在 onload 事件前执行
-- 普通加载和执行会阻塞 dom 解析，且下载完毕后会立即执行
+-   defer 和 async 脚步加载不会阻塞 dom 解析，即遇到 script 标签时不会去阻塞 dom 解析
+-   defer 脚步下载完不会执行，需要等到 dom 解析完毕后，`DOMContentLoaded` 事件调用前执行  
+    （ps[高程]：延迟脚本并不一定会按照顺序执行，也不一定会在 `DOMContentLoaded` 事件触发前执行，因此最好只包含一个延迟脚本）
+-   async 脚步下载完毕后会在合适的时机执行，可能在 `DOMContentLoaded` 事件之前或之后执行，但一定在 onload 事件前执行
+-   普通加载和执行会阻塞 dom 解析，且下载完毕后会立即执行
 
 重绘是根据一个时钟周期定时进行的 —— 浏览器刷新频率（一般是 16.67ms），并不是在每次宏任务最后一定重绘，而是必须当前宏任务结束才能重绘，也就是重绘时可能已经进行了多次宏任务：
 
@@ -163,12 +163,12 @@ js 的加载是否阻塞 dom 解析要依据 script 的属性
 1. 当只有 css 时，不需要等待 css 加载完毕
 2. 当只有 js 时，
 
-   - 如果为 defer，那么会在 `DOMContentLoaded` 前触发
-   - 如果为 async，那么可能在 `DOMContentLoaded` 前或 `DOMContentLoaded` 后触发（即使 async 在 dom 解析过程中下载完毕，也可能在 `DOMContentLoaded` 后触发）
-   - 如果是普通 js，无论是外链或者内联 js，都需要等待 js 执行完毕后才触发 `DOMContentLoaded` 事件
-   - 无论是何种 js，只要是宏任务异步代码，那么 `DOMContentLoaded` 都不需要等待它们的执行
-   - 但如果是微任务异步代码，除了 async 的 js，其他都需要等待它们的执行才触发 `DOMContentLoaded`
-   - 也就是说 async 的 js 和 `DOMContentLoaded` 事件完全没有关系
+    - 如果为 defer，那么会在 `DOMContentLoaded` 前触发
+    - 如果为 async，那么可能在 `DOMContentLoaded` 前或 `DOMContentLoaded` 后触发（即使 async 在 dom 解析过程中下载完毕，也可能在 `DOMContentLoaded` 后触发）
+    - 如果是普通 js，无论是外链或者内联 js，都需要等待 js 执行完毕后才触发 `DOMContentLoaded` 事件
+    - 无论是何种 js，只要是宏任务异步代码，那么 `DOMContentLoaded` 都不需要等待它们的执行
+    - 但如果是微任务异步代码，除了 async 的 js，其他都需要等待它们的执行才触发 `DOMContentLoaded`
+    - 也就是说 async 的 js 和 `DOMContentLoaded` 事件完全没有关系
 
 3. 当 css 和 js 都存在时，由于 css 在 js 前会阻塞 js 的执行，所以当 css 后面有 js 时，`DOMContentLoaded` 事件需要等待 css 下载和解析完毕
 
