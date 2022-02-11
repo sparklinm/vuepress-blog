@@ -26,7 +26,11 @@ var color = window.getComputedStyle(document.querySelector('.element'), ':before
 
 **特性：**
 
-1. 元素的层叠等级基于父元素的层叠等级（如果父元素存在层叠等级）
+1. 元素的层叠等级基于父元素的层叠等级（如果父元素存在层叠等级）（存在 z-index）
+
+层叠顺序：
+
+![](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/8/30/16ce245b90085292~tplv-t2oaga2asx-watermark.awebp)
 
 ### BFC
 
@@ -211,7 +215,7 @@ box-sizing: border-box 是IE盒子模型
 1. 左右浮动，中间 BFC
 2. 左右浮动，中间 margin 与左右栏分离
 3. 中间在前宽度 100% ，3 个 div 浮动，父元素使用 padding/margin 给左右两边留出空间，左右子元素使用负 margin-left 移动至上一行，再通过决定定位移动到父元素留出的空间中 （圣杯布局）
-4. 思路同上，为左右两边留出的空间方式不同，中间元素新增一个父容器。父容器宽度 100% 且浮动，中间元素通过 margin 留出左右空间。
+4. 思路同上，为左右两边留出的空间方式不同，中间元素新增一个父容器。父容器宽度 100% 且浮动，中间元素通过 margin 留出左右空间。（双飞翼）
 5. flex
 
 ### inline-block 中间间隙
@@ -310,7 +314,7 @@ https://www.jianshu.com/p/35e0581629d2
 
 2. 子元素继承
 
-    - display:none 不会被子元素继承，但是父元素都不在了，子元素自然也就不会显示了，皮之不存，毛之安附~~
+    - display:none 不会被子元素继承，但是父元素都不在了，子元素自然也就不会显示了
     - visibility:hidden 会被子元素继承，可以通过设置子元素 visibility:visible 使子元素显示出来
     - opacity: 0 也会被子元素继承，但是不能通过设置子元素 opacity: 0 使其重新显示
 
