@@ -187,3 +187,61 @@ Promise.prototype.finally = function (cb) {
 };
 
 
+function myNew (fn, ...args) {
+    const obj = {};
+
+    Object.setPrototypeOf(obj, fn.prototype);
+
+    const res = fn.apply(obj, args);
+
+    return typeof res === 'object' ? res : obj;
+}
+
+function myCall (fn, obj, ...args) {
+    const symbol = Symbol();
+
+    obj[symbol] = fn;
+
+    const res = obj[symbol](...args);
+
+    delete obj[symbol];
+
+    return res;
+}
+
+
+function cloneDeep (obj) {
+    const old2NewMap = new Map();
+
+    const doClone = (obj) => {
+        if (old2NewMap.get(obj)) {
+            return old2NewMap.get(obj);
+        }
+
+        const res = Array.isArray(obj) ? [] : {};
+
+        old2NewMap.set(obj, res);
+        Object.entries(obj).forEach(([key, value]) => {
+            if (typeof value === 'object') {
+                res[key] = doClone(value);
+            } else {
+                res[key] = value;
+            }
+        });
+
+        return res;
+    };
+
+    return doClone(obj);
+}
+
+
+
+const a = {
+    b: [1, 2, 3]
+};
+
+a.x = a;
+
+console.log(cloneDeep(a));
+

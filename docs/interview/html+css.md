@@ -26,7 +26,11 @@ var color = window.getComputedStyle(document.querySelector('.element'), ':before
 
 **特性：**
 
-1. 元素的层叠等级基于父元素的层叠等级（如果父元素存在层叠等级）
+1. 元素的层叠等级基于父元素的层叠等级（如果父元素存在层叠等级）（存在 z-index）
+
+层叠顺序：
+
+![](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/8/30/16ce245b90085292~tplv-t2oaga2asx-watermark.awebp)
 
 ### BFC
 
@@ -139,7 +143,7 @@ box-sizing: border-box 是IE盒子模型
 
 1. text-align + padding
 2. text-align + line-height （单行文字，且 font-size 和父节点 font-size 的一样）
-   首先，line-height 并不能使元素垂直居中，当设置 line-height 后元素垂直居中的原理是行框的上下间距同时变大。因为是元素 baseline 和行框 baseline 对齐，所以在元素高度和行框差不多时，就是近似垂直居中，而一旦元素高度过高，变难以垂直居中。解决方法看下面：
+   首先，line-height 并不能使元素垂直居中，当设置 line-height 后元素垂直居中的原理是行框的上下间距同时变大。因为是元素 baseline 和行框 baseline 对齐，所以在元素高度和行框差不多时，就是近似垂直居中，而一旦元素高度过高，便难以垂直居中。解决方法看下面：
 3. text-align + 伪元素: height: 100% + vertical-align
 4. text-align + line-height + vertical-align （非单行文字或是其他非文字行内元素）
 5. absolute + margin （已知高度）
@@ -211,7 +215,7 @@ box-sizing: border-box 是IE盒子模型
 1. 左右浮动，中间 BFC
 2. 左右浮动，中间 margin 与左右栏分离
 3. 中间在前宽度 100% ，3 个 div 浮动，父元素使用 padding/margin 给左右两边留出空间，左右子元素使用负 margin-left 移动至上一行，再通过决定定位移动到父元素留出的空间中 （圣杯布局）
-4. 思路同上，为左右两边留出的空间方式不同，中间元素新增一个父容器。父容器宽度 100% 且浮动，中间元素通过 margin 留出左右空间。
+4. 思路同上，为左右两边留出的空间方式不同，中间元素新增一个父容器。父容器宽度 100% 且浮动，中间元素通过 margin 留出左右空间。（双飞翼）
 5. flex
 
 ### inline-block 中间间隙
@@ -277,7 +281,7 @@ https://www.jianshu.com/p/35e0581629d2
 捕获的流程为：window -> document -> html -> body -> ... -> 目标元素。
 冒泡的流程为：目标元素 -> ... -> body -> html -> document -> window。
 
-1. event. preventDefault()
+1. event.preventDefault()
    取消事件的默认动作。
 
 2. event.stopPropagation()
@@ -310,7 +314,7 @@ https://www.jianshu.com/p/35e0581629d2
 
 2. 子元素继承
 
-    - display:none 不会被子元素继承，但是父元素都不在了，子元素自然也就不会显示了，皮之不存，毛之安附~~
+    - display:none 不会被子元素继承，但是父元素都不在了，子元素自然也就不会显示了
     - visibility:hidden 会被子元素继承，可以通过设置子元素 visibility:visible 使子元素显示出来
     - opacity: 0 也会被子元素继承，但是不能通过设置子元素 opacity: 0 使其重新显示
 
